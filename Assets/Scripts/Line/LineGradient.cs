@@ -20,6 +20,7 @@ public class LineGradient : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         loopCounter = GetComponent<LoopCounter>();
+        UpdateGradient();
     }
 
     public void UpdateGradient()

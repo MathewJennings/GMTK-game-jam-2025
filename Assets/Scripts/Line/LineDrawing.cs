@@ -16,7 +16,6 @@ public class LineDrawing : MonoBehaviour
     private GameObject audioManager;
     private LoopCounter loopCounter;
     private LoopDetector loopDetector;
-    private LineTipCollisionDetector lineTipCollisionDetector;
 
     private bool finishedDrawing = false;
     private List<Vector2> drawPositions;
@@ -56,7 +55,6 @@ public class LineDrawing : MonoBehaviour
         edgeCollider = GetComponent<EdgeCollider2D>();
         loopCounter = GetComponent<LoopCounter>();
         loopDetector = GetComponent<LoopDetector>();
-        lineTipCollisionDetector = GetComponent<LineTipCollisionDetector>();
         lineGradient = GetComponent<LineGradient>();
         lineGradient.SetMaxLineLength(maxLineLength);
 
@@ -125,7 +123,6 @@ public class LineDrawing : MonoBehaviour
         drawValidForLoops.Add(true);
         lineRenderer.SetPositions(Vector2ListToVector3List(drawPositions).ToArray());
         edgeCollider.points = drawPositions.ToArray();
-        lineTipCollisionDetector.SetTipPosition(currentPosition);
 
         if (loopDetector.CreatedLoop(drawPositions, drawValidForLoops))
         {
@@ -161,7 +158,7 @@ public class LineDrawing : MonoBehaviour
         }
     }
 
-    private void DestroyLine()
+    public void DestroyLine()
     {
         loopCounter.DestroyLoopCounter();
         Destroy(gameObject);

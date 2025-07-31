@@ -76,6 +76,7 @@ public class LineManagement : MonoBehaviour
             Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             if (Vector2.Distance(currentPosition, drawPositions[^1]) > .1f)
             {
+                Debug.Log(currentPosition);
                 AddNewPointToLine(currentPosition, Time.time);
             }
         }
@@ -83,7 +84,8 @@ public class LineManagement : MonoBehaviour
 
     private void CheckFadeOldPoints()
     {
-        for (int i = 0; i < drawTimes.Count; i++)
+        // Iterate backwards to avoid index shifting issues when removing elements
+        for (int i = drawTimes.Count - 1; i >= 0; i--)
         {
             if (Time.time - drawTimes[i] > timeToFade)
             {
@@ -113,6 +115,7 @@ public class LineManagement : MonoBehaviour
     {
         drawPositions.RemoveAt(i);
         drawTimes.RemoveAt(i);
+        lineRenderer.positionCount = drawPositions.Count;
         lineRenderer.SetPositions(Vector2ListToVector3List(drawPositions).ToArray());
         edgeCollider.points = drawPositions.ToArray();
         if (drawPositions.Count <= 2)

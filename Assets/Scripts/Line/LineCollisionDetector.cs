@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class LineCollisionDetector : MonoBehaviour
 {
-    private GameObject audioManager;/// <summary>
+    private GameObject audioManager;
 
+    /// <summary>
     /// Must set the audio manager after instantiating the line drawing for playing audio feedback when a loop is created.
     /// </summary>
     /// <param name="audioManager">The Audio Manager GameObject.</param>

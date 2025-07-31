@@ -81,7 +81,6 @@ public class LoopCounter : MonoBehaviour
     public void IncrementLoopCount()
     {
         currentLoopCount++;
-        Debug.Log("Number of loops: " + currentLoopCount);
         CreateLoopCountText(currentLoopCount);
     }
 

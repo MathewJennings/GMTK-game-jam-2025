@@ -17,13 +17,16 @@ public class DrawLine : MonoBehaviour
     private List<Vector2> drawPositions = new(150);
     private List<float> drawTimes = new(150);
 
+    [SerializeField]
+    private bool mouseDownRequired = true;
+
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             CreateLine();
         }
-        if (Mouse.current.leftButton.IsPressed())
+        if (Mouse.current.leftButton.IsPressed() || !mouseDownRequired)
         {
             Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             if (Vector2.Distance(currentPosition, drawPositions[drawPositions.Count - 1]) > .1f)

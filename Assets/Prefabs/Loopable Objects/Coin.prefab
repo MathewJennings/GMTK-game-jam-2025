@@ -91,6 +91,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1286398527470442751, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5571049149470191176}
+    - targetCorrespondingSourceObject: {fileID: 1286398527470442751, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1757995156363076802}
   m_SourcePrefab: {fileID: 100100000, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
 --- !u!1 &605877789999443274 stripped
 GameObject:
@@ -110,3 +113,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
+--- !u!114 &1757995156363076802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605877789999443274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a19185c114170e499c21ed4cf30a5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.8
+  directionChangeInterval: 2
+  movementRange: {x: 5, y: 5}
+  constrainToScreen: 1
+  screenPadding: 1
+  smoothness: 0.5
+  usePerlinNoise: 1
+  noiseScale: 0.5

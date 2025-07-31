@@ -392,7 +392,6 @@ MonoBehaviour:
   scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
   currentScoreText: {fileID: 7654243027111695400}
   targetScoreText: {fileID: 4626624575570523459}
-  targetScore: 700
 --- !u!114 &5285673275662093765
 MonoBehaviour:
   m_ObjectHideFlags: 0

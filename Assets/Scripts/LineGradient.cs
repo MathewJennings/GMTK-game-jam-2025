@@ -45,11 +45,19 @@ public class LineGradient : MonoBehaviour
         Gradient currentGradient = new();
         float progressPercentage = (float)currentPointCount / maxLineLength;
 
-        GradientColorKey[] colorKeys = new GradientColorKey[4];
-        colorKeys[0] = new GradientColorKey(Color.HSVToRGB(progressPercentage * 0.1f % 1f, 0.8f, 1f), 0.0f);
-        colorKeys[1] = new GradientColorKey(Color.HSVToRGB((progressPercentage * 0.1f + 0.2f) % 1f, 0.8f, 1f), 0.33f);
-        colorKeys[2] = new GradientColorKey(Color.HSVToRGB((progressPercentage * 0.1f + 0.4f) % 1f, 0.8f, 1f), 0.66f);
-        colorKeys[3] = new GradientColorKey(Color.HSVToRGB((progressPercentage * 0.1f + 0.6f) % 1f, 0.8f, 1f), 1.0f);
+        // Create a rainbow effect that cycles through all colors (hues) as you draw
+        GradientColorKey[] colorKeys = new GradientColorKey[8];
+        // Adding 0.33f offset to make the base hue green
+        float baseHue = (progressPercentage * 0.15f + 0.33f) % 1f;
+        float saturation = .8f;
+        colorKeys[0] = new GradientColorKey(Color.HSVToRGB(baseHue % 1f, saturation, 1f), 0.0f);
+        colorKeys[1] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.125f) % 1f, saturation, 1f), 0.143f);
+        colorKeys[2] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.25f) % 1f, saturation, 1f), 0.286f);
+        colorKeys[3] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.375f) % 1f, saturation, 1f), 0.429f);
+        colorKeys[4] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.5f) % 1f, saturation, 1f), 0.571f);
+        colorKeys[5] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.625f) % 1f, saturation, 1f), 0.714f);
+        colorKeys[6] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.75f) % 1f, saturation, 1f), 0.857f);
+        colorKeys[7] = new GradientColorKey(Color.HSVToRGB((baseHue + 0.875f) % 1f, saturation, 1f), 1.0f);
 
         GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
         alphaKeys[0] = new GradientAlphaKey(1.0f, 0.0f);

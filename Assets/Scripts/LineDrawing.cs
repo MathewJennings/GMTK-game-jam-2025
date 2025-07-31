@@ -16,6 +16,7 @@ public class LineDrawing : MonoBehaviour
     private LineRenderer lineRenderer;
     private LineGradient lineGradient;
     private EdgeCollider2D edgeCollider;
+    private GameObject audioManager;
 
     private bool finishedDrawing = false;
     private List<Vector2> drawPositions;
@@ -33,6 +34,15 @@ public class LineDrawing : MonoBehaviour
     {
         maxLineLength = length < 150 ? 150 : length;
         InitializeLine();
+    }
+
+    /// <summary>
+    /// Must set the audio manager after instantiating the line drawing for playing audio feedback when a loop is created.
+    /// </summary>
+    /// <param name="audioManager">The Audio Manager GameObject.</param>
+    public void SetAudioManager(GameObject audioManager)
+    {
+        this.audioManager = audioManager;
     }
 
     private void Awake()
@@ -89,7 +99,7 @@ public class LineDrawing : MonoBehaviour
             if (Vector2.Distance(currentPosition, drawPositions[^1]) > .1f)
             {
                 AddNewPointToLine(currentPosition, Time.time);
-                lineGradient.UpdateGradient(drawPositions.Count);
+                lineGradient.UpdateGradient();
             }
         }
     }
@@ -115,25 +125,8 @@ public class LineDrawing : MonoBehaviour
         if (CreatedLoop())
         {
             Debug.Log("Loop created!");
-            
-            // Find AudioManager and play audio feedback
-            GameObject audioManager = GameObject.Find("Audio Manager");
-            if (audioManager != null)
-            {
-                AudioSource audioSource = audioManager.GetComponent<AudioSource>();
-                if (audioSource != null)
-                {
-                    audioSource.Play();
-                }
-                else
-                {
-                    Debug.LogWarning("AudioManager found but no AudioSource component attached!");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("AudioManager GameObject not found in scene!");
-            }
+            AudioSource audioSource = audioManager.GetComponent<AudioSource>();
+            audioSource.Play();
         }
     }
 

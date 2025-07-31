@@ -40,7 +40,7 @@ public class LineGradient : MonoBehaviour
         lineRenderer.colorGradient = lineColorGradient;
     }
 
-    public void UpdateGradient(int currentPointCount)
+    public void UpdateGradient()
     {
         Gradient currentGradient = new();
         // Create a rich gradient of green hues from vibrant lime to dark forest green

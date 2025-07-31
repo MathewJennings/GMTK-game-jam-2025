@@ -12,6 +12,9 @@ public class SpawnLine : MonoBehaviour
     [SerializeField]
     int maxLineLength;
 
+    [SerializeField]
+    GameObject audioManager;
+
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -20,6 +23,7 @@ public class SpawnLine : MonoBehaviour
             LineDrawing lineManagement = line.GetComponent<LineDrawing>();
             lineManagement.SetTimeToFade(lineTimeToFade);
             lineManagement.SetMaxLineLength(maxLineLength);
+            lineManagement.SetAudioManager(audioManager);
         }
     }
 }

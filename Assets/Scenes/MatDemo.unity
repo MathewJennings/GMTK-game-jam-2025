@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 135378555}
   - component: {fileID: 135378554}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: LineDrawer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 5641382915828232499, guid: 93feeccdc2e3e8549a676855bd9cf1f7, type: 3}
-  drawPositions: []
+  timeToFade: 1.5
 --- !u!4 &135378555
 Transform:
   m_ObjectHideFlags: 0
@@ -486,11 +486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.92
+      value: -0.68
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.4
+      value: 1.13
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.z
@@ -526,7 +526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4564705293887160755, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_BodyType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

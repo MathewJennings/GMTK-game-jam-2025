@@ -13,6 +13,19 @@ public class LineManagement : MonoBehaviour
     private readonly List<Vector2> drawPositions = new(150);
     private readonly List<float> drawTimes = new(150);
 
+    /// Cannot be less than 1 second
+    public void SetTimeToFade(float time)
+    {
+        if (time < 1)
+        {
+            timeToFade = 1;
+        }
+        else
+        {
+            timeToFade = time;
+        }
+    }
+
     private void Awake()
     {
         InitializeLine();

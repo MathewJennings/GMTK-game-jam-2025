@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 5641382915828232499, guid: 93feeccdc2e3e8549a676855bd9cf1f7, type: 3}
+  lineTimeToFade: 1.5

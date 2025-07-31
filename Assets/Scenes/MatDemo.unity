@@ -474,6 +474,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: timeToFade
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: lineTimeToFade
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
       value: LineSpawner

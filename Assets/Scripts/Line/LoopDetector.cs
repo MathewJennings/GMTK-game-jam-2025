@@ -37,8 +37,11 @@ public class LoopDetector : MonoBehaviour
             if (DoLineSegmentsIntersect(lastPoint, secondLastPoint, drawPositions[i], drawPositions[i-1]))
             {
                 // An intersection was found. Invalidate all points up until now.
-                for (int j = 0; j < drawValidForLoops.Count; j++)
+                // Keep the last ~10 valid so that those can still be considered for future loops.
+                for (int j = drawValidForLoops.Count - 10; j >= 0; j--)
                 {
+                    // End early if we hit invalid point. Rest is already marked as invalid.
+                    if (!drawValidForLoops[j]) break;
                     drawValidForLoops[j] = false;
                 }
 

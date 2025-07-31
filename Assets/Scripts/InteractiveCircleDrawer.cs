@@ -12,6 +12,18 @@ public class InteractiveCircleDrawer : MonoBehaviour
     public float intersectionTolerance = 0.2f; // How close lines need to be to count as intersection
     public Camera drawingCamera;
     
+    [Header("Collision Settings")]
+    [Tooltip("Enable collision detection for the drawn circle")]
+    public bool enableCollisionDetection = true;
+    [Tooltip("Radius of the collision detection around each line segment")]
+    public float collisionRadius = 0.1f;
+    [Tooltip("Layer mask for objects that can break the circle")]
+    public LayerMask breakingObjectsLayer = -1;
+    [Tooltip("Effect to spawn when circle is broken (optional)")]
+    public GameObject breakEffect;
+    [Tooltip("Prefab for the line tip collider (optional - will be created automatically if not provided)")]
+    public GameObject lineTipPrefab;
+    
     [Header("Visual Settings")]
     public Gradient lineColorGradient; // Gradient for the line color
     [Range(0.01f, 1.0f)]
@@ -24,6 +36,9 @@ public class InteractiveCircleDrawer : MonoBehaviour
     public Canvas worldCanvas; // Canvas for world space UI elements
     
     private List<Vector3> drawnPoints = new List<Vector3>();
+    private List<GameObject> colliderObjects = new List<GameObject>(); // Store collider GameObjects
+    private EdgeCollider2D edgeCollider; // Main collider for the drawn line
+    private GameObject lineTip; // Moving tip for collision detection
     private bool isDrawing = false;
     private Vector3 startPoint;
     
@@ -50,6 +65,34 @@ public class InteractiveCircleDrawer : MonoBehaviour
         // Initialize Input System
         mouse = Mouse.current;
         pointer = Pointer.current;
+        
+        // Initialize EdgeCollider2D for collision detection
+        if (enableCollisionDetection)
+        {
+            edgeCollider = GetComponent<EdgeCollider2D>();
+            if (edgeCollider == null)
+            {
+                edgeCollider = gameObject.AddComponent<EdgeCollider2D>();
+                Debug.Log("Created new EdgeCollider2D component");
+            }
+            else
+            {
+                Debug.Log("Found existing EdgeCollider2D component");
+            }
+            
+            edgeCollider.enabled = false; // Start disabled, enable when drawing starts
+            edgeCollider.isTrigger = true; // IMPORTANT: Must be a trigger for OnTriggerEnter2D to work
+            
+            // Setup LineTip for collision detection
+            SetupLineTip();
+            
+            Debug.Log($"EdgeCollider2D setup complete - GameObject: {gameObject.name}, Layer: {gameObject.layer}");
+            Debug.Log($"Breaking objects layer mask: {breakingObjectsLayer.value}");
+        }
+        else
+        {
+            Debug.Log("Collision detection is disabled");
+        }
         
         // Initialize gradient if not set
         if (lineColorGradient == null || lineColorGradient.colorKeys.Length == 0)
@@ -122,10 +165,68 @@ public class InteractiveCircleDrawer : MonoBehaviour
         isDrawing = true;
         drawnPoints.Clear();
         
-        // Get starting position
+        // Enable collision detection if enabled
+        if (enableCollisionDetection && edgeCollider != null)
+        {
+            // TEMPORARY: Disable collision detection to test if this is causing the issue
+            edgeCollider.enabled = true;
+            Debug.Log($"EdgeCollider2D enabled for drawing. IsTrigger: {edgeCollider.isTrigger}");
+            // Debug.Log("COLLISION DETECTION TEMPORARILY DISABLED FOR DEBUGGING");
+        }
+        else
+        {
+            Debug.Log($"EdgeCollider2D NOT enabled - enableCollisionDetection: {enableCollisionDetection}, edgeCollider null: {edgeCollider == null}");
+        }
+        
+        // Get starting position FIRST
         Vector2 mousePos = mouse.position.ReadValue();
+        Debug.Log($"Initial mouse screen position: {mousePos}");
+        
+        // Safety check for camera and mouse position
+        if (drawingCamera == null)
+        {
+            Debug.LogError("Drawing camera is null! Cannot convert screen to world position.");
+            yield break;
+        }
+        
         startPoint = drawingCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 10f));
         drawnPoints.Add(startPoint);
+        
+        Debug.Log($"Starting drawing at mouse position: {startPoint}");
+        
+        // Activate LineTip for collision detection AFTER we have startPoint
+        if (enableCollisionDetection && lineTip != null)
+        {
+            lineTip.SetActive(true);
+            
+            // Use Rigidbody2D to position the LineTip initially at the MOUSE CLICK position
+            Rigidbody2D tipRigidbody = lineTip.GetComponent<Rigidbody2D>();
+            if (tipRigidbody != null)
+            {
+                tipRigidbody.position = new Vector2(startPoint.x, startPoint.y);
+                Debug.Log($"LineTip Rigidbody positioned at: {tipRigidbody.position}");
+            }
+            else
+            {
+                lineTip.transform.position = startPoint;
+                Debug.Log($"LineTip Transform positioned at: {lineTip.transform.position}");
+            }
+            
+            Debug.Log($"LineTip activated at position: {startPoint}");
+            Debug.Log($"LineTip layer: {lineTip.layer}");
+            Debug.Log($"LineTip active in hierarchy: {lineTip.activeInHierarchy}");
+            
+            // Check the collider setup
+            CircleCollider2D tipCollider = lineTip.GetComponent<CircleCollider2D>();
+            if (tipCollider != null)
+            {
+                Debug.Log($"LineTip collider - IsTrigger: {tipCollider.isTrigger}, Radius: {tipCollider.radius}");
+            }
+            else
+            {
+                Debug.LogError("LineTip has no CircleCollider2D!");
+            }
+        }
         
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, startPoint);
@@ -135,7 +236,55 @@ public class InteractiveCircleDrawer : MonoBehaviour
             if (mouse.leftButton.isPressed)
             {
                 Vector2 currentMousePos = mouse.position.ReadValue();
+                
+                // Safety check for camera
+                if (drawingCamera == null)
+                {
+                    Debug.LogError("Drawing camera became null during drawing loop!");
+                    break;
+                }
+                
                 Vector3 worldPos = drawingCamera.ScreenToWorldPoint(new Vector3(currentMousePos.x, currentMousePos.y, 10f));
+                
+                // Debug coordinate conversion to identify (0,0,0) issue
+                Debug.Log($"Drawing loop - Mouse screen pos: {currentMousePos}, World pos: {worldPos}");
+                
+                // Safety check: don't move LineTip if mouse position is invalid (0,0) or world position is (0,0,0)
+                bool isValidMousePosition = currentMousePos.magnitude > 0.1f && (Mathf.Abs(worldPos.x) > 0.01f || Mathf.Abs(worldPos.y) > 0.01f);
+                
+                // Update LineTip position to follow mouse (only if we have a valid position)
+                if (enableCollisionDetection && lineTip != null && lineTip.activeInHierarchy && isValidMousePosition)
+                {
+                    // Use Rigidbody2D to move the LineTip smoothly instead of teleporting
+                    Rigidbody2D tipRigidbody = lineTip.GetComponent<Rigidbody2D>();
+                    if (tipRigidbody != null)
+                    {
+                        // Move to the new position using MovePosition for proper collision detection
+                        tipRigidbody.MovePosition(worldPos);
+                    }
+                    else
+                    {
+                        // Fallback to transform if no rigidbody
+                        lineTip.transform.position = worldPos;
+                    }
+                    
+                    // Debug every few frames to avoid spam but ensure we see it
+                    if (drawnPoints.Count % 5 == 0)
+                    {
+                        Debug.Log($"LineTip moved to: {worldPos}");
+                    }
+                }
+                else if (enableCollisionDetection)
+                {
+                    if (!isValidMousePosition)
+                    {
+                        Debug.LogWarning($"LineTip not updated - invalid mouse position. Screen: {currentMousePos}, World: {worldPos}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"LineTip not updated - lineTip null: {lineTip == null}, activeInHierarchy: {(lineTip != null ? lineTip.activeInHierarchy.ToString() : "N/A")}");
+                    }
+                }
                 
                 // Only add point if it's far enough from the last point
                 if (drawnPoints.Count == 0 || Vector3.Distance(worldPos, drawnPoints[drawnPoints.Count - 1]) > drawingThreshold)
@@ -143,6 +292,15 @@ public class InteractiveCircleDrawer : MonoBehaviour
                     drawnPoints.Add(worldPos);
                     lineRenderer.positionCount = drawnPoints.Count;
                     lineRenderer.SetPosition(drawnPoints.Count - 1, worldPos);
+                    
+                    // Update collision detection
+                    UpdateCollider();
+                    
+                    // DISABLED: Manual collision checking as it may cause false positives
+                    // if (enableCollisionDetection)
+                    // {
+                    //     CheckManualCollisions();
+                    // }
                     
                     // Update visual effects as we draw
                     UpdateLineVisuals();
@@ -152,6 +310,18 @@ public class InteractiveCircleDrawer : MonoBehaviour
                     {
                         Debug.Log("Self-intersection detected! Ending drawing.");
                         isDrawing = false;
+                        
+                        // Disable LineTip when drawing ends
+                        if (enableCollisionDetection && lineTip != null)
+                        {
+                            lineTip.SetActive(false);
+                        }
+                        
+                        // Disable collider when circle is complete
+                        if (enableCollisionDetection && edgeCollider != null)
+                        {
+                            edgeCollider.enabled = false;
+                        }
                         
                         // Close the circle by connecting back to the start point
                         CloseCircle();
@@ -166,6 +336,19 @@ public class InteractiveCircleDrawer : MonoBehaviour
                 // Mouse released without intersection - could implement timeout or manual completion here
                 Debug.Log("Mouse released, ending drawing.");
                 isDrawing = false;
+                
+                // Disable LineTip when drawing ends
+                if (enableCollisionDetection && lineTip != null)
+                {
+                    lineTip.SetActive(false);
+                }
+                
+                // Disable collider when drawing ends
+                if (enableCollisionDetection && edgeCollider != null)
+                {
+                    edgeCollider.enabled = false;
+                }
+                
                 AnalyzeDrawnShape();
                 break;
             }
@@ -341,6 +524,23 @@ public class InteractiveCircleDrawer : MonoBehaviour
         isDrawing = false;
         drawnPoints.Clear();
         lineRenderer.positionCount = 0;
+        
+        // Disable and clear collider
+        if (edgeCollider != null)
+        {
+            edgeCollider.enabled = false;
+            edgeCollider.points = new Vector2[0];
+        }
+        
+        // Clear any collider objects
+        foreach (GameObject colliderObj in colliderObjects)
+        {
+            if (colliderObj != null)
+            {
+                Destroy(colliderObj);
+            }
+        }
+        colliderObjects.Clear();
         
         // Hide center score text
         if (centerScoreText != null)
@@ -574,6 +774,417 @@ public class InteractiveCircleDrawer : MonoBehaviour
         {
             lineRenderer.startWidth = lineWidth;
             lineRenderer.endWidth = lineWidth;
+        }
+    }
+    
+    // Collision Detection Methods
+    void UpdateCollider()
+    {
+        if (enableCollisionDetection && edgeCollider != null && drawnPoints.Count >= 2)
+        {
+            // Convert Vector3 list to Vector2 array for EdgeCollider2D
+            Vector2[] colliderPoints = new Vector2[drawnPoints.Count];
+            for (int i = 0; i < drawnPoints.Count; i++)
+            {
+                colliderPoints[i] = new Vector2(drawnPoints[i].x, drawnPoints[i].y);
+            }
+            edgeCollider.points = colliderPoints;
+            
+            if (drawnPoints.Count % 10 == 0) // Only log every 10 points to avoid spam
+            {
+                Debug.Log($"Updated EdgeCollider2D with {colliderPoints.Length} points. Enabled: {edgeCollider.enabled}, IsTrigger: {edgeCollider.isTrigger}");
+                Debug.Log($"First point: {colliderPoints[0]}, Last point: {colliderPoints[colliderPoints.Length - 1]}");
+            }
+        }
+        else if (enableCollisionDetection)
+        {
+            Debug.Log($"UpdateCollider failed - edgeCollider null: {edgeCollider == null}, points count: {drawnPoints.Count}");
+        }
+    }
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"=== TRIGGER DETECTED ===");
+        Debug.Log($"Object: {other.gameObject.name}");
+        Debug.Log($"Layer: {other.gameObject.layer}");
+        Debug.Log($"Tag: {other.gameObject.tag}");
+        Debug.Log($"Position: {other.transform.position}");
+        Debug.Log($"Collider type: {other.GetType().Name}");
+        Debug.Log($"Has CircleBreaker: {other.GetComponent<CircleBreaker>() != null}");
+        
+        // IMPORTANT: Never break the circle due to LineTip collisions
+        if (other.gameObject.name == "LineTip" || other.gameObject.layer == 8)
+        {
+            Debug.Log($"TRIGGER IGNORED - LineTip collision detected: {other.gameObject.name}");
+            return;
+        }
+        
+        if (enableCollisionDetection && isDrawing && IsBreakingObject(other))
+        {
+            Debug.Log($"BREAKING CIRCLE due to collision with {other.gameObject.name}");
+            BreakCircle(other.transform.position);
+        }
+        else
+        {
+            Debug.Log($"Collision IGNORED - enableCollisionDetection: {enableCollisionDetection}, isDrawing: {isDrawing}, IsBreakingObject: {IsBreakingObject(other)}");
+        }
+    }
+    
+    bool IsBreakingObject(Collider2D other)
+    {
+        // IMPORTANT: Never consider LineTip objects as breaking objects
+        if (other.gameObject.name == "LineTip" || other.gameObject.layer == 8)
+        {
+            Debug.Log($"IsBreakingObject: {other.gameObject.name} is LineTip - NOT a breaking object");
+            return false;
+        }
+        
+        // Check if the object is on a layer that can break the circle
+        bool canBreak = ((1 << other.gameObject.layer) & breakingObjectsLayer) != 0;
+        Debug.Log($"Checking if {other.gameObject.name} (layer {other.gameObject.layer}) can break circle. LayerMask: {breakingObjectsLayer.value}, Result: {canBreak}");
+        return canBreak;
+    }
+    
+    void BreakCircle(Vector3 breakPosition)
+    {
+        Debug.Log("=== CIRCLE BROKEN ===");
+        Debug.Log($"Break position: {breakPosition}");
+        Debug.Log($"Current drawing points: {drawnPoints.Count}");
+        Debug.Log($"Is drawing: {isDrawing}");
+        
+        // Print stack trace to see what called this
+        System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
+        Debug.Log($"Called from: {stackTrace.ToString()}");
+        
+        // Spawn break effect if available
+        if (breakEffect != null)
+        {
+            Instantiate(breakEffect, breakPosition, Quaternion.identity);
+        }
+        
+        // Stop drawing and reset
+        isDrawing = false;
+        
+        // Disable collider
+        if (edgeCollider != null)
+        {
+            edgeCollider.enabled = false;
+        }
+        
+        // Clear the drawing
+        StartCoroutine(FadeOutBrokenCircle());
+    }
+    
+    IEnumerator FadeOutBrokenCircle()
+    {
+        // Quick fade out effect
+        Color originalColor = lineRenderer.material.color;
+        float fadeTime = 0.5f;
+        float elapsed = 0f;
+        
+        while (elapsed < fadeTime)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeTime);
+            lineRenderer.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+        
+        // Reset everything
+        ResetDrawing();
+        lineRenderer.material.color = originalColor;
+        
+        // Show message to user
+        if (resultText != null)
+        {
+            resultText.text = "Circle broken! Try again.";
+        }
+    }
+
+    void CheckManualCollisions()
+    {
+        if (drawnPoints.Count < 2) return;
+        
+        // Get the most recent line segment
+        Vector3 startPoint = drawnPoints[drawnPoints.Count - 2];
+        Vector3 endPoint = drawnPoints[drawnPoints.Count - 1];
+        
+        // Find all objects on the breaking layer
+        Collider2D[] breakingObjects = FindObjectsByType<Collider2D>(FindObjectsSortMode.None);
+        
+        foreach (Collider2D collider in breakingObjects)
+        {
+            if (IsBreakingObject(collider))
+            {
+                // Check if the line segment intersects with the collider
+                if (DoesLineIntersectCollider(startPoint, endPoint, collider))
+                {
+                    Debug.Log($"Manual collision detected with {collider.gameObject.name}!");
+                    BreakCircle(collider.transform.position);
+                    return;
+                }
+            }
+        }
+    }
+    
+    bool DoesLineIntersectCollider(Vector3 lineStart, Vector3 lineEnd, Collider2D collider)
+    {
+        // Simple approach: check if either endpoint is inside the collider
+        // or if the collider bounds intersect the line segment
+        
+        if (collider.OverlapPoint(lineStart) || collider.OverlapPoint(lineEnd))
+        {
+            return true;
+        }
+        
+        // Check if line intersects collider bounds
+        Bounds bounds = collider.bounds;
+        Vector3 center = bounds.center;
+        float distance = Vector3.Distance(center, lineStart);
+        float lineLength = Vector3.Distance(lineStart, lineEnd);
+        
+        // Simple distance check - if collider center is close to the line segment
+        return distance < (bounds.size.magnitude * 0.5f + collisionRadius);
+    }
+
+    void SetupLineTip()
+    {
+        Debug.Log("=== SETTING UP LINETIP ===");
+        
+        // Create LineTip GameObject
+        if (lineTipPrefab != null)
+        {
+            lineTip = Instantiate(lineTipPrefab, transform);
+            Debug.Log("LineTip created from prefab");
+        }
+        else
+        {
+            // Create a simple LineTip GameObject
+            lineTip = new GameObject("LineTip");
+            lineTip.transform.SetParent(transform);
+            Debug.Log("LineTip created procedurally");
+            
+            // Add a simple CircleCollider2D for collision detection
+            CircleCollider2D tipCollider = lineTip.AddComponent<CircleCollider2D>();
+            tipCollider.isTrigger = true;
+            tipCollider.radius = collisionRadius;
+            Debug.Log($"LineTip collider added - IsTrigger: {tipCollider.isTrigger}, Radius: {tipCollider.radius}");
+            
+            // Add Rigidbody2D for proper physics movement and collision detection
+            Rigidbody2D tipRigidbody = lineTip.AddComponent<Rigidbody2D>();
+            tipRigidbody.gravityScale = 0f; // No gravity
+            tipRigidbody.freezeRotation = true; // Don't rotate
+            tipRigidbody.bodyType = RigidbodyType2D.Kinematic; // Kinematic so we can control movement
+            Debug.Log("LineTip Rigidbody2D added - Kinematic, no gravity");
+            
+            // Add a bright green visual indicator so we can see the LineTip
+            SpriteRenderer tipRenderer = lineTip.AddComponent<SpriteRenderer>();
+            
+            // Create a simple circle sprite programmatically
+            Texture2D circleTexture = new Texture2D(32, 32);
+            Vector2 center = new Vector2(16, 16);
+            float radius = 14f;
+            
+            for (int x = 0; x < 32; x++)
+            {
+                for (int y = 0; y < 32; y++)
+                {
+                    float distance = Vector2.Distance(new Vector2(x, y), center);
+                    if (distance <= radius)
+                    {
+                        circleTexture.SetPixel(x, y, Color.green);
+                    }
+                    else
+                    {
+                        circleTexture.SetPixel(x, y, Color.clear);
+                    }
+                }
+            }
+            circleTexture.Apply();
+            
+            // Create sprite from texture
+            Sprite circleSprite = Sprite.Create(circleTexture, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 100);
+            tipRenderer.sprite = circleSprite;
+            tipRenderer.color = Color.green;
+            tipRenderer.sortingOrder = 10; // Render on top of other elements
+            
+            Debug.Log("LineTip bright green visual indicator added");
+            
+            // The collider will handle collision detection via OnTriggerEnter2D
+            // Add a collision handler component  
+            var collisionHandler = lineTip.AddComponent<LineTipCollisionHandler>();
+            collisionHandler.parentDrawer = this;
+            Debug.Log("LineTipCollisionHandler component added");
+            
+            // Put LineTip on a different layer to avoid self-collision issues
+            // Try to use layer 8 (which is often unused) or default layer
+            lineTip.layer = 8; // Change from default layer to avoid collision with parent
+            Debug.Log($"LineTip layer set to: {lineTip.layer}");
+            
+            // Make sure layer 8 is excluded from breaking objects LayerMask
+            if (((1 << 8) & breakingObjectsLayer) != 0)
+            {
+                Debug.LogWarning("Layer 8 (LineTip layer) was included in breakingObjectsLayer! Removing it to prevent self-collision.");
+                breakingObjectsLayer &= ~(1 << 8); // Remove layer 8 from the mask
+                Debug.Log($"Updated breaking objects layer mask: {breakingObjectsLayer.value}");
+            }
+        }
+        
+        // Initially deactivate the LineTip
+        lineTip.SetActive(false);
+        
+        Debug.Log($"LineTip GameObject created - Layer: {lineTip.layer}");
+        Debug.Log($"Breaking objects layer mask: {breakingObjectsLayer.value}");
+        Debug.Log("LineTip setup complete");
+    }
+    
+    /// <summary>
+    /// Called by LineTip when it collides with a breaking object
+    /// </summary>
+    public void OnLineTipCollision(Vector3 collisionPosition)
+    {
+        if (isDrawing)
+        {
+            Debug.Log("Circle broken by LineTip collision!");
+            BreakCircle(collisionPosition);
+        }
+    }
+}
+
+/// <summary>
+/// Simple collision handler for the LineTip GameObject
+/// </summary>
+public class LineTipCollisionHandler : MonoBehaviour
+{
+    public InteractiveCircleDrawer parentDrawer;
+    
+    void Start()
+    {
+        Debug.Log($"LineTipCollisionHandler started on {gameObject.name}");
+        Debug.Log($"Parent drawer assigned: {parentDrawer != null}");
+        
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        if (collider != null)
+        {
+            Debug.Log($"LineTipCollisionHandler collider setup - IsTrigger: {collider.isTrigger}, Radius: {collider.radius}");
+        }
+        
+        // Log layer and physics settings
+        Debug.Log($"LineTip GameObject layer: {gameObject.layer}");
+        Debug.Log($"LineTip position: {transform.position}");
+    }
+    
+    void Update()
+    {
+        // Continuously check for nearby objects to debug collision issues
+        if (Time.frameCount % 60 == 0) // Every 60 frames (1 second at 60fps)
+        {
+            Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, 2.0f);
+            Debug.Log($"LineTip nearby objects check - Position: {transform.position}, Found {nearbyColliders.Length} colliders within range");
+            
+            foreach (Collider2D nearby in nearbyColliders)
+            {
+                if (nearby.gameObject != gameObject) // Don't include self
+                {
+                    CircleBreaker breaker = nearby.GetComponent<CircleBreaker>();
+                    float distance = Vector3.Distance(transform.position, nearby.transform.position);
+                    Debug.Log($"  - {nearby.gameObject.name} (Layer: {nearby.gameObject.layer}, HasCircleBreaker: {breaker != null}, Distance: {distance:F2})");
+                    
+                    // If there's a CircleBreaker very close, warn about it
+                    if (breaker != null && distance < 0.5f)
+                    {
+                        Debug.LogWarning($"LineTip is very close to CircleBreaker {nearby.gameObject.name} (distance: {distance:F2}) - might cause immediate collision!");
+                    }
+                }
+            }
+        }
+    }
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"=== LineTip TRIGGER DETECTED ===");
+        Debug.Log($"LineTip collision detected with: {other.gameObject.name}");
+        Debug.Log($"Other object layer: {other.gameObject.layer}");
+        Debug.Log($"Other object tag: {other.gameObject.tag}");
+        Debug.Log($"Other object position: {other.transform.position}");
+        Debug.Log($"LineTip position: {transform.position}");
+        
+        // IMPORTANT: Ignore collisions with self and parent drawer
+        if (other.gameObject == gameObject)
+        {
+            Debug.Log("LineTip collision IGNORED - collision with self");
+            return;
+        }
+        
+        if (parentDrawer != null && other.gameObject == parentDrawer.gameObject)
+        {
+            Debug.Log("LineTip collision IGNORED - collision with parent drawer (EdgeCollider2D)");
+            return;
+        }
+        
+        // Also ignore if the other object is the LineTip itself (shouldn't happen but just in case)
+        if (other.gameObject.name == "LineTip")
+        {
+            Debug.Log("LineTip collision IGNORED - collision with another LineTip");
+            return;
+        }
+        
+        // Check if it's a circle breaker
+        CircleBreaker breaker = other.GetComponent<CircleBreaker>();
+        Debug.Log($"Has CircleBreaker component: {breaker != null}");
+        
+        if (breaker != null && parentDrawer != null)
+        {
+            Debug.Log($"LineTip hit CircleBreaker: {other.gameObject.name} - calling parentDrawer.OnLineTipCollision");
+            parentDrawer.OnLineTipCollision(transform.position);
+        }
+        else
+        {
+            Debug.Log($"LineTip collision ignored - breaker null: {breaker == null}, parentDrawer null: {parentDrawer == null}");
+        }
+    }
+    
+    // Also try OnTriggerStay2D in case Enter isn't working
+    void OnTriggerStay2D(Collider2D other)
+    {
+        // IMPORTANT: Ignore collisions with self and parent drawer
+        if (other.gameObject == gameObject || 
+            (parentDrawer != null && other.gameObject == parentDrawer.gameObject) ||
+            other.gameObject.name == "LineTip")
+        {
+            return; // Ignore self-collisions
+        }
+        
+        CircleBreaker breaker = other.GetComponent<CircleBreaker>();
+        if (breaker != null && parentDrawer != null)
+        {
+            Debug.Log($"LineTip STAYING in trigger with CircleBreaker: {other.gameObject.name}");
+            // Only call once to avoid spam
+            if (Time.frameCount % 30 == 0)
+            {
+                parentDrawer.OnLineTipCollision(transform.position);
+            }
+        }
+    }
+    
+    // Also add OnCollisionEnter2D as a backup
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // IMPORTANT: Ignore collisions with self and parent drawer
+        if (collision.gameObject == gameObject || 
+            (parentDrawer != null && collision.gameObject == parentDrawer.gameObject) ||
+            collision.gameObject.name == "LineTip")
+        {
+            Debug.Log($"LineTip solid collision IGNORED - collision with {collision.gameObject.name}");
+            return; // Ignore self-collisions
+        }
+        
+        Debug.Log($"LineTip COLLISION (not trigger) detected with: {collision.gameObject.name}");
+        CircleBreaker breaker = collision.gameObject.GetComponent<CircleBreaker>();
+        if (breaker != null && parentDrawer != null)
+        {
+            Debug.Log($"LineTip collision (solid) with CircleBreaker: {collision.gameObject.name}");
+            parentDrawer.OnLineTipCollision(transform.position);
         }
     }
 }

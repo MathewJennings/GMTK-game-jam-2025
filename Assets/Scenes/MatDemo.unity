@@ -480,11 +480,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: maxLineLength
-      value: 150
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: lineTimeToFade
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
@@ -509,11 +509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.68
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.13
       objectReference: {fileID: 0}
     - target: {fileID: 3688111944904370946, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_LocalPosition.z

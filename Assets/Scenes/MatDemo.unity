@@ -657,7 +657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
-      value: LineSpawner
+      value: Line Spawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

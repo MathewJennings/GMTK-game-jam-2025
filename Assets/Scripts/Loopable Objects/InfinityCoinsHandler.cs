@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InfinityCoinsHandler : MonoBehaviour
 {
-    public void HandleLoopedCoin()
+    public void ToggleActiveCoins()
     {
         foreach (Transform child in transform)
         {

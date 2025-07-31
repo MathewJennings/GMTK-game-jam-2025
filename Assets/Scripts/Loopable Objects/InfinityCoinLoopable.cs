@@ -25,13 +25,23 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         spriteRenderer.color = isActive ? Color.green : Color.red;
     }
     
-    public int HandleLooped(int loopCount)
+    public int HandleLooped(GameObject line)
     {
-        int actualCount = isActive ? loopCount : -1 * loopCount;
-        
-        infinityCoinsHandler.HandleLoopedCoin();
+        LoopCounter lineCounter = line.GetComponent<LoopCounter>();
+        int loopCount = lineCounter.GetCurrentLoopCount();
+        int score = isActive ? loopCount : -1 * loopCount;
 
-        return actualCount;
+        if (!isActive)
+        {
+            line.GetComponent<LineBreaker>().BreakLine();
+        }
+        else
+        {
+            infinityCoinsHandler.ToggleActiveCoins();
+        }
+        
+
+        return score;
     }
     
     public void ToggleIsActive()

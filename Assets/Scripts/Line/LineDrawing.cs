@@ -160,7 +160,8 @@ public class LineDrawing : MonoBehaviour
     public void DestroyLine()
     {
         loopCounter.DestroyLoopCounter();
-        Destroy(gameObject);
+        // Destroy on a delay to allow the rest of the behavior of the line to finish.
+        Destroy(gameObject, 0.1f);
     }
 
     private List<Vector3> Vector2ListToVector3List(List<Vector2> vector2s)

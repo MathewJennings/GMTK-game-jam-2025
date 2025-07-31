@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SpawnLine : MonoBehaviour
 {
+    [SerializeField]
+    Canvas canvas;
+    
     [SerializeField]
     GameObject audioManager;
 
@@ -16,22 +20,6 @@ public class SpawnLine : MonoBehaviour
     [SerializeField]
     int maxLineLength;
 
-    [Header("Loop Counter Settings")]
-    [SerializeField]
-    float loopCounterOffsetX = 100f;
-
-    [SerializeField]
-    float loopCounterOffsetY = 50f;
-
-    [SerializeField]
-    int loopCounterFontSize = 24;
-
-    [SerializeField]
-    float loopCounterFadeDuration = 0.5f;
-
-    [SerializeField]
-    float loopCounterVerticalMovementAnimationDistance = 50f;
-
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -43,14 +31,11 @@ public class SpawnLine : MonoBehaviour
             lineManagement.SetMaxLineLength(maxLineLength);
             lineManagement.SetAudioManager(audioManager);
 
+            LineBreaker lineBreaker = line.GetComponent<LineBreaker>();
+            lineBreaker.SetAudioManager(audioManager);
+            
             LoopCounter loopCounter = line.GetComponent<LoopCounter>();
-            loopCounter.SetDisplayOffset(loopCounterOffsetX, loopCounterOffsetY);
-            loopCounter.SetFontSize(loopCounterFontSize);
-            loopCounter.SetFadeDuration(loopCounterFadeDuration);
-            loopCounter.SetVerticalMovementAnimationDistance(loopCounterVerticalMovementAnimationDistance);
-
-            LineCollisionDetector lineCollisionDetector = line.GetComponent<LineCollisionDetector>();
-            lineCollisionDetector.SetAudioManager(audioManager);
+            loopCounter.SetCanvas(canvas);
         }
     }
 }

@@ -285,8 +285,9 @@ GameObject:
   - component: {fileID: 3473255005074208581}
   - component: {fileID: 2125270813613502656}
   - component: {fileID: 5994466559508839215}
+  - component: {fileID: 5285673275662093765}
   m_Layer: 5
-  m_Name: Score Canvas
+  m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,3 +393,21 @@ MonoBehaviour:
   currentScoreText: {fileID: 7654243027111695400}
   targetScoreText: {fileID: 4626624575570523459}
   targetScore: 700
+--- !u!114 &5285673275662093765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957207914959527687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d34edb9062aa74fb7b9888af1a84ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayOffsetX: 100
+  displayOffsetY: 50
+  fontSize: 66
+  fontColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  fadeDuration: 0.3
+  verticalMovementAnimationDistance: 50

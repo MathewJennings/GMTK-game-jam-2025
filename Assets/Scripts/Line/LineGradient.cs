@@ -9,7 +9,7 @@ public class LineGradient : MonoBehaviour
     private int maxLineLength;
 
     private LineRenderer lineRenderer;
-    private LoopCounter loopCounter;
+    private LoopTextGenerator _loopTextGenerator;
 
     public void SetMaxLineLength(int length)
     {
@@ -19,7 +19,8 @@ public class LineGradient : MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        loopCounter = GetComponent<LoopCounter>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
+        _loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
         UpdateGradient();
     }
 
@@ -49,6 +50,6 @@ public class LineGradient : MonoBehaviour
 
         currentGradient.SetKeys(colorKeys, alphaKeys);
         lineRenderer.colorGradient = currentGradient;
-        loopCounter.SetFontColor(colorAtEndOfLine);
+        _loopTextGenerator.SetFontColor(colorAtEndOfLine);
     }
 }

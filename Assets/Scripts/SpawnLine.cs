@@ -48,6 +48,9 @@ public class SpawnLine : MonoBehaviour
             loopCounter.SetFontSize(loopCounterFontSize);
             loopCounter.SetFadeDuration(loopCounterFadeDuration);
             loopCounter.SetVerticalMovementAnimationDistance(loopCounterVerticalMovementAnimationDistance);
+
+            LineCollisionDetector lineCollisionDetector = line.GetComponent<LineCollisionDetector>();
+            lineCollisionDetector.SetAudioManager(audioManager);
         }
     }
 }

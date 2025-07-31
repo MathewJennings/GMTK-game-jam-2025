@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
   isActive: 0
 --- !u!4 &3520759918114729023 stripped
 Transform:
@@ -219,4 +220,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
   isActive: 1

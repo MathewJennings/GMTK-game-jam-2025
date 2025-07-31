@@ -3,6 +3,9 @@ using UnityEngine;
 public class InfinityCoinLoopable : MonoBehaviour, ILoopable
 {
     [SerializeField]
+    private ScoreScriptableObject scoreScriptableObject;
+
+    [SerializeField]
     bool isActive;
     
     private SpriteRenderer spriteRenderer;
@@ -30,6 +33,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
         int score = isActive ? loopCount : -1 * loopCount;
+        scoreScriptableObject.currentScore += score;
 
         if (!isActive)
         {

@@ -9,6 +9,8 @@ public class AsteroidSpawner : MonoBehaviour
     public float spawnInterval = 2f;
     public float spawnHeight = 10f; // How far above the screen to spawn
     public float spawnRangeX = 15f; // X range for spawning (centered on spawner)
+    public int minAsteroidsPerSpawn = 1; // Minimum asteroids to spawn at once
+    public int maxAsteroidsPerSpawn = 3; // Maximum asteroids to spawn at once
     
     [Header("Scale Settings")]
     public float minScale = 0.5f;
@@ -51,9 +53,22 @@ public class AsteroidSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= spawnInterval)
         {
-            SpawnAsteroid();
+            SpawnAsteroidBatch();
             timer = 0f;
         }
+    }
+
+    void SpawnAsteroidBatch()
+    {
+        // Determine how many asteroids to spawn this time
+        int asteroidsToSpawn = Random.Range(minAsteroidsPerSpawn, maxAsteroidsPerSpawn + 1);
+        
+        for (int i = 0; i < asteroidsToSpawn; i++)
+        {
+            SpawnAsteroid();
+        }
+        
+        Debug.Log($"Spawned batch of {asteroidsToSpawn} asteroids");
     }
 
     void SpawnAsteroid()

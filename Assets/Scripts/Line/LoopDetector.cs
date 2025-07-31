@@ -103,17 +103,15 @@ public class LoopDetector : MonoBehaviour
 
         if (objectsInsidePolygon.Count > 0)
         {
-            Debug.Log($"Found {objectsInsidePolygon.Count} objects inside the polygon.");
             foreach (GameObject obj in objectsInsidePolygon)
             {
-                // Here you can add logic to handle the objects inside the polygon.
-                // For example, you could change their color, destroy them, etc.
-                Debug.Log($"Object: {obj.name} is inside the polygon.");
+                // Get the ILoopable component from the object and call HandleLooped
+                ILoopable loopable = obj.GetComponent<ILoopable>();
+                if (loopable != null)
+                {
+                    loopable.HandleLooped();
+                }
             }
-        }
-        else
-        {
-            Debug.Log("No objects found inside the polygon.");
         }
     }
 

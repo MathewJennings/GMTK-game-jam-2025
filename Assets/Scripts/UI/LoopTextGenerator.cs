@@ -13,29 +13,6 @@ public class LoopTextGenerator : MonoBehaviour
     public float fadeDuration = 0.5f;
     public float verticalMovementAnimationDistance = 50f;
 
-    private List<GameObject> loopCountTextGameObjects;
-    private List<Text> loopCountTexts;
-
-    /// <summary>
-    /// Set the display offset for loop counter text positioning.
-    /// </summary>
-    /// <param name="offsetX">Horizontal offset from drawing position</param>
-    /// <param name="offsetY">Vertical offset from drawing position</param>
-
-    
-    // LoopTextGenerator loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
-    // loopTextGenerator.SetDisplayOffset(loopCounterOffsetX, loopCounterOffsetY);
-    // loopTextGenerator.SetFontSize(loopCounterFontSize);
-    // loopTextGenerator.SetFadeDuration(loopCounterFadeDuration);
-    // loopTextGenerator.SetVerticalMovementAnimationDistance(loopCounterVerticalMovementAnimationDistance);
-
-    
-    void Start()
-    {
-        loopCountTextGameObjects = new List<GameObject>();
-        loopCountTexts = new List<Text>();
-    }
-
     public void SetFontSize(int size)
     {
         fontSize = size < 8 ? 8 : size;
@@ -82,9 +59,6 @@ public class LoopTextGenerator : MonoBehaviour
         RectTransform rectTransform = loopCountText.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(150, 150);
         rectTransform.position = currentCounterTextPosition;
-
-        loopCountTextGameObjects.Add(loopCountTextGameObject);
-        loopCountTexts.Add(loopCountText);
 
         StartCoroutine(AnimateTextFadeAndMovement(loopCountText, outline));
     }
@@ -144,15 +118,5 @@ public class LoopTextGenerator : MonoBehaviour
             yield return null;
         }
         Destroy(text.gameObject);
-    }
-
-    public void DestroyLoopTexts()
-    {
-        foreach (GameObject loopCountTextGameObject in loopCountTextGameObjects)
-        {
-            Destroy(loopCountTextGameObject);
-        }
-        loopCountTextGameObjects.Clear();
-        loopCountTexts.Clear();  
     }
 }

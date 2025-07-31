@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LoopCounter : MonoBehaviour
 {
-    
+
     public float displayOffsetX = 100f; // Offset from the current mouse position
     public float displayOffsetY = 50f;
     private int currentLoopCount = 0;
@@ -19,12 +19,12 @@ public class LoopCounter : MonoBehaviour
         mainCamera = Camera.main;
         loopDetector = GetComponent<LoopDetector>();
     }
-    
+
     public int GetCurrentLoopCount()
     {
         return currentLoopCount;
     }
-    
+
     public void SetCanvas(Canvas newCanvas)
     {
         canvas = newCanvas;
@@ -44,7 +44,7 @@ public class LoopCounter : MonoBehaviour
         string text = (totalScoreChange >= 0 ? "+" : "") + totalScoreChange.ToString();
         canvas.GetComponent<LoopTextGenerator>().CreateLoopCountText(text, currentCounterTextPosition);
     }
-    
+
     /// <summary>
     /// Update the position where we will display the counter for the next loop.
     /// </summary>
@@ -56,11 +56,5 @@ public class LoopCounter : MonoBehaviour
         screenPosition.x += displayOffsetX;
         screenPosition.y += displayOffsetY;
         currentCounterTextPosition = screenPosition;
-    }
-
-    public void DestroyLoopCounter()
-    {
-        canvas.GetComponent<LoopTextGenerator>().DestroyLoopTexts();
-        currentLoopCount = 0;
     }
 }

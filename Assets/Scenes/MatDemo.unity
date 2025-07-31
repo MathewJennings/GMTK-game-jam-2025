@@ -505,6 +505,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &1431595516 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 936403723498394182, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+  m_PrefabInstance: {fileID: 1117189792652999486}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1469116704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7672939639677655237, guid: 688f57b1a9f61cf4e9cee0d76d99ee6d, type: 3}
@@ -616,6 +621,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1431595516}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: timeToFade
       value: 3
       objectReference: {fileID: 0}
@@ -650,7 +659,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 957207914959527687, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Name
-      value: Score Canvas
+      value: UI Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Pivot.x

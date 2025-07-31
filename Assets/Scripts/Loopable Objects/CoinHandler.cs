@@ -7,7 +7,7 @@ public class CoinHandler : MonoBehaviour, ILoopable
 
     public int HandleLooped(int loopCount)
     {
-        scoreScriptableObject.score += loopCount;
+        scoreScriptableObject.currentScore += loopCount;
         return loopCount;
     }
 }

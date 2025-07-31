@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class CoinHandler : MonoBehaviour, ILoopable
 {
-    public void HandleLooped()
+    [SerializeField]
+    private ScoreScriptableObject scoreScriptableObject;
+
+    public int HandleLooped(int loopCount)
     {
-        Debug.Log("I'm a coin!");
+        scoreScriptableObject.score += loopCount;
+        return loopCount;
     }
 }

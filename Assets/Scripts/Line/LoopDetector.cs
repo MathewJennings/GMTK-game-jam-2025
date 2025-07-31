@@ -6,6 +6,18 @@ public class LoopDetector : MonoBehaviour
     [SerializeField]
     float minimumLoopArea = 1.0f;
 
+    private List<ILoopable> loopablesInLoop = new();
+
+    public List<ILoopable> GetLoopablesInLoop()
+    {
+        return loopablesInLoop;
+    }
+
+    public void ClearLoopablesInLoop()
+    {
+        loopablesInLoop.Clear();
+    }
+
     // Check if the very last point in drawPositions is close to any other point.
     // Ignore the 15 latest points to avoid false positives.
     public bool CreatedLoop(List<Vector2> drawPositions, List<bool> drawValidForLoops)
@@ -38,11 +50,9 @@ public class LoopDetector : MonoBehaviour
                     ProcessObjectsInLoop(drawPositions.GetRange(i, drawPositions.Count - i));
                     return true;
                 }
-
                 return false;
             }
         }
-
         return false;
     }
 
@@ -99,8 +109,8 @@ public class LoopDetector : MonoBehaviour
 
     private void ProcessObjectsInLoop(List<Vector2> polygonPoints)
     {
+        ClearLoopablesInLoop();
         List<GameObject> objectsInsidePolygon = GetGameObjectsInsidePolygon(polygonPoints);
-
         if (objectsInsidePolygon.Count > 0)
         {
             foreach (GameObject obj in objectsInsidePolygon)
@@ -109,7 +119,7 @@ public class LoopDetector : MonoBehaviour
                 ILoopable loopable = obj.GetComponent<ILoopable>();
                 if (loopable != null)
                 {
-                    loopable.HandleLooped();
+                    loopablesInLoop.Add(loopable);
                 }
             }
         }
@@ -121,7 +131,6 @@ public class LoopDetector : MonoBehaviour
 
         // Get all game objects tagged with "loopable"
         GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
-
         foreach (GameObject obj in loopableObjects)
         {
             // Check if the object's position is inside the polygon

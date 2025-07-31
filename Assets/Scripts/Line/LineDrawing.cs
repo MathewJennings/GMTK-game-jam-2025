@@ -126,7 +126,7 @@ public class LineDrawing : MonoBehaviour
 
         if (loopDetector.CreatedLoop(drawPositions, drawValidForLoops))
         {
-            loopCounter.IncrementLoopCount();
+            loopCounter.IncrementLoopCountAndHandleLoopables();
             audioManager.GetComponent<AudioClipManager>().PlayCompletedLoopClip();
         }
     }

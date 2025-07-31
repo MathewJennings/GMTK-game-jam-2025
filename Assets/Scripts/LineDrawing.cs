@@ -17,6 +17,7 @@ public class LineDrawing : MonoBehaviour
     private LineGradient lineGradient;
     private EdgeCollider2D edgeCollider;
     private GameObject audioManager;
+    private LoopCounter loopCounter;
 
     private bool finishedDrawing = false;
     private List<Vector2> drawPositions;
@@ -54,6 +55,7 @@ public class LineDrawing : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         edgeCollider = GetComponent<EdgeCollider2D>();
+        loopCounter = GetComponent<LoopCounter>();
         lineGradient = GetComponent<LineGradient>();
         lineGradient.SetMaxLineLength(maxLineLength);
 
@@ -100,6 +102,7 @@ public class LineDrawing : MonoBehaviour
             {
                 AddNewPointToLine(currentPosition, Time.time);
                 lineGradient.UpdateGradient();
+                loopCounter.UpdateCounterTextPosition(currentPosition);
             }
         }
     }
@@ -124,7 +127,7 @@ public class LineDrawing : MonoBehaviour
 
         if (CreatedLoop())
         {
-            Debug.Log("Loop created!");
+            loopCounter.IncrementLoopCount();
             AudioSource audioSource = audioManager.GetComponent<AudioSource>();
             audioSource.Play();
         }
@@ -199,8 +202,14 @@ public class LineDrawing : MonoBehaviour
         edgeCollider.points = drawPositions.ToArray();
         if (drawPositions.Count <= 2)
         {
-            Destroy(gameObject);
+            DestroyLine();
         }
+    }
+
+    private void DestroyLine()
+    {
+        loopCounter.DestroyLoopCounter();
+        Destroy(gameObject);
     }
 
     private List<Vector3> Vector2ListToVector3List(List<Vector2> vector2s)

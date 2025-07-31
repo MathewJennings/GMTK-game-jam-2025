@@ -495,6 +495,14 @@ PrefabInstance:
       propertyPath: lineTimeToFade
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: loopCounterFontSize
+      value: 66
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: loopCounterFadeDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
       value: LineSpawner

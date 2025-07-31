@@ -7,38 +7,50 @@ public class CircleChecker : MonoBehaviour
     private LineRenderer lineRenderer;
 
 
-    bool IsValidCircle()
+    // Detect if there is a loop originating from the start index
+    int CountValidLoops()
     {
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
         {
-            return false;
-        } 
-        if (lineRenderer.positionCount < 15)
-        {
-            // Not enough points to form a circle
-            Debug.Log("Not enough points to form a circle");
-            return false;
+            return 0;
         }
 
+        int loopCount = 0;
+        int start = 0;
         
-        // Check if any point beyond point 14 is close enough to any of the first 14 points
-        for (int i = 0; i < 14; i++)
+        // If there are at least 15 points after start, do another loop check from start.
+        while (lineRenderer.positionCount - start >= 15)
         {
-            Vector3 referencePoint = lineRenderer.GetPosition(i);
-            for (int j = i+14; j < lineRenderer.positionCount; j++)
+            bool loopFound = false;
+            for (int i = start; i < start+14; i++)
             {
-                Vector3 point = lineRenderer.GetPosition(j);
-                if (Vector3.Distance(referencePoint, point) < 0.3f)
+                Vector3 referencePoint = lineRenderer.GetPosition(i);
+                for (int j = i+14; j < lineRenderer.positionCount; j++)
                 {
-                    // Found a point close enough to one of the first 14 points
-                    Debug.Log("Circle detected");
-                    return true;
+                    Vector3 point = lineRenderer.GetPosition(j);
+                    if (Vector3.Distance(referencePoint, point) < 0.3f)
+                    {
+                        // Increment the loop count, and do another iteration starting at j.
+                        loopCount++;
+                        loopFound = true;
+                        start = j;
+                        break;
+                    }
+                }
+
+                if (loopFound)
+                {
+                    break;
                 }
             }
+            // If no loop was found, break the loop.
+            if (!loopFound)
+            {
+                break;
+            }
         }
-        
-        return false;
+        return loopCount;
     }
     
     void UpdateCircleColor(bool isValid)
@@ -57,9 +69,9 @@ public class CircleChecker : MonoBehaviour
     {
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
-            bool isCircle = IsValidCircle();
-            UpdateCircleColor(isCircle);
-            Debug.Log(isCircle);
+            int loopCount = CountValidLoops();
+            UpdateCircleColor(loopCount > 0);
+            Debug.Log(loopCount);
         }
     }
 }

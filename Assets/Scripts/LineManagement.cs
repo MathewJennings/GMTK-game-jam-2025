@@ -5,25 +5,29 @@ using UnityEngine.InputSystem;
 public class LineManagement : MonoBehaviour
 {
     [SerializeField]
+    int maxLineLength;
+
+    [SerializeField]
     float timeToFade;
 
     private LineRenderer lineRenderer;
     private EdgeCollider2D edgeCollider;
+
     private bool finishedDrawing = false;
-    private readonly List<Vector2> drawPositions = new(150);
-    private readonly List<float> drawTimes = new(150);
+    private List<Vector2> drawPositions;
+    private List<float> drawTimes;
 
     /// Cannot be less than 1 second
     public void SetTimeToFade(float time)
     {
-        if (time < 1)
-        {
-            timeToFade = 1;
-        }
-        else
-        {
-            timeToFade = time;
-        }
+        timeToFade = time < 1 ? 1 : time;
+    }
+
+    /// Cannot be less than 150
+    public void SetMaxLineLength(int length)
+    {
+        maxLineLength = length < 150 ? 150 : length;
+        InitializeLine();
     }
 
     private void Awake()
@@ -35,7 +39,9 @@ public class LineManagement : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         edgeCollider = GetComponent<EdgeCollider2D>();
-        drawPositions.Clear();
+
+        drawPositions = new(maxLineLength);
+        drawTimes = new(maxLineLength);
 
         drawPositions.Add(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
         lineRenderer.SetPosition(0, drawPositions[0]);
@@ -88,7 +94,7 @@ public class LineManagement : MonoBehaviour
 
     private void AddNewPointToLine(Vector2 currentPosition, float currentTime)
     {
-        if (drawPositions.Count >= 150)
+        if (drawPositions.Count >= maxLineLength)
         {
             drawPositions.RemoveAt(0);
             drawTimes.RemoveAt(0);

@@ -209,5 +209,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 779859f0858c21c4cbf80fe88c5a2e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLineLength: 150
   timeToFade: 1.5
-  mouseDownRequired: 0

@@ -19,6 +19,7 @@ public class LoopCounter : MonoBehaviour
     private List<GameObject> loopCountTextGameObjects;
     private List<Text> loopCountTexts;
     private Vector2 currentCounterTextPosition;
+    private LoopDetector loopDetector;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class LoopCounter : MonoBehaviour
         }
         loopCountTextGameObjects = new List<GameObject>();
         loopCountTexts = new List<Text>();
+        loopDetector = GetComponent<LoopDetector>();
     }
 
     /// <summary>
@@ -78,15 +80,21 @@ public class LoopCounter : MonoBehaviour
     /// <summary>
     /// Increment the loop count and create a new loop count text to display it.
     /// </summary>
-    public void IncrementLoopCount()
+    public void IncrementLoopCountAndHandleLoopables()
     {
         currentLoopCount++;
-        CreateLoopCountText(currentLoopCount);
+        int totalScoreChange = 0;
+        foreach (ILoopable loopable in loopDetector.GetLoopablesInLoop())
+        {
+            totalScoreChange += loopable.HandleLooped(currentLoopCount);
+        }
+        string text = (totalScoreChange >= 0 ? "+" : "") + totalScoreChange.ToString();
+        CreateLoopCountText(text);
     }
 
-    private void CreateLoopCountText(int loopNumber)
+    private void CreateLoopCountText(string text)
     {
-        GameObject loopCountTextGameObject = new($"Loop Count Text {loopNumber}");
+        GameObject loopCountTextGameObject = new($"Loop Count Text {text}");
         loopCountTextGameObject.transform.SetParent(canvas.transform, false);
 
         Text loopCountText = loopCountTextGameObject.AddComponent<Text>();
@@ -95,14 +103,14 @@ public class LoopCounter : MonoBehaviour
         loopCountText.fontStyle = FontStyle.Bold;
         loopCountText.color = fontColor;
         loopCountText.alignment = TextAnchor.MiddleCenter;
-        loopCountText.text = loopNumber.ToString();
+        loopCountText.text = text;
 
         Outline outline = loopCountTextGameObject.AddComponent<Outline>();
         outline.effectColor = Color.black;
         outline.effectDistance = new Vector2(2, 2);
 
         RectTransform rectTransform = loopCountText.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(100, 100);
+        rectTransform.sizeDelta = new Vector2(150, 150);
         rectTransform.position = currentCounterTextPosition;
 
         loopCountTextGameObjects.Add(loopCountTextGameObject);
@@ -165,6 +173,7 @@ public class LoopCounter : MonoBehaviour
             rectTransform.position = Vector3.Lerp(startPosition, endPosition, movementProgress);
             yield return null;
         }
+        Destroy(text.gameObject);
     }
 
     /// <summary>

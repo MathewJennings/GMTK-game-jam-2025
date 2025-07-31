@@ -13,9 +13,17 @@ public class LineCollisionDetector : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag("LoopableObject")) {
-            GetComponent<LineDrawing>().DestroyLine();
-            audioManager.GetComponent<AudioClipManager>().PlayBrokenLoopClip();
+        if (other.gameObject.CompareTag("LoopableObject"))
+        {
+            BreakLoop();
         }
+    }
+
+    private void BreakLoop()
+    {
+        GetComponent<LineDrawing>().DestroyLine();
+        audioManager.GetComponent<AudioClipManager>().PlayBrokenLoopClip();
+        LoopDetector loopDetector = GetComponent<LoopDetector>();
+        loopDetector.ClearLoopablesInLoop();
     }
 }

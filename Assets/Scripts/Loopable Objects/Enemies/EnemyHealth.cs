@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
+
     [SerializeField]
     private int maxHealth = 1;
 
@@ -12,20 +13,14 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentHealth = maxHealth;
     }
 
-    public int HandleLooped(GameObject line)
+    public LoopResult HandleLooped(GameObject line)
     {
         currentHealth--;
-        if (currentHealth <= 0)
+        if (currentHealth > 0)
         {
-            Destroy(gameObject);
-            return maxHealth;
+            return new LoopResult(0, $"{currentHealth}hp");
         }
-        return 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Destroy(gameObject);
+        return new LoopResult(maxHealth, "DEFEATED!");
     }
 }

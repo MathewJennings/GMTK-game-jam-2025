@@ -31,18 +31,19 @@ public class LoopCounter : MonoBehaviour
     }
 
     /// <summary>
-    /// Increment the loop count and create a new loop count text to display it.
+    /// Increment the loop count and trigger HandleLooped for the loopables.
     /// </summary>
     public void IncrementLoopCountAndHandleLoopables()
     {
         currentLoopCount++;
-        int totalScoreChange = 0;
         foreach (ILoopable loopable in loopDetector.GetLoopablesInLoop())
         {
-            totalScoreChange += loopable.HandleLooped(gameObject);
+            LoopResult result = loopable.HandleLooped(gameObject);
+            if (!string.IsNullOrEmpty(result.displayText))
+            {
+                canvas.GetComponent<LoopTextGenerator>().CreateLoopCountText(result.displayText, currentCounterTextPosition);
+            }
         }
-        string text = (totalScoreChange >= 0 ? "+" : "") + totalScoreChange.ToString();
-        canvas.GetComponent<LoopTextGenerator>().CreateLoopCountText(text, currentCounterTextPosition);
     }
 
     /// <summary>

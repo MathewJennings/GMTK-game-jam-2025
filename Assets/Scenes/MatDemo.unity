@@ -659,6 +659,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1369991101
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.942852
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.98101264
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 660910015349348899, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914887297699012090, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_Name
+      value: InfinityCoins
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
 --- !u!223 &1431595516 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 936403723498394182, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
@@ -1095,3 +1152,4 @@ SceneRoots:
   - {fileID: 1955336464}
   - {fileID: 1030814320}
   - {fileID: 928822969}
+  - {fileID: 1369991101}

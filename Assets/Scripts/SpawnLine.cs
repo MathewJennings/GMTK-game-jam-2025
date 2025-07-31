@@ -17,7 +17,7 @@ public class SpawnLine : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             GameObject line = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
-            LineManagement lineManagement = line.GetComponent<LineManagement>();
+            LineDrawing lineManagement = line.GetComponent<LineDrawing>();
             lineManagement.SetTimeToFade(lineTimeToFade);
             lineManagement.SetMaxLineLength(maxLineLength);
         }

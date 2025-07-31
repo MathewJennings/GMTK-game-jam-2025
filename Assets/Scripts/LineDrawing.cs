@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LineManagement : MonoBehaviour
+public class LineDrawing : MonoBehaviour
 {
     [SerializeField]
     int maxLineLength;
@@ -11,6 +11,7 @@ public class LineManagement : MonoBehaviour
     float timeToFade;
 
     private LineRenderer lineRenderer;
+    private LineGradient lineGradient;
     private EdgeCollider2D edgeCollider;
 
     private bool finishedDrawing = false;
@@ -39,6 +40,8 @@ public class LineManagement : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         edgeCollider = GetComponent<EdgeCollider2D>();
+        lineGradient = GetComponent<LineGradient>();
+        lineGradient.SetMaxLineLength(maxLineLength);
 
         drawPositions = new(maxLineLength);
         drawTimes = new(maxLineLength);
@@ -53,6 +56,8 @@ public class LineManagement : MonoBehaviour
 
         edgeCollider.points = drawPositions.ToArray();
     }
+
+
 
     private void Update()
     {
@@ -76,20 +81,8 @@ public class LineManagement : MonoBehaviour
             Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             if (Vector2.Distance(currentPosition, drawPositions[^1]) > .1f)
             {
-                Debug.Log(currentPosition);
                 AddNewPointToLine(currentPosition, Time.time);
-            }
-        }
-    }
-
-    private void CheckFadeOldPoints()
-    {
-        // Iterate backwards to avoid index shifting issues when removing elements
-        for (int i = drawTimes.Count - 1; i >= 0; i--)
-        {
-            if (Time.time - drawTimes[i] > timeToFade)
-            {
-                RemovePointFromLine(i);
+                lineGradient.UpdateGradient(drawPositions.Count);
             }
         }
     }
@@ -109,6 +102,18 @@ public class LineManagement : MonoBehaviour
         drawTimes.Add(currentTime);
         lineRenderer.SetPositions(Vector2ListToVector3List(drawPositions).ToArray());
         edgeCollider.points = drawPositions.ToArray();
+    }
+
+    private void CheckFadeOldPoints()
+    {
+        // Iterate backwards to avoid index shifting issues when removing elements
+        for (int i = drawTimes.Count - 1; i >= 0; i--)
+        {
+            if (Time.time - drawTimes[i] > timeToFade)
+            {
+                RemovePointFromLine(i);
+            }
+        }
     }
 
     private void RemovePointFromLine(int i)

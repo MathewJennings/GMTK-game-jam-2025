@@ -445,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: targetScore
-      value: 100
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: nextSceneName
@@ -512,6 +512,10 @@ PrefabInstance:
     - target: {fileID: 605877789999443274, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_Name
       value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757995156363076802, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
+      propertyPath: moveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_LocalPosition.x

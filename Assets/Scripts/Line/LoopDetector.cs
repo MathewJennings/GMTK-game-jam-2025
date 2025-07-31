@@ -119,16 +119,15 @@ public class LoopDetector : MonoBehaviour
     {
         List<GameObject> objectsInsidePolygon = new List<GameObject>();
 
-        // Get all colliders in the scene
-        // For now layerMask is set to ~0 to include all layers.
-        Collider2D[] colliders = Physics2D.OverlapPointAll(Vector2.zero, ~0);
+        // Get all game objects tagged with "loopable"
+        GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
 
-        foreach (Collider2D collider in colliders)
+        foreach (GameObject obj in loopableObjects)
         {
-            // Check if the collider's position is inside the polygon
-            if (IsPointInPolygon(collider.transform.position, polygonPoints))
+            // Check if the object's position is inside the polygon
+            if (IsPointInPolygon(obj.transform.position, polygonPoints))
             {
-                objectsInsidePolygon.Add(collider.gameObject);
+                objectsInsidePolygon.Add(obj);
             }
         }
 

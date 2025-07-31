@@ -9,6 +9,9 @@ public class LineDrawing : MonoBehaviour
 
     [SerializeField]
     float timeToFade;
+    
+    [SerializeField]
+    float minimumLoopArea = 1.0f;
 
     private LineRenderer lineRenderer;
     private LineGradient lineGradient;
@@ -113,11 +116,6 @@ public class LineDrawing : MonoBehaviour
         if (CreatedLoop())
         {
             Debug.Log("Loop created!");
-            // Mark all the points up until now as invalid.
-            for (int i = 0; i < drawValidForLoops.Count; i++)
-            {
-                drawValidForLoops[i] = false;
-            }
         }
     }
     
@@ -136,11 +134,36 @@ public class LineDrawing : MonoBehaviour
             
             if (Vector2.Distance(referencePoint, drawPositions[i]) < 0.1f)
             {
-                return true;
+                // An intersection was found. Invalidate all points up until now.
+                for (int j = 0; j < drawValidForLoops.Count; j++)
+                {
+                    drawValidForLoops[j] = false;
+                }
+                
+                // Check if the loop with all the points involved has a large enough area.
+                float area = CalculatePolygonArea(
+                    drawPositions.GetRange(i, drawPositions.Count - i));
+                return area > minimumLoopArea;
             }
         }
 
         return false;
+    }
+    
+    // Calculate the area of a polygon using the Shoelace formula.
+    private float CalculatePolygonArea(List<Vector2> points)
+    {
+        float area = 0f;
+        int count = points.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector2 current = points[i];
+            Vector2 next = points[(i + 1) % count]; // Wrap around to the first point.
+            area += current.x * next.y - next.x * current.y;
+        }
+
+        return Mathf.Abs(area) / 2f;
     }
 
     private void CheckFadeOldPoints()

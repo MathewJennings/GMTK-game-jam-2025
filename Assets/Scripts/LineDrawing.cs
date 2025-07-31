@@ -154,7 +154,13 @@ public class LineDrawing : MonoBehaviour
                 // Check if the loop with all the points involved has a large enough area.
                 float area = CalculatePolygonArea(
                     drawPositions.GetRange(i, drawPositions.Count - i));
-                return area > minimumLoopArea;
+                if (area > minimumLoopArea)
+                {
+                    ProcessObjectsInLoop(drawPositions.GetRange(i, drawPositions.Count - i));
+                    return true;
+                }
+
+                return false;
             }
         }
 
@@ -175,6 +181,64 @@ public class LineDrawing : MonoBehaviour
         }
 
         return Mathf.Abs(area) / 2f;
+    }
+
+    private void ProcessObjectsInLoop(List<Vector2> polygonPoints)
+    {
+        List<GameObject> objectsInsidePolygon = GetGameObjectsInsidePolygon(polygonPoints);
+
+        if (objectsInsidePolygon.Count > 0)
+        {
+            Debug.Log($"Found {objectsInsidePolygon.Count} objects inside the polygon.");
+            foreach (GameObject obj in objectsInsidePolygon)
+            {
+                // Here you can add logic to handle the objects inside the polygon.
+                // For example, you could change their color, destroy them, etc.
+                Debug.Log($"Object: {obj.name} is inside the polygon.");
+            }
+        }
+        else
+        {
+            Debug.Log("No objects found inside the polygon.");
+        }
+    }
+
+    private List<GameObject> GetGameObjectsInsidePolygon(List<Vector2> polygonPoints)
+    {
+        List<GameObject> objectsInsidePolygon = new List<GameObject>();
+
+        // Get all colliders in the scene
+        // For now layerMask is set to ~0 to include all layers.
+        Collider2D[] colliders = Physics2D.OverlapPointAll(Vector2.zero, ~0);
+
+        foreach (Collider2D collider in colliders)
+        {
+            // Check if the collider's position is inside the polygon
+            if (IsPointInPolygon(collider.transform.position, polygonPoints))
+            {
+                objectsInsidePolygon.Add(collider.gameObject);
+            }
+        }
+
+        return objectsInsidePolygon;
+    }
+
+    // Helper method to check if a point is inside a polygon
+    private bool IsPointInPolygon(Vector2 point, List<Vector2> polygonPoints)
+    {
+        int count = polygonPoints.Count;
+        bool inside = false;
+
+        for (int i = 0, j = count - 1; i < count; j = i++)
+        {
+            if ((polygonPoints[i].y > point.y) != (polygonPoints[j].y > point.y) &&
+                (point.x < (polygonPoints[j].x - polygonPoints[i].x) * (point.y - polygonPoints[i].y) / (polygonPoints[j].y - polygonPoints[i].y) + polygonPoints[i].x))
+            {
+                inside = !inside;
+            }
+        }
+
+        return inside;
     }
 
     private void CheckFadeOldPoints()

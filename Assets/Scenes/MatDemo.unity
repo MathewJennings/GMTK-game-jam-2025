@@ -523,24 +523,12 @@ PrefabInstance:
       value: Coin
       objectReference: {fileID: 0}
     - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -573,10 +561,6 @@ PrefabInstance:
     - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3070461275263164087, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -647,14 +631,6 @@ PrefabInstance:
       propertyPath: lineTimeToFade
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
-      propertyPath: loopCounterFontSize
-      value: 66
-      objectReference: {fileID: 0}
-    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
-      propertyPath: loopCounterFadeDuration
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
       value: Line Spawner
@@ -675,10 +651,6 @@ PrefabInstance:
     - target: {fileID: 957207914959527687, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Name
       value: Score Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5994466559508839215, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
-      propertyPath: nextSceneName
-      value: FelixDemo
       objectReference: {fileID: 0}
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Pivot.x
@@ -836,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: targetScore
-      value: 700
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: nextSceneName

@@ -16,6 +16,8 @@ public class ScoreScriptUpdater : MonoBehaviour
     {
         if (scoreScriptableObject.hasWon)
         {
+            currentScoreText.text = "Score: " + scoreScriptableObject.targetScore.ToString();
+            currentScoreText.color = Color.green;
             targetScoreText.text = "YOU WIN!";
             targetScoreText.color = Color.green;
             return;

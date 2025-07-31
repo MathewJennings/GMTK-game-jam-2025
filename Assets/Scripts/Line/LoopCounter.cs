@@ -88,7 +88,7 @@ public class LoopCounter : MonoBehaviour
         {
             totalScoreChange += loopable.HandleLooped(currentLoopCount);
         }
-        string text = (totalScoreChange >= 0 ? "+" : "-") + totalScoreChange.ToString();
+        string text = (totalScoreChange >= 0 ? "+" : "") + totalScoreChange.ToString();
         CreateLoopCountText(text);
     }
 

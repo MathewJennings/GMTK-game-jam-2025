@@ -27,10 +27,11 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     
     public int HandleLooped(int loopCount)
     {
-        infinityCoinsHandler.HandleLoopedCoin(isActive);
+        int actualCount = isActive ? loopCount : -1 * loopCount;
         
-        // TODO: Return something meaningful.
-        return loopCount;
+        infinityCoinsHandler.HandleLoopedCoin();
+
+        return actualCount;
     }
     
     public void ToggleIsActive()

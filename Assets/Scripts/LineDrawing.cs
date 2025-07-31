@@ -9,7 +9,7 @@ public class LineDrawing : MonoBehaviour
 
     [SerializeField]
     float timeToFade;
-    
+
     [SerializeField]
     float minimumLoopArea = 1.0f;
 
@@ -111,14 +111,32 @@ public class LineDrawing : MonoBehaviour
         drawValidForLoops.Add(true);
         lineRenderer.SetPositions(Vector2ListToVector3List(drawPositions).ToArray());
         edgeCollider.points = drawPositions.ToArray();
-        
-        // Check if the newly added point forms a loop.
+
         if (CreatedLoop())
         {
             Debug.Log("Loop created!");
+            
+            // Find AudioManager and play audio feedback
+            GameObject audioManager = GameObject.Find("Audio Manager");
+            if (audioManager != null)
+            {
+                AudioSource audioSource = audioManager.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Play();
+                }
+                else
+                {
+                    Debug.LogWarning("AudioManager found but no AudioSource component attached!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("AudioManager GameObject not found in scene!");
+            }
         }
     }
-    
+
     // Check if the very last point in drawPositions is close to any other point.
     // Ignore the 15 latest points to avoid false positives.
     private bool CreatedLoop()
@@ -131,7 +149,7 @@ public class LineDrawing : MonoBehaviour
         {
             // Return false if this point was already used in a previous loop.
             if (!drawValidForLoops[i]) return false;
-            
+
             if (Vector2.Distance(referencePoint, drawPositions[i]) < 0.1f)
             {
                 // An intersection was found. Invalidate all points up until now.
@@ -139,7 +157,7 @@ public class LineDrawing : MonoBehaviour
                 {
                     drawValidForLoops[j] = false;
                 }
-                
+
                 // Check if the loop with all the points involved has a large enough area.
                 float area = CalculatePolygonArea(
                     drawPositions.GetRange(i, drawPositions.Count - i));
@@ -149,7 +167,7 @@ public class LineDrawing : MonoBehaviour
 
         return false;
     }
-    
+
     // Calculate the area of a polygon using the Shoelace formula.
     private float CalculatePolygonArea(List<Vector2> points)
     {

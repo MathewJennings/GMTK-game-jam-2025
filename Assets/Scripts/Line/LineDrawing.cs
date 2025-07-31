@@ -127,8 +127,7 @@ public class LineDrawing : MonoBehaviour
         if (loopDetector.CreatedLoop(drawPositions, drawValidForLoops))
         {
             loopCounter.IncrementLoopCount();
-            AudioSource audioSource = audioManager.GetComponent<AudioSource>();
-            audioSource.Play();
+            audioManager.GetComponent<AudioClipManager>().PlayCompletedLoopClip();
         }
     }
 

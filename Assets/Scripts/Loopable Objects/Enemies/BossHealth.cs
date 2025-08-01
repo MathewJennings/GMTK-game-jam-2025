@@ -24,13 +24,8 @@ public class BossHealth : EnemyHealth, ILoopable
         }
         Destroy(gameObject);
         callbackFunction?.Invoke();
-
-        string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : $"+{maxHealth}pts!";
-
-        if (currentLevel != null)
-        {
-            currentLevel.currentPoints += maxHealth;
-        }
+        currentLevel.hasCompletedBossFight = true;
+        string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
         return new LoopResult(maxHealth, resultText, transform.position);
     }
 }

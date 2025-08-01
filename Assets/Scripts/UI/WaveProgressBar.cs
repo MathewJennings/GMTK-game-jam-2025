@@ -93,7 +93,7 @@ public class WaveProgressBar : MonoBehaviour
     {
         if (isScoreDecayEnabled &&
                 !(levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0) &&
-                !levelManager.currentLevel.isBossFight)
+                !levelManager.currentLevel.hasPreparedBossFight)
         {
             ApplyScoreDecay();
         }

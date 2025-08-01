@@ -10,16 +10,11 @@ public class LevelManager : MonoBehaviour
     public WaveAndBossBarsManager waveAndBossBarsManager; // Assign in Inspector
     public BossProgressBar bossProgressBar; // Assign in Inspector
 
-    private bool hasPreparedBossFight = false;
-
     void Awake()
     {
-        if (spawnEnemy != null && currentLevel != null && waveAndBossBarsManager != null && bossProgressBar != null)
+        if (IsFullyConfigured())
         {
-            currentLevel.currentPoints = currentLevel.initialPointsBuffer;
-            currentLevel.isBossFight = false;
-            spawnEnemy.PlayLevel(currentLevel);
-            waveAndBossBarsManager.SetWaveBarActive();
+            PrepareCurrentLevel();
         }
         else
         {
@@ -27,9 +22,28 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void PrepareCurrentLevel()
+    {
+        currentLevel.currentPoints = currentLevel.initialPointsBuffer;
+        currentLevel.hasPreparedBossFight = false;
+        currentLevel.hasCompletedBossFight = false;
+        spawnEnemy.PlayLevel(currentLevel);
+        waveAndBossBarsManager.SetWaveBarActive();
+    }
+
+    private void PrepareNextLevel()
+    {
+        currentLevel = currentLevel.nextLevel;
+        PrepareCurrentLevel();
+    }
+
     void Update()
     {
-        if (currentLevel.HasReachedTargetPoints() && !hasPreparedBossFight)
+        if (!IsFullyConfigured())
+        {
+            return;
+        }
+        if (currentLevel.HasReachedTargetPoints() && !currentLevel.hasPreparedBossFight)
         {
             PrepareBossFight();
         }
@@ -37,17 +51,26 @@ public class LevelManager : MonoBehaviour
         {
             OnLoseConditionMet();
         }
+        else if (currentLevel.hasCompletedBossFight)
+        {
+            PrepareNextLevel();
+        }
+    }
+
+    private bool IsFullyConfigured()
+    {
+        return spawnEnemy != null && currentLevel != null && waveAndBossBarsManager != null && bossProgressBar != null;
     }
 
     private void PrepareBossFight()
     {
-        currentLevel.isBossFight = true;
         GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
+        boss.GetComponent<EnemyHealth>().SetCurrentLevel(currentLevel);
         RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
         randomMovement.InitializeBossPreset();
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
-        hasPreparedBossFight = true;
+        currentLevel.hasPreparedBossFight = true;
     }
 
     private void OnLoseConditionMet()
@@ -55,6 +78,9 @@ public class LevelManager : MonoBehaviour
         // winAndLoseUIManager.ShowLoseText();
     }
 
+    /// <summary>
+    /// Only for the unity editor?
+    /// </summary>
     public void PlayNextLevel()
     {
         if (currentLevel != null && currentLevel.nextLevel != null && spawnEnemy != null)

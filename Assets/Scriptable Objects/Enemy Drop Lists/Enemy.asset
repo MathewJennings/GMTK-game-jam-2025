@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e594c24b6a9dab0448df5478fbdbdfef, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  enemyDropPrefabs: []
+  enemyDropPrefabs:
+  - {fileID: 4827265980704315333, guid: be06567c4fc829945990606f60dcdaaa, type: 3}
+  - {fileID: 4827265980704315333, guid: 8805cf2bc313012449a1cea82032ecc1, type: 3}
+  enemyDropWeights:
+  - 0
+  - 0

@@ -47,7 +47,7 @@ public class LoopCounter : MonoBehaviour
         InfinityCoinsHandler.HandleMultipleInfinityCoins(loopDetector.GetLoopablesInLoop());
         float multiplier = CalculateMultiplier();
         string multiplierText = "x" + multiplier;
-        loopTextGenerator.CreateLoopCountText(multiplierText, currentCounterTextPosition + new Vector2(displayOffsetX, displayOffsetY)) ;
+        loopTextGenerator.CreateLoopCountText(multiplierText, currentCounterTextPosition, true) ;
         foreach (ILoopable loopable in loopDetector.GetLoopablesInLoop())
         {
             LoopResult result = loopable.HandleLooped(gameObject, multiplier);

@@ -18,12 +18,18 @@ public class LoopTextGenerator : MonoBehaviour
         fontColor = color;
     }
 
-    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition)
+    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, Color c)
     {
-        CreateLoopCountText(text,currentCounterTextPosition, fontColor);
+        CreateLoopCountText(text,currentCounterTextPosition, c, fontSize);
     }
 
-    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, Color c)
+    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, bool useSmallFont)
+    {
+        int size = useSmallFont ? fontSize - 4 : fontSize;
+        CreateLoopCountText(text,currentCounterTextPosition, fontColor, size);
+    }
+
+    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, Color c, int fontSize)
     {
         GameObject loopCountTextGameObject = new($"Loop Count Text {text}");
         loopCountTextGameObject.transform.SetParent(transform, false);

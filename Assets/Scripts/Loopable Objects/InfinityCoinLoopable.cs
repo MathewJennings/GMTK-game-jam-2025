@@ -52,12 +52,13 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         if (!isActive)
         {
             line.GetComponent<LineBreaker>().BreakLine();
+            LoopResult result = infinityCoinsHandler.HandleIncorrectLoop(line, spriteRenderer.color, multiplier);
+            return result;
         }
         else
         {
-            infinityCoinsHandler.HandleGetHit();
+            LoopResult result = infinityCoinsHandler.HandleGetHit(line, spriteRenderer.color, multiplier);
+            return result;
         }
-
-        return new LoopResult(points, points > 0 ? $"+{points}" : $"{points}", spriteRenderer.color, transform.position);
     }
 }

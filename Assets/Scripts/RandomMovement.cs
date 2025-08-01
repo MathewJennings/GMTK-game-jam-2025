@@ -203,26 +203,9 @@ public class RandomMovement : MonoBehaviour
         transform.position = startingPosition;
     }
 
-   public void SetMovementEnabled(bool enabled)
+    public void SetMovementEnabled(bool enabled)
     {
         this.enabled = enabled;
-    }
-
-   public void SetMoveSpeed(float speed)
-    {
-        moveSpeed = speed;
-    }
-
-    public void InitializeBossPreset()
-    {
-        moveSpeed = 5f;
-        directionChangeInterval = 0.5f;
-        constrainMovementRange = false;
-        constrainToScreen = true;
-        screenPaddingInPx = 50f;
-        smoothness = 0.5f;
-        usePerlinNoise = false;
-        noiseScale = 0.5f;
     }
 
     // Draw gizmos in the editor to visualize movement range

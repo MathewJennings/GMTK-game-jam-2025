@@ -19,12 +19,17 @@ public class BossHealth : EnemyHealth, ILoopable
 
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        currentHealth -= 1*multiplier;
+        currentHealth -= 1 * multiplier;
         if (currentHealth > 0)
         {
             onDamage?.Invoke(currentHealth, maxHealth);
             return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
         }
+        return OnDefeatBoss();
+    }
+
+    protected LoopResult OnDefeatBoss()
+    {
         Destroy(gameObject);
         onDeath?.Invoke();
         currentLevel.hasCompletedBossFight = true;

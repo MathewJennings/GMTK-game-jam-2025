@@ -80,8 +80,6 @@ public class LevelManager : MonoBehaviour
     {
         GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
         boss.GetComponent<EnemyHealth>().SetCurrentLevel(currentLevel);
-        RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
-        randomMovement.InitializeBossPreset();
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
         currentLevel.hasPreparedBossFight = true;

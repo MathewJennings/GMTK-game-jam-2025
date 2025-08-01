@@ -10,12 +10,12 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     private EnemyDropList enemyDropList;
 
     [SerializeField]
-    protected float maxHealth = 1;
+    public float maxHealth = 1;
 
     [SerializeField]
     private bool shrinkOnHit = false;
 
-    protected float currentHealth;
+    public float currentHealth;
 
     void Awake()
     {

@@ -5,7 +5,9 @@ public class BossHealth : EnemyHealth, ILoopable
 {
 
     [SerializeField]
-    private UnityEvent callbackFunction;
+    private UnityEvent onDeath;
+    [SerializeField]
+    private UnityEvent<float, float> onDamage;
 
     [SerializeField]
     private string deathTextOverride; // Optional override for death text
@@ -20,10 +22,11 @@ public class BossHealth : EnemyHealth, ILoopable
         currentHealth -= 1*multiplier;
         if (currentHealth > 0)
         {
+            onDamage?.Invoke(currentHealth, maxHealth);
             return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
         }
         Destroy(gameObject);
-        callbackFunction?.Invoke();
+        onDeath?.Invoke();
         currentLevel.hasCompletedBossFight = true;
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
         return new LoopResult((int)maxHealth, resultText, Color.red, transform.position);

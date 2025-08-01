@@ -21,7 +21,7 @@ public class RandomMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField]
-    private float moveSpeed = 2f;
+    public float moveSpeed = 2f;
 
     [SerializeField]
     private float directionChangeInterval = 3f; // Time between direction changes

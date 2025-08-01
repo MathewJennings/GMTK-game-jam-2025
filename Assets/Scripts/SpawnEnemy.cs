@@ -104,7 +104,6 @@ public class SpawnEnemy : MonoBehaviour
         //if currentInterval == 0, we don't spawn enemies
         if (currentInterval != 0 && timer >= currentInterval)
         {
-            Debug.Log($"Spawning enemies after {timer} seconds, interval: {currentInterval}");
             int numEnemies = Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
             SpawnType selectedType = GetWeightedSpawnType();
             SpawnTarget(numEnemies, selectedType);
@@ -193,7 +192,25 @@ public class SpawnEnemy : MonoBehaviour
             Vector2 spawnPosition = GetSpawnPosition(side, screenMin, screenMax);
             Vector2 targetPosition = GetTargetPosition(side);
 
-            int enemyIndex = Random.Range(0, currentLevel.enemyPrefabs.Count);
+            // weighted random selection
+            float totalWeight = 0f;
+            for (int i = 0; i < currentLevel.enemyPrefabWeights.Count; i++)
+            {
+                totalWeight += currentLevel.enemyPrefabWeights[i];
+            }
+            float randomValue = Random.Range(0f, totalWeight);
+            float cumulative = 0f;
+            int enemyIndex = 0;
+            for (int i = 0; i < currentLevel.enemyPrefabWeights.Count; i++)
+            {
+                cumulative += currentLevel.enemyPrefabWeights[i];
+                if (randomValue <= cumulative)
+                {
+                    enemyIndex = i;
+                    break;
+                }
+            }
+
             var baseVelocity = Random.Range(minVelocity, maxVelocity);
 
             for (int i = 0; i < numEnemies; i++)

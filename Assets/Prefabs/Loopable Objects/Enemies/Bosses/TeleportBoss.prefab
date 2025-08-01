@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 0}
   isActive: 0
 --- !u!1 &2481108458643093309
 GameObject:
@@ -396,7 +395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 0}
   isActive: 0
 --- !u!1 &3615367204274016671
 GameObject:
@@ -508,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 0}
   isActive: 0
 --- !u!1 &6996959494265364463
 GameObject:
@@ -794,7 +791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c02ea5060acd6a448d089da26076103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelManager: {fileID: 0}
   isActive: 1
 --- !u!1001 &822805465486560534
 PrefabInstance:
@@ -859,6 +855,10 @@ PrefabInstance:
     - target: {fileID: 8066606338228497719, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
       propertyPath: m_Name
       value: TeleportBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900106608822870948, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+      propertyPath: moveSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8584419761140623019, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}

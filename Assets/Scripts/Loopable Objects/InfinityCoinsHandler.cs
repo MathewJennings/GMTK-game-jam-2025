@@ -120,9 +120,19 @@ public class InfinityCoinsHandler : BossHealth
         timeSinceLastChange = 0f;
     }
 
-    public void HandleGetHit()
+    public LoopResult HandleIncorrectLoop(GameObject line, Color spriteColor, float multiplier = 1.0f)
     {
-        currentHealth--;
+        currentHealth += Mathf.Clamp(1*multiplier, 0, maxHealth);
+        // Decrease min and max rotation speed and change speed.
+        minRotationSpeed -= rotationSpeedHitIncrease * 1.1f;
+        maxRotationSpeed -= rotationSpeedHitIncrease * 1.1f;
+        ChangeRotationSpeed();
+        return new LoopResult(0,  "BZZT!", spriteColor, transform.position);
+    }
+
+    public LoopResult HandleGetHit(GameObject line, Color spriteColor, float multiplier = 1.0f)
+    {
+        currentHealth -= 1*multiplier;
         // Increase min and max rotation speed and change speed.
         float oldRotationSpeed = rotationSpeed;
         minRotationSpeed += rotationSpeedHitIncrease;
@@ -132,10 +142,14 @@ public class InfinityCoinsHandler : BossHealth
         {
             rotationSpeed = -rotationSpeed;
         }
-
         SetRandomActiveChild();
+        if (currentHealth > 0)
+        {
+            return new LoopResult(0,  $"{Mathf.Ceil(currentHealth)} more", spriteColor, transform.position);
+        }
+        return OnDefeatBoss();
     }
-    
+
     private void SetRandomActiveChild()
     {
         // If no children or only one child exists, do nothing

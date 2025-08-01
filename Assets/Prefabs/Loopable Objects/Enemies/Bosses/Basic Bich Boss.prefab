@@ -264,6 +264,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1220506604347110733}
+    - targetCorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8900106608822870948}
   m_SourcePrefab: {fileID: 100100000, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
 --- !u!4 &5550314188805922506 stripped
 Transform:
@@ -294,3 +297,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   deathTextOverride: 
+--- !u!114 &8900106608822870948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066606338228497719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a19185c114170e499c21ed4cf30a5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  directionChangeInterval: 0.5
+  constrainMovementRange: 0
+  movementRange: {x: 5, y: 5}
+  constrainToScreen: 1
+  screenPaddingInPx: 50
+  smoothness: 0.5
+  usePerlinNoise: 0
+  noiseScale: 0.5

@@ -905,7 +905,6 @@ MonoBehaviour:
   speed: 3.5
   fadeDuration: 1
   circleLineWidth: 0.1
-  circleColor: {r: 0, g: 0.6132076, b: 0.055529274, a: 1}
 --- !u!1 &1017465462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1364,7 @@ PrefabInstance:
     - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: currentLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
+      objectReference: {fileID: 11400000, guid: 9122e4bc63227464089a33fd26a41414, type: 2}
     - target: {fileID: 4427270174041315833, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 621.8329

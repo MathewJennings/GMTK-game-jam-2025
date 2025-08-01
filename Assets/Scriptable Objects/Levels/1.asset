@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b0741b26ddd47a5a7e75bd74a42ac4, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  levelName: Tutorial
+  levelName: Intro
   nextLevel: {fileID: 11400000, guid: 9122e4bc63227464089a33fd26a41414, type: 2}
   spawnInterval:
     serializedVersion: 2
@@ -63,8 +63,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 15.126416
-      value: 0.9694364
+      time: 15.054284
+      value: 2.092014
       inSlope: -0.0008584434
       outSlope: -0.0008584434
       tangentMode: 0
@@ -72,8 +72,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 17.027813
-      value: 0.9699495
+      time: 16.95568
+      value: 2.0925272
       inSlope: 0.006397528
       outSlope: 0.006397528
       tangentMode: 0

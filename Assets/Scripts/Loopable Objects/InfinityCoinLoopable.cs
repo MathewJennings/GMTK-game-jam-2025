@@ -4,9 +4,6 @@ using UnityEngine;
 public class InfinityCoinLoopable : MonoBehaviour, ILoopable
 {
     [SerializeField]
-    private LevelManager levelManager;
-
-    [SerializeField]
     bool isActive;
 
     private SpriteRenderer spriteRenderer;
@@ -14,10 +11,6 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
 
     void Awake()
     {
-        if (levelManager == null)
-        {
-            Debug.LogWarning("InfinityCoinLoopable: Missing reference to LevelManager.");
-        }
         infinityCoinsHandler = GetComponentInParent<InfinityCoinsHandler>();
 
         // Get the child object named "Sprite" and its SpriteRenderer

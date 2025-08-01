@@ -26,9 +26,10 @@ public class InfinityCoinsHandler : BossHealth
         currentHealth = maxHealth;
     }
 
-    public override LoopResult HandleLooped(GameObject line)
+    public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
+
     {
-        return new LoopResult(0, null, transform.position);
+        return new LoopResult(0, null, Color.red, transform.position);
     }
 
     public static void HandleMultipleInfinityCoins(List<ILoopable> loopables)

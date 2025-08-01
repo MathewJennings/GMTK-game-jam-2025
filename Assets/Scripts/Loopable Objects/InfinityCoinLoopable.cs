@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InfinityCoinLoopable : MonoBehaviour, ILoopable
@@ -25,7 +26,12 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
                 Debug.LogError("SpriteRenderer not found on the child object.");
             }
         }
-        spriteRenderer.color = isActive ? Color.green : Color.red;
+        spriteRenderer.color = isActive ? Color.green : Color.purple;
+    }
+
+    public bool GetIsActive()
+    {
+        return isActive;
     }
 
     public LoopResult HandleLooped(GameObject line)
@@ -35,7 +41,6 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         int score = isActive ? loopCount : -1 * loopCount;
         scoreScriptableObject.currentScore += score;
 
-        string displayText;
         if (!isActive)
         {
             line.GetComponent<LineBreaker>().BreakLine();
@@ -51,6 +56,6 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     public void ToggleIsActive()
     {
         isActive = !isActive;
-        spriteRenderer.color = isActive ? Color.green : Color.red;
+        spriteRenderer.color = isActive ? Color.green : Color.purple;
     }
 }

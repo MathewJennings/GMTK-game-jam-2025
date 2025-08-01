@@ -13,6 +13,8 @@ public class LevelScriptableObject : ScriptableObject
     public bool isBossFight = false;
 
     public List<GameObject> enemyPrefabs;
+    public List<float> enemyPrefabWeights; // Parallel list to enemyPrefabs
+
     public GameObject bossPrefab;
 
     public bool HasReachedTargetPoints()

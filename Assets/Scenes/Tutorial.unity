@@ -904,6 +904,8 @@ MonoBehaviour:
   radius: 2
   speed: 3.5
   fadeDuration: 1
+  circleLineWidth: 0.1
+  circleColor: {r: 0, g: 0.6132076, b: 0.055529274, a: 1}
 --- !u!1 &1017465462
 GameObject:
   m_ObjectHideFlags: 0

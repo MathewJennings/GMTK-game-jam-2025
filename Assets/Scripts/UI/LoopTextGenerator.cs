@@ -57,7 +57,7 @@ public class LoopTextGenerator : MonoBehaviour
         outline.effectDistance = new Vector2(2, 2);
 
         RectTransform rectTransform = loopCountText.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(150, 150);
+        rectTransform.sizeDelta = new Vector2(400, 200);
         rectTransform.position = currentCounterTextPosition;
 
         StartCoroutine(AnimateTextFadeAndMovement(loopCountText, outline));

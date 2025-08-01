@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SpawnLine : MonoBehaviour
 {
     [SerializeField]
-    private ScoreScriptableObject scoreData;
+    private LevelManager levelManager;
 
     [SerializeField]
     Canvas canvas;
@@ -23,9 +23,18 @@ public class SpawnLine : MonoBehaviour
     [SerializeField]
     int maxLineLength;
 
+    void Awake()
+    {
+        if (levelManager == null)
+        {
+            Debug.LogWarning("SpawnLine: Missing reference to LevelManager.");
+        }
+    }
+
     private void Update()
     {
-        if (scoreData.hasLost || scoreData.hasWon) return;
+        if (levelManager.currentLevel.HasRunOutOfPoints() ||
+            levelManager.currentLevel.HasReachedTargetPoints()) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

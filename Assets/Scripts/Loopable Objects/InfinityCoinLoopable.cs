@@ -4,7 +4,7 @@ using UnityEngine;
 public class InfinityCoinLoopable : MonoBehaviour, ILoopable
 {
     [SerializeField]
-    private ScoreScriptableObject scoreScriptableObject;
+    private LevelManager levelManager;
 
     [SerializeField]
     bool isActive;
@@ -14,6 +14,10 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
 
     void Awake()
     {
+        if (levelManager == null)
+        {
+            Debug.LogWarning("InfinityCoinLoopable: Missing reference to LevelManager.");
+        }
         infinityCoinsHandler = GetComponentInParent<InfinityCoinsHandler>();
 
         // Get the child object named "Sprite" and its SpriteRenderer
@@ -38,8 +42,8 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     {
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
-        int score = isActive ? loopCount : -1 * loopCount;
-        scoreScriptableObject.currentScore += score;
+        int points = isActive ? loopCount : -1 * loopCount;
+        levelManager.currentLevel.currentPoints += points;
 
         if (!isActive)
         {
@@ -50,7 +54,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
             infinityCoinsHandler.ToggleActiveCoins();
         }
 
-        return new LoopResult(score, score > 0 ? $"+{score}" : $"{score}", transform.position);
+        return new LoopResult(points, points > 0 ? $"+{points}" : $"{points}", transform.position);
     }
 
     public void ToggleIsActive()

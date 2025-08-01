@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
-    [SerializeField]
-    private ScoreScriptableObject scoreScriptableObject;
+    private LevelScriptableObject currentLevel;
 
     [SerializeField]
     private EnemyDropList enemyDropList;
@@ -13,9 +12,14 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     private int currentHealth;
 
-    private void Awake()
+    void Awake()
     {
         currentHealth = maxHealth;
+    }
+
+    public void SetCurrentLevel(LevelScriptableObject level)
+    {
+        currentLevel = level;
     }
 
     public LoopResult HandleLooped(GameObject line)
@@ -28,20 +32,19 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         }
         Destroy(gameObject);
         MaybeDropItem();
-        
-        scoreScriptableObject.currentScore += maxHealth;
+        currentLevel.currentPoints += maxHealth;
         return new LoopResult(maxHealth, $"+{maxHealth}pts!", transform.position);
     }
 
     private void MaybeDropItem()
     {
         if (enemyDropList == null) return;
-        
+
         int prefabCount = enemyDropList.enemyDropPrefabs.Count;
         int weightCount = enemyDropList.enemyDropWeights.Count;
 
         if (prefabCount == 0 || prefabCount != weightCount) return;
-        
+
         float randomWeight = Random.Range(0f, 1f);
         float cumulativeWeight = 0f;
 

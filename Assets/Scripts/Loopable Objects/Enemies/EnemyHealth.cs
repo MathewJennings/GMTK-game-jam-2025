@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
@@ -10,6 +12,12 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     [SerializeField]
     private int maxHealth = 1;
+
+    [SerializeField]
+    private UnityEvent callbackFunction;
+
+    [SerializeField]
+    private string deathTextOverride; // Optional override for death text
 
     private int currentHealth;
 
@@ -28,9 +36,11 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         }
         Destroy(gameObject);
         MaybeDropItem();
-        
+        callbackFunction?.Invoke();
+
         scoreScriptableObject.currentScore += maxHealth;
-        return new LoopResult(maxHealth, $"+{maxHealth}pts!", transform.position);
+        string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : $"+{maxHealth}pts!";
+        return new LoopResult(maxHealth, resultText, transform.position);
     }
 
     private void MaybeDropItem()
@@ -42,7 +52,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
         if (prefabCount == 0 || prefabCount != weightCount) return;
         
-        float randomWeight = Random.Range(0f, 1f);
+        float randomWeight = UnityEngine.Random.Range(0f, 1f);
         float cumulativeWeight = 0f;
 
         for (int i = 0; i < weightCount; i++)

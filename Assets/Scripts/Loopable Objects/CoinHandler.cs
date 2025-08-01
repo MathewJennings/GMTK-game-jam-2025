@@ -13,11 +13,11 @@ public class CoinHandler : MonoBehaviour, ILoopable
         }
     }
 
-    public LoopResult HandleLooped(GameObject line)
+    public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
         levelManager.currentLevel.currentPoints += loopCount;
-        return new LoopResult(loopCount, $"+{loopCount}", transform.position);
+        return new LoopResult(loopCount, $"+{loopCount}", Color.yellow, transform.position);
     }
 }

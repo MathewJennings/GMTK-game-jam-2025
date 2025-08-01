@@ -33,7 +33,6 @@ public class LoopDetector : MonoBehaviour
             if (!drawValidForLoops[i]) return false;
 
             // Check if last line segment intersects with any previous segment.
-            //if (Vector2.Distance(lastPoint, drawPositions[i]) < 0.1f)
             if (DoLineSegmentsIntersect(lastPoint, secondLastPoint, drawPositions[i], drawPositions[i-1]))
             {
                 // An intersection was found. Invalidate all points up until now.

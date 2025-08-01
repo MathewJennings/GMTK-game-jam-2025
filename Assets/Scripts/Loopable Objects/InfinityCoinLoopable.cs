@@ -43,7 +43,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         spriteRenderer.color = isActive ? Color.red : Color.purple;
     }
 
-    public LoopResult HandleLooped(GameObject line)
+    public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
@@ -58,6 +58,6 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
             infinityCoinsHandler.HandleGetHit();
         }
 
-        return new LoopResult(points, points > 0 ? $"+{points}" : $"{points}", transform.position);
+        return new LoopResult(points, points > 0 ? $"+{points}" : $"{points}", spriteRenderer.color, transform.position);
     }
 }

@@ -24,11 +24,4 @@ public class LevelScriptableObject : ScriptableObject
     {
         return currentPoints <= 0;
     }
-
-    public void SetPointsForStartOfBossFight()
-    {
-        int bossMaxHealth = bossPrefab.GetComponent<EnemyHealth>().GetMaxHealth();
-        currentPoints = bossMaxHealth;
-        targetPoints = bossMaxHealth;
-    }
 }

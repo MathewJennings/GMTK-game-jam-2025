@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class ScoreProgressBar : MonoBehaviour
+public class WaveProgressBar : MonoBehaviour
 {
     [SerializeField] private LevelManager levelManager;
 

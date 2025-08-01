@@ -27,6 +27,11 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentLevel = level;
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public int GetMaxHealth()
     {
         return maxHealth;

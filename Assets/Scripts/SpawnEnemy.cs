@@ -17,7 +17,6 @@ public class SpawnEnemy : MonoBehaviour
     private float curveTime = 0f;
     private AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 5, 10, 5);
     private HashSet<GameObject> activeEnemies = new();
-    private bool isBossSpawned = false;
 
     [Header("Velocity Settings")]
     [Space]
@@ -53,32 +52,13 @@ public class SpawnEnemy : MonoBehaviour
 
     void Update()
     {
-        if (currentLevel.HasReachedTargetPoints())
-        {
-            OnTargetPointsMet();
-        }
-        else if (currentLevel.HasRunOutOfPoints())
-        {
-            // Implement this
-            // OnLoseConditionMet();
-            return;
-        }
-        else
+        if (!currentLevel.HasReachedTargetPoints())
         {
             SpawnEnemies();
         }
-    }
-
-    private void OnTargetPointsMet()
-    {
-        if (!isBossSpawned)
+        else if (activeEnemies.Count > 0)
         {
             ClearRemainingEnemies();
-            activeEnemies.Clear();
-            GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
-            RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
-            randomMovement.InitializeBossPreset();
-            isBossSpawned = true;
         }
     }
 
@@ -120,7 +100,6 @@ public class SpawnEnemy : MonoBehaviour
         {
             spawnIntervalCurve = currentLevel.spawnInterval;
             curveTime = 0f;
-            isBossSpawned = false;
             Debug.Log($"Playing level: {currentLevel.levelName}");
         }
     }

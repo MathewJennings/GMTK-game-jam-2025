@@ -7,25 +7,31 @@ public class LevelManager : MonoBehaviour
 {
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public SpawnEnemy spawnEnemy; // Assign in Inspector
+    public WaveAndBossBarsManager waveAndBossBarsManager; // Assign in Inspector
+    public BossProgressBar bossProgressBar; // Assign in Inspector
+
+    private bool hasPreparedBossFight = false;
 
     void Awake()
     {
-        if (spawnEnemy != null && currentLevel != null)
+        if (spawnEnemy != null && currentLevel != null && waveAndBossBarsManager != null && bossProgressBar != null)
         {
-            spawnEnemy.PlayLevel(currentLevel);
             currentLevel.currentPoints = currentLevel.initialPointsBuffer;
+            currentLevel.isBossFight = false;
+            spawnEnemy.PlayLevel(currentLevel);
+            waveAndBossBarsManager.SetWaveBarActive();
         }
         else
         {
-            Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy or StartingLevel.");
+            Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy, StartingLevel, WaveAndBossBarsManager, or BossProgressBar.");
         }
     }
 
     void Update()
     {
-        if (currentLevel.HasReachedTargetPoints())
+        if (currentLevel.HasReachedTargetPoints() && !hasPreparedBossFight)
         {
-            OnTargetPointsMet();
+            PrepareBossFight();
         }
         else if (currentLevel.HasRunOutOfPoints())
         {
@@ -33,10 +39,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void OnTargetPointsMet()
+    private void PrepareBossFight()
     {
         currentLevel.isBossFight = true;
-        currentLevel.SetPointsForStartOfBossFight();
+        GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
+        RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
+        randomMovement.InitializeBossPreset();
+        waveAndBossBarsManager.SetBossBarActive();
+        bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
+        hasPreparedBossFight = true;
     }
 
     private void OnLoseConditionMet()

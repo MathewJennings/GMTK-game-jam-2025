@@ -513,6 +513,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 605877789999443274, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1757995156363076802, guid: 3fe96fcd80e007f49855b4798fa59d6f, type: 3}
       propertyPath: moveSpeed
       value: 0
@@ -685,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: currentLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 9122e4bc63227464089a33fd26a41414, type: 2}
+      objectReference: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
     - target: {fileID: 4427270174041315833, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 621.8329
@@ -1441,6 +1445,10 @@ PrefabInstance:
     - target: {fileID: 8914887297699012090, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
       propertyPath: m_Name
       value: InfinityCoins
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914887297699012090, guid: 33468597a558fb3439b7f1b9be3ef9c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

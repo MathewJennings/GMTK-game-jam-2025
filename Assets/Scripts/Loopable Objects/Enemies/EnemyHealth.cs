@@ -18,9 +18,9 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentHealth--;
         if (currentHealth > 0)
         {
-            return new LoopResult(0, $"{currentHealth} more");
+            return new LoopResult(0, $"{currentHealth} more", transform.position);
         }
         Destroy(gameObject);
-        return new LoopResult(maxHealth, "DEFEATED!");
+        return new LoopResult(maxHealth, "DEFEATED!", transform.position);
     }
 }

@@ -101,7 +101,7 @@ public class LineDrawing : MonoBehaviour
             {
                 AddNewPointToLine(currentPosition, Time.time);
                 lineGradient.UpdateGradient();
-                loopCounter.UpdateCounterTextPosition(currentPosition);
+                loopCounter.UpdateLineTipPosition(currentPosition);
             }
         }
     }

@@ -45,7 +45,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
             infinityCoinsHandler.ToggleActiveCoins();
         }
 
-        return new LoopResult(score, score > 0 ? $"+{score}" : $"{score}");
+        return new LoopResult(score, score > 0 ? $"+{score}" : $"{score}", transform.position);
     }
 
     public void ToggleIsActive()

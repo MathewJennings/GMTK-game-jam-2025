@@ -10,6 +10,6 @@ public class CoinHandler : MonoBehaviour, ILoopable
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
         scoreScriptableObject.currentScore += loopCount;
-        return new LoopResult(loopCount, $"+{loopCount}");
+        return new LoopResult(loopCount, $"+{loopCount}", transform.position);
     }
 }

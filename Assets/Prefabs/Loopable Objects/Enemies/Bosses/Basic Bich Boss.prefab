@@ -184,7 +184,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      propertyPath: shrinkOnHit
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: enemyDropList
@@ -192,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 898c19c12d064154882f657733ceab72, type: 2}
     - target: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: m_Name
-      value: Enemy Boss
+      value: Basic Bich Boss
       objectReference: {fileID: 0}
     - target: {fileID: 7612186399155506960, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: m_LocalScale.x

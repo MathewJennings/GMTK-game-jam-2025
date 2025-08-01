@@ -11,6 +11,9 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     [SerializeField]
     private int maxHealth = 1;
+    
+    [SerializeField]
+    private bool shrinkOnHit = false;
 
     [SerializeField]
     private UnityEvent callbackFunction;
@@ -35,7 +38,10 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentHealth--;
         if (currentHealth > 0)
         {
-            transform.localScale *= 0.95f;
+            if (shrinkOnHit)
+            {
+                transform.localScale *= 0.95f;
+            }
             return new LoopResult(0, $"{currentHealth} more", transform.position);
         }
         Destroy(gameObject);

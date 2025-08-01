@@ -101,8 +101,8 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 20
-  initialPointsBuffer: 20
+  currentPoints: 25
+  initialPointsBuffer: 25
   targetPoints: 25
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}

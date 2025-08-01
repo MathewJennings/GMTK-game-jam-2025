@@ -909,7 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDropList: {fileID: 0}
-  maxHealth: 50
+  maxHealth: 20
   shrinkOnHit: 0
   callbackFunction:
     m_PersistentCalls:

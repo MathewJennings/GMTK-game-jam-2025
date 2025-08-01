@@ -40,17 +40,22 @@ public class WaveProgressBar : MonoBehaviour
     private float lastKnownScore = 0;
     private Image fillImage;
     private Vector3 originalScale;
+    private Color originalColor;
 
     // Decay system variables
     private float lastScoreIncreaseTime = 0f;
     private float currentDecayRate = 0f;
     private bool isDecaying = false;
     private bool isDecayWarningEffectActive = false;
+    private Coroutine decayWarningCoroutine;
+    private bool decayPaused = false;
+    private Coroutine pauseDecayCoroutine;
 
     void Awake()
     {
         SetupProgressBar();
         originalScale = transform.localScale;
+        originalColor = fillImage.color;
         if (levelManager == null)
         {
             Debug.LogWarning("ScoreProgressBar: Missing reference to LevelManager.");
@@ -125,6 +130,11 @@ public class WaveProgressBar : MonoBehaviour
             isDecaying = false;
             return;
         }
+        if (decayPaused)
+        {
+            isDecaying = false;
+            return;
+        }
         float progressPercentage = levelManager.currentLevel.currentPoints / levelManager.currentLevel.targetPoints;
         float decayMultiplier = CalculateDecayMultiplier(progressPercentage);
         currentDecayRate = Mathf.Lerp(minDecayRate, maxDecayRate, decayMultiplier);
@@ -164,9 +174,9 @@ public class WaveProgressBar : MonoBehaviour
             {
                 StartCoroutine(PulseEffect());
             }
-            else if (scoreChange < 0 && isDecaying && !isDecayWarningEffectActive)
+            else if (scoreChange < 0 && isDecaying && !decayPaused && !isDecayWarningEffectActive)
             {
-                StartCoroutine(DecayWarningEffect());
+                decayWarningCoroutine = StartCoroutine(DecayWarningEffect());
             }
         }
     }
@@ -188,8 +198,7 @@ public class WaveProgressBar : MonoBehaviour
     private IEnumerator DecayWarningEffect()
     {
         isDecayWarningEffectActive = true;
-        // Subtle red flash to indicate deca
-        Color originalColor = fillImage.color;
+        // Subtle red flash to indicate decay
         Color warningColor = Color.Lerp(originalColor, Color.red, 0.3f);
 
         float elapsedTime = 0f;
@@ -251,9 +260,51 @@ public class WaveProgressBar : MonoBehaviour
     /// <summary>
     /// Temporarily pause score decay (useful for cutscenes, menus, powerups, etc.)
     /// </summary>
-    public void PauseDecay(bool pause)
+    public void PauseDecay(float duration)
     {
-        isScoreDecayEnabled = !pause;
+        // Stop current decay coroutine so we can reset the duration.
+        if (pauseDecayCoroutine != null)
+        {
+            StopCoroutine(pauseDecayCoroutine);
+        }
+        // Stop decay warning coroutine to avoid interfering with color changes.
+        if (decayWarningCoroutine != null)
+        {
+            StopCoroutine(decayWarningCoroutine);
+            decayWarningCoroutine = null;
+            isDecayWarningEffectActive = false;
+        }
+
+        pauseDecayCoroutine = StartCoroutine(PauseDecayCoroutine(duration));
+    }
+
+    private IEnumerator PauseDecayCoroutine(float duration)
+    {
+        isScoreDecayEnabled = false;
+        decayPaused = true;
+        // Lerp to a light blue ice color
+        Color decayFrozenColor = new Color(100 / 255f, 255 / 255f, 255 / 255f); // Normalize RGB values to 0-1
+        float transitionDuration = 0.3f;
+
+        for (float t = 0; t < transitionDuration; t += Time.deltaTime)
+        {
+            fillImage.color = Color.Lerp(originalColor, decayFrozenColor, t / transitionDuration);
+            yield return null;
+        }
+        fillImage.color = decayFrozenColor;
+
+        yield return new WaitForSeconds(duration);
+        
+        // Lerp back to the original color over 0.3 seconds
+        for (float t = 0; t < transitionDuration; t += Time.deltaTime)
+        {
+            fillImage.color = Color.Lerp(decayFrozenColor, originalColor, t / transitionDuration);
+            yield return null;
+        }
+        fillImage.color = originalColor;
+        isScoreDecayEnabled = true;
+        decayPaused = false;
+        pauseDecayCoroutine = null;
     }
 
     /// <summary>

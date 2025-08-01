@@ -4,11 +4,20 @@ using UnityEngine;
 public class InfinityCoinsHandler : MonoBehaviour
 {
     [SerializeField]
-    private float maxRotationSpeed = 45f; // Maximum rotation speed in degrees per second
+    private float minRotationSpeed = 30f; // Minimum rotation speed in degrees per second
+
+    [SerializeField]
+    private float maxRotationSpeed = 90f; // Maximum rotation speed in degrees per second
     
     [SerializeField]
+    private float rotationSpeedHitIncrease = 5f; // How much speed increases with each hit
+
+    [SerializeField]
     private float rotationChangeInterval = 5f; // Time in seconds to change rotation speed
-    
+
+    List<InfinityCoinLoopable> children;
+    InfinityCoinLoopable activeChild;
+
     private float rotationSpeed;
     private float timeSinceLastChange;
 
@@ -53,6 +62,23 @@ public class InfinityCoinsHandler : MonoBehaviour
     {
         // Initialize with a random rotation speed
         ChangeRotationSpeed();
+
+        children = new List<InfinityCoinLoopable>();
+        activeChild = null;
+
+        // Collect all children and find the active one
+        foreach (Transform child in transform)
+        {
+            InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();
+            if (loopable != null)
+            {
+                children.Add(loopable);
+                if (loopable.GetIsActive())
+                {
+                    activeChild = loopable;
+                }
+            }
+        }
     }
 
     void Update()
@@ -67,25 +93,56 @@ public class InfinityCoinsHandler : MonoBehaviour
         if (timeSinceLastChange >= rotationChangeInterval)
         {
             ChangeRotationSpeed();
-            timeSinceLastChange = 0f;
         }
     }
 
     private void ChangeRotationSpeed()
     {
-        // Randomize the rotation speed and direction
-        rotationSpeed = Random.Range(-1 * maxRotationSpeed, maxRotationSpeed);
+        // Randomize the rotation speed.
+        rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+        // Randomly reverse the direction
+        if (Random.value < 0.5f)
+        {
+            rotationSpeed = -rotationSpeed;
+        }
+
+        timeSinceLastChange = 0f;
+    }
+
+    public void HandleGetHit()
+    {
+        // Increase min and max rotation speed and change speed.
+        float oldRotationSpeed = rotationSpeed;
+        minRotationSpeed += rotationSpeedHitIncrease;
+        maxRotationSpeed += rotationSpeedHitIncrease;
+        ChangeRotationSpeed();
+        if (Mathf.Sign(rotationSpeed) == Mathf.Sign(oldRotationSpeed))
+        {
+            rotationSpeed = -rotationSpeed;
+        }
+
+        SetRandomActiveChild();
     }
     
-    public void ToggleActiveCoins()
+    private void SetRandomActiveChild()
     {
-        foreach (Transform child in transform)
+        // If no children or only one child exists, do nothing
+        if (children.Count <= 1) return;
+
+        // Deactivate the currently active child
+        if (activeChild != null)
         {
-            InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();
-            if (loopable != null)
-            {
-                loopable.ToggleIsActive();
-            }
+            activeChild.SetIsActive(false);
         }
+
+        // Select a random different child to activate
+        InfinityCoinLoopable newActiveChild;
+        do
+        {
+            newActiveChild = children[Random.Range(0, children.Count)];
+        } while (newActiveChild == activeChild);
+
+        activeChild = newActiveChild;
+        activeChild.SetIsActive(true);
     }
 }

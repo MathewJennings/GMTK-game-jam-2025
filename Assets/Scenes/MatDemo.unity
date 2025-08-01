@@ -271,7 +271,7 @@ PrefabInstance:
     - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: currentLevel
       value: 
-      objectReference: {fileID: 11400000, guid: f52fa8b194dac694e8cc999214101796, type: 2}
+      objectReference: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
     - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: bossProgressBar
       value: 

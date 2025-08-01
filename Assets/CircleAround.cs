@@ -64,7 +64,7 @@ public class CircleAround : MonoBehaviour
         // Only circle if not fading out and target exists
         if (!fadingOut && target != null)
         {
-            angle += speed * Time.deltaTime;
+            angle -= speed * Time.deltaTime;
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
             transform.position = target.position + new Vector3(x, y, 0f);

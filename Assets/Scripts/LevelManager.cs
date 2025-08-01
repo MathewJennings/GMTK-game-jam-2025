@@ -8,16 +8,42 @@ public class LevelManager : MonoBehaviour
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public SpawnEnemy spawnEnemy; // Assign in Inspector
 
-    void Start()
+    [SerializeField]
+    private int initialScoreBuffer = 20; // Creates a buffer for the constant decay of the score
+
+    void Awake()
     {
         if (spawnEnemy != null && currentLevel != null)
         {
             spawnEnemy.PlayLevel(currentLevel);
+            currentLevel.currentPoints = initialScoreBuffer;
         }
         else
         {
             Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy or StartingLevel.");
         }
+    }
+
+    void Update()
+    {
+        if (currentLevel.HasReachedTargetPoints())
+        {
+            OnTargetPointsMet();
+        }
+        else if (currentLevel.HasRunOutOfPoints())
+        {
+            OnLoseConditionMet();
+        }
+    }
+
+    private void OnTargetPointsMet()
+    {
+        // winAndLoseUIManager.ShowWinText();
+    }
+
+    private void OnLoseConditionMet()
+    {
+        // winAndLoseUIManager.ShowLoseText();
     }
 
     public void PlayNextLevel()

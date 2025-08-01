@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ScoreProgressBar : MonoBehaviour
 {
-    [SerializeField] private ScoreScriptableObject scoreData;
+    [SerializeField] private LevelManager levelManager;
 
     [Header("UI Components")]
     [SerializeField] private RectTransform progressBarFill;
@@ -49,13 +49,17 @@ public class ScoreProgressBar : MonoBehaviour
     private bool isDecaying = false;
     private bool isDecayWarningEffectActive = false;
 
-    void Start()
+    void Awake()
     {
         SetupProgressBar();
         originalScale = transform.localScale;
-        if (scoreData != null)
+        if (levelManager == null)
         {
-            lastKnownScore = scoreData.currentScore;
+            Debug.LogWarning("ScoreProgressBar: Missing reference to LevelManager.");
+        }
+        else
+        {
+            lastKnownScore = levelManager.currentLevel.currentPoints;
             displayedScore = lastKnownScore;
             targetDisplayScore = lastKnownScore;
             lastScoreIncreaseTime = Time.time;
@@ -64,17 +68,17 @@ public class ScoreProgressBar : MonoBehaviour
 
     void Update()
     {
-        if (scoreData == null ||
-        (scoreData.hasLost && displayedScore <= 0) ||
-        (scoreData.hasWon && displayedScore >= scoreData.targetScore)) return;
+        if (levelManager == null ||
+        (levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0) ||
+        (levelManager.currentLevel.HasReachedTargetPoints() && displayedScore >= levelManager.currentLevel.targetPoints)) return;
 
         // Check for score changes
-        if (scoreData.currentScore != lastKnownScore)
+        if (levelManager.currentLevel.currentPoints != lastKnownScore)
         {
-            float scoreChange = scoreData.currentScore - lastKnownScore;
+            float scoreChange = levelManager.currentLevel.currentPoints - lastKnownScore;
             OnScoreChanged(scoreChange);
-            lastKnownScore = scoreData.currentScore;
-            targetDisplayScore = scoreData.currentScore;
+            lastKnownScore = levelManager.currentLevel.currentPoints;
+            targetDisplayScore = levelManager.currentLevel.currentPoints;
             // Reset decay timer when score increases
             if (scoreChange > 0)
             {
@@ -112,19 +116,19 @@ public class ScoreProgressBar : MonoBehaviour
             isDecaying = false;
             return;
         }
-        if (scoreData.currentScore <= 0)
+        if (levelManager.currentLevel.currentPoints <= 0)
         {
             isDecaying = false;
             return;
         }
-        float progressPercentage = scoreData.currentScore / scoreData.targetScore;
+        float progressPercentage = levelManager.currentLevel.currentPoints / levelManager.currentLevel.targetPoints;
         float decayMultiplier = CalculateDecayMultiplier(progressPercentage);
         currentDecayRate = Mathf.Lerp(minDecayRate, maxDecayRate, decayMultiplier);
         float decayAmount = currentDecayRate * Time.deltaTime;
-        float newScore = Mathf.Max(0, scoreData.currentScore - decayAmount);
-        if (newScore != scoreData.currentScore)
+        float newScore = Mathf.Max(0, levelManager.currentLevel.currentPoints - decayAmount);
+        if (newScore != levelManager.currentLevel.currentPoints)
         {
-            scoreData.currentScore = newScore;
+            levelManager.currentLevel.currentPoints = newScore;
             isDecaying = true;
         }
     }
@@ -211,14 +215,14 @@ public class ScoreProgressBar : MonoBehaviour
     {
         displayedScore = Mathf.SmoothDamp(displayedScore, targetDisplayScore, ref velocity, smoothTime);
         velocity *= momentumDecay;
-        displayedScore = Mathf.Clamp(displayedScore, 0, scoreData.targetScore);
+        displayedScore = Mathf.Clamp(displayedScore, 0, levelManager.currentLevel.targetPoints);
     }
 
     private void UpdateProgressBar()
     {
-        if (progressBarFill == null || scoreData == null) return;
+        if (progressBarFill == null || levelManager == null) return;
 
-        float progress = scoreData.targetScore > 0 ? displayedScore / scoreData.targetScore : 0f;
+        float progress = levelManager.currentLevel.targetPoints > 0 ? displayedScore / levelManager.currentLevel.targetPoints : 0f;
         progress = Mathf.Clamp01(progress);
 
         // Update fill amount
@@ -234,8 +238,6 @@ public class ScoreProgressBar : MonoBehaviour
 
     private void UpdateTextDisplay()
     {
-        if (scoreData == null) return;
-
         if (currentScoreText != null)
         {
             currentScoreText.text = Mathf.RoundToInt(displayedScore).ToString();

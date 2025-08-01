@@ -13,9 +13,6 @@ public enum SpawnType
 
 public class SpawnEnemy : MonoBehaviour
 {
-    [SerializeField]
-    private ScoreScriptableObject scoreData;
-
     public List<GameObject> enemyPrefabs; // Assign in Inspector
 
     private float timer = 0f;
@@ -52,11 +49,16 @@ public class SpawnEnemy : MonoBehaviour
     [Range(0f, 1f)] public float convergeWeight = 0.33f;
     [Tooltip("Probability weight for Random spawn type.")]
     [Range(0f, 1f)] public float randomWeight = 0.34f;
-    public LevelScriptableObject currentLevel; // Add this field at the top of the class
+
+    private LevelScriptableObject currentLevel;
 
     void Update()
     {
-        if (scoreData.hasLost || scoreData.hasWon) return;
+        if (currentLevel != null &&
+            (currentLevel.HasReachedTargetPoints() || currentLevel.HasRunOutOfPoints()))
+        {
+            return;
+        }
 
         timer += Time.deltaTime;
         curveTime += Time.deltaTime;
@@ -186,6 +188,8 @@ public class SpawnEnemy : MonoBehaviour
                 Vector2 actualTargetPos = targetPosition + offset;
 
                 GameObject obj = Instantiate(enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
+                EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
+                enemyHealth.SetCurrentLevel(currentLevel);
 
                 TargetMover mover = obj.AddComponent<TargetMover>();
                 mover.direction = (actualTargetPos - actualSpawnPos).normalized;

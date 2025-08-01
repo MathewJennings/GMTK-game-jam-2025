@@ -13,6 +13,9 @@ public enum SpawnType
 
 public class SpawnEnemy : MonoBehaviour
 {
+    [SerializeField]
+    private ScoreScriptableObject scoreData;
+
     public List<GameObject> enemyPrefabs; // Assign in Inspector
 
     private float timer = 0f;
@@ -54,6 +57,8 @@ public class SpawnEnemy : MonoBehaviour
 
     void Update()
     {
+        if (scoreData.hasLost || scoreData.hasWon) return;
+
         timer += Time.deltaTime;
         curveTime += Time.deltaTime;
 

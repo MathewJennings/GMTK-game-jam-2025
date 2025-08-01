@@ -11,16 +11,17 @@ public class ScoreManager : MonoBehaviour
     private int targetScore = 1000;
 
     [SerializeField]
-    private string nextSceneName = "NextLevel";
+    private int initialScore = 20; // Creates a buffer for the constant decay of the score
 
     [SerializeField]
-    private float nextSceneLoadDelay = 2f;
+    private WinAndLoseUIManager winAndLoseUIManager;
 
     private void Awake()
     {
-        scoreScriptableObject.currentScore = 0;
+        scoreScriptableObject.currentScore = initialScore;
         scoreScriptableObject.targetScore = targetScore;
         scoreScriptableObject.hasWon = false;
+        scoreScriptableObject.hasLost = false;
     }
 
     void Update()
@@ -29,24 +30,21 @@ public class ScoreManager : MonoBehaviour
         {
             OnWinConditionMet();
         }
+        else if (scoreScriptableObject.currentScore <= 0)
+        {
+            OnLoseConditionMet();
+        }
     }
 
     private void OnWinConditionMet()
     {
         scoreScriptableObject.hasWon = true;
-        Invoke(nameof(LoadNextScene), nextSceneLoadDelay);
+        winAndLoseUIManager.ShowWinText();
     }
 
-    private void LoadNextScene()
+    private void OnLoseConditionMet()
     {
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentSceneIndex + 1);
-        }
+        scoreScriptableObject.hasLost = true;
+        winAndLoseUIManager.ShowLoseText();
     }
 }

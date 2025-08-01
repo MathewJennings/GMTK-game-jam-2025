@@ -567,6 +567,17 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 936403723498394182, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
   m_PrefabInstance: {fileID: 1117189792652999486}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1431595523 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4063659897483679420, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+  m_PrefabInstance: {fileID: 1117189792652999486}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61836684ea12fd74e83ee8ee266a863f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1469116704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7672939639677655237, guid: 688f57b1a9f61cf4e9cee0d76d99ee6d, type: 3}
@@ -656,14 +667,6 @@ PrefabInstance:
     - target: {fileID: 957207914959527687, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Name
       value: UI Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5994466559508839215, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
-      propertyPath: targetScoreText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5994466559508839215, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
-      propertyPath: currentScoreText
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Pivot.x
@@ -820,9 +823,9 @@ PrefabInstance:
       value: ScoreManager
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
-      propertyPath: nextSceneName
-      value: FelixDemo
-      objectReference: {fileID: 0}
+      propertyPath: winAndLoseUIManager
+      value: 
+      objectReference: {fileID: 1431595523}
     - target: {fileID: 7273504291315445407, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

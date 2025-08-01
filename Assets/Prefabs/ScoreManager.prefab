@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
   targetScore: 100
-  nextSceneName: NextLevel
-  nextSceneLoadDelay: 2
+  initialScore: 20
+  winAndLoseUIManager: {fileID: 0}

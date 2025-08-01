@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class SpawnLine : MonoBehaviour
 {
     [SerializeField]
+    private ScoreScriptableObject scoreData;
+
+    [SerializeField]
     Canvas canvas;
 
     [SerializeField]
@@ -22,6 +25,8 @@ public class SpawnLine : MonoBehaviour
 
     private void Update()
     {
+        if (scoreData.hasLost || scoreData.hasWon) return;
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             GameObject line = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);

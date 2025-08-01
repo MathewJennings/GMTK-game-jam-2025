@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLineLength: 150
   timeToFade: 1.5
+  scoreData: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
 --- !u!114 &-7970680117031427676
 MonoBehaviour:
   m_ObjectHideFlags: 0

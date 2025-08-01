@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b0741b26ddd47a5a7e75bd74a42ac4, type: 3}
+  m_Name: 4
+  m_EditorClassIdentifier: 
+  levelName: Harroing Hard
+  nextLevel: {fileID: 0}
+  spawnInterval:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.27183533
+      value: 2.0072098
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 10.219052
+      value: 1.9935812
+      inSlope: -0.99291754
+      outSlope: -0.99291754
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.05093651
+    - serializedVersion: 3
+      time: 20.351946
+      value: 2.350113
+      inSlope: -0.9647256
+      outSlope: -0.9647256
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0269441
+      outWeight: 0.042673197
+    - serializedVersion: 3
+      time: 29.847061
+      value: 4.931783
+      inSlope: -0.0023339945
+      outSlope: -0.0023339945
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 30.000061
+      value: 0
+      inSlope: -0.069433674
+      outSlope: -0.069433674
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0834776
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

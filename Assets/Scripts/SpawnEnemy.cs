@@ -20,10 +20,8 @@ public class SpawnEnemy : MonoBehaviour
 
     private float timer = 0f;
     private float curveTime = 0f;
-
-    [Header("Spawn Interval Curve")]
-    [Tooltip("Controls the interval between spawns over time. X axis is time, Y axis is interval.")]
-    public AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 2, 10, 2);
+    private AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 5, 10, 5);
+    private bool isBossSpawned = false;
 
     [Header("Velocity Settings")]
     [Space]
@@ -54,6 +52,7 @@ public class SpawnEnemy : MonoBehaviour
     [Range(0f, 1f)] public float convergeWeight = 0.33f;
     [Tooltip("Probability weight for Random spawn type.")]
     [Range(0f, 1f)] public float randomWeight = 0.34f;
+    public LevelScriptableObject currentLevel; // Add this field at the top of the class
 
     void Update()
     {
@@ -63,18 +62,34 @@ public class SpawnEnemy : MonoBehaviour
         curveTime += Time.deltaTime;
 
         float curveLength = spawnIntervalCurve.keys[spawnIntervalCurve.length - 1].time;
-        if (curveTime > curveLength)
-            curveTime = 0f;
-
+        if (!isBossSpawned && curveTime > curveLength)
+        {
+            isBossSpawned = true;
+            //LATER: This will eventually be a single call to spawn boss
+            Debug.Log("Spawning boss for: " + currentLevel.levelName);
+        }
         float currentInterval = spawnIntervalCurve.Evaluate(curveTime);
 
-        if (timer >= currentInterval)
+        //if currentInterval == 0, we don't spawn enemies
+        if (currentInterval != 0 && timer >= currentInterval)
         {
             Debug.Log($"Spawning enemies after {timer} seconds, interval: {currentInterval}");
             int numEnemies = Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
             SpawnType selectedType = GetWeightedSpawnType();
             SpawnTarget(numEnemies, selectedType);
             timer = 0f;
+        }
+    }
+
+    public void PlayLevel(LevelScriptableObject level)
+    {
+        currentLevel = level;
+        if (currentLevel != null)
+        {
+            spawnIntervalCurve = currentLevel.spawnInterval;
+            curveTime = 0f;
+            isBossSpawned = false;
+            Debug.Log($"Playing level: {currentLevel.levelName}");
         }
     }
 

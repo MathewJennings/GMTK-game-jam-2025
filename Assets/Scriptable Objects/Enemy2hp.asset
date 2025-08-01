@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDropPrefabs:
   - {fileID: 4827265980704315333, guid: be06567c4fc829945990606f60dcdaaa, type: 3}
+  enemyDropWeights:
+  - 0.05

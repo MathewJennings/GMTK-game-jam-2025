@@ -34,11 +34,25 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     private void MaybeDropItem()
     {
-        if (enemyDropList != null && enemyDropList.enemyDropPrefabs.Count > 0)
+        if (enemyDropList == null) return;
+        
+        int prefabCount = enemyDropList.enemyDropPrefabs.Count;
+        int weightCount = enemyDropList.enemyDropWeights.Count;
+
+        if (prefabCount == 0 || prefabCount != weightCount) return;
+        
+        float randomWeight = Random.Range(0f, 1f);
+        float cumulativeWeight = 0f;
+
+        for (int i = 0; i < weightCount; i++)
         {
-            int randomIndex = Random.Range(0, enemyDropList.enemyDropPrefabs.Count);
-            GameObject randomDrop = enemyDropList.enemyDropPrefabs[randomIndex];
-            Instantiate(randomDrop, transform.position, Quaternion.identity);
+            cumulativeWeight += enemyDropList.enemyDropWeights[i];
+            if (randomWeight <= cumulativeWeight)
+            {
+                GameObject randomDrop = enemyDropList.enemyDropPrefabs[i];
+                Instantiate(randomDrop, transform.position, Quaternion.identity);
+                break;
+            }
         }
     }
 }

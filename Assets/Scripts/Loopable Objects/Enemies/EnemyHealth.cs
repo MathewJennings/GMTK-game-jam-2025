@@ -10,12 +10,12 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     private EnemyDropList enemyDropList;
 
     [SerializeField]
-    protected int maxHealth = 1;
+    protected float maxHealth = 1;
 
     [SerializeField]
     private bool shrinkOnHit = false;
 
-    protected int currentHealth;
+    protected float currentHealth;
 
     void Awake()
     {
@@ -27,25 +27,25 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentLevel = level;
     }
 
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }
 
-    public int GetMaxHealth()
+    public float GetMaxHealth()
     {
         return maxHealth;
     }
     public virtual LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
-        currentHealth--;
+        currentHealth -= 1*multiplier;
         if (currentHealth > 0)
         {
             if (shrinkOnHit)
             {
                 transform.localScale *= 0.95f;
             }
-            return new LoopResult(0, $"{currentHealth} more", Color.red, transform.position);
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
         }
         Destroy(gameObject);
         MaybeDropItem();
@@ -53,7 +53,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         {
             currentLevel.currentPoints += maxHealth * multiplier;
         }
-        return new LoopResult(maxHealth, $"+{maxHealth}pts!", Color.red, transform.position);
+        return new LoopResult((int)maxHealth, $"+{maxHealth}pts!", Color.red, transform.position);
     }
 
     private void MaybeDropItem()

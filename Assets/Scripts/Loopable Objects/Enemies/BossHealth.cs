@@ -17,15 +17,15 @@ public class BossHealth : EnemyHealth, ILoopable
 
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        currentHealth--;
+        currentHealth -= 1*multiplier;
         if (currentHealth > 0)
         {
-            return new LoopResult(0, $"{currentHealth} more", Color.red, transform.position);
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
         }
         Destroy(gameObject);
         callbackFunction?.Invoke();
         currentLevel.hasCompletedBossFight = true;
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
-        return new LoopResult(maxHealth, resultText, Color.red, transform.position);
+        return new LoopResult((int)maxHealth, resultText, Color.red, transform.position);
     }
 }

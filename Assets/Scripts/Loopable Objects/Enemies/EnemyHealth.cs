@@ -42,9 +42,12 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         MaybeDropItem();
         callbackFunction?.Invoke();
 
-        scoreScriptableObject.currentScore += maxHealth;
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : $"+{maxHealth}pts!";
-        currentLevel.currentPoints += maxHealth;
+
+        if (currentLevel != null)
+        {
+            currentLevel.currentPoints += maxHealth;
+        }
         return new LoopResult(maxHealth, resultText, transform.position);
     }
 
@@ -56,10 +59,9 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         int weightCount = enemyDropList.enemyDropWeights.Count;
 
         if (prefabCount == 0 || prefabCount != weightCount) return;
-        
+
         float randomWeight = UnityEngine.Random.Range(0f, 1f);
 
-        float randomWeight = Random.Range(0f, 1f);
         float cumulativeWeight = 0f;
 
         for (int i = 0; i < weightCount; i++)

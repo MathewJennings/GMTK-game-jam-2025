@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
+    [SerializeField]
+    private ScoreScriptableObject scoreScriptableObject;
 
     [SerializeField]
     private int maxHealth = 1;
@@ -21,6 +23,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
             return new LoopResult(0, $"{currentHealth} more", transform.position);
         }
         Destroy(gameObject);
+        scoreScriptableObject.currentScore += maxHealth;
         return new LoopResult(maxHealth, "DEFEATED!", transform.position);
     }
 }

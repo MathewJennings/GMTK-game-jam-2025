@@ -121,3 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad977feb659e324a85fcc1d8d00bd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
+  maxHealth: 1

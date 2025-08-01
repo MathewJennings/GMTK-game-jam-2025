@@ -4,24 +4,18 @@ using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
-    private LevelScriptableObject currentLevel;
+    protected LevelScriptableObject currentLevel;
 
     [SerializeField]
     private EnemyDropList enemyDropList;
 
     [SerializeField]
-    private int maxHealth = 1;
-    
+    protected int maxHealth = 1;
+
     [SerializeField]
     private bool shrinkOnHit = false;
 
-    [SerializeField]
-    private UnityEvent callbackFunction;
-
-    [SerializeField]
-    private string deathTextOverride; // Optional override for death text
-
-    private int currentHealth;
+    protected int currentHealth;
 
     void Awake()
     {
@@ -33,7 +27,12 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentLevel = level;
     }
 
-    public LoopResult HandleLooped(GameObject line)
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public virtual LoopResult HandleLooped(GameObject line)
     {
         currentHealth--;
         if (currentHealth > 0)
@@ -46,15 +45,11 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         }
         Destroy(gameObject);
         MaybeDropItem();
-        callbackFunction?.Invoke();
-
-        string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : $"+{maxHealth}pts!";
-
         if (currentLevel != null)
         {
             currentLevel.currentPoints += maxHealth;
         }
-        return new LoopResult(maxHealth, resultText, transform.position);
+        return new LoopResult(maxHealth, $"+{maxHealth}pts!", transform.position);
     }
 
     private void MaybeDropItem()

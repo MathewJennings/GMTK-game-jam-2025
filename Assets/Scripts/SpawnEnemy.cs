@@ -16,6 +16,7 @@ public class SpawnEnemy : MonoBehaviour
     private float timer = 0f;
     private float curveTime = 0f;
     private AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 5, 10, 5);
+    private HashSet<GameObject> activeEnemies = new();
     private bool isBossSpawned = false;
 
     [Header("Velocity Settings")]
@@ -66,18 +67,31 @@ public class SpawnEnemy : MonoBehaviour
         {
             SpawnEnemies();
         }
-        
     }
 
     private void OnTargetPointsMet()
     {
         if (!isBossSpawned)
         {
+            ClearRemainingEnemies();
+            activeEnemies.Clear();
             GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
             RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
             randomMovement.InitializeBossPreset();
             isBossSpawned = true;
         }
+    }
+
+    private void ClearRemainingEnemies()
+    {
+        foreach (var enemy in activeEnemies)
+        {
+            if (enemy != null)
+            {
+                Destroy(enemy);
+            }
+        }
+        activeEnemies.Clear();
     }
 
     private void SpawnEnemies()
@@ -204,6 +218,7 @@ public class SpawnEnemy : MonoBehaviour
                 Vector2 actualTargetPos = targetPosition + offset;
 
                 GameObject obj = Instantiate(currentLevel.enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
+                activeEnemies.Add(obj);
                 EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
                 enemyHealth.SetCurrentLevel(currentLevel);
 

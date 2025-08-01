@@ -250,7 +250,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7612186399155506960, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
@@ -259,10 +260,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7612186399155506960, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4960599875122430736}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1220506604347110733}
   m_SourcePrefab: {fileID: 100100000, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
 --- !u!4 &5550314188805922506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7612186399155506960, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
   m_PrefabInstance: {fileID: 2640594185692844506}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8066606338228497719 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+  m_PrefabInstance: {fileID: 2640594185692844506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1220506604347110733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066606338228497719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a645de2caaa5db42b1e551093d5a672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyDropList: {fileID: 0}
+  maxHealth: 50
+  shrinkOnHit: 0
+  callbackFunction:
+    m_PersistentCalls:
+      m_Calls: []
+  deathTextOverride: 

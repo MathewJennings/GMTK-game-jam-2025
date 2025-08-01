@@ -10,6 +10,7 @@ public class LevelScriptableObject : ScriptableObject
     public float currentPoints = 20;
     public float initialPointsBuffer = 20;
     public float targetPoints = 100;
+    public bool isBossFight = false;
 
     public List<GameObject> enemyPrefabs;
     public GameObject bossPrefab;
@@ -22,5 +23,12 @@ public class LevelScriptableObject : ScriptableObject
     public bool HasRunOutOfPoints()
     {
         return currentPoints <= 0;
+    }
+
+    public void SetPointsForStartOfBossFight()
+    {
+        int bossMaxHealth = bossPrefab.GetComponent<EnemyHealth>().GetMaxHealth();
+        currentPoints = bossMaxHealth;
+        targetPoints = bossMaxHealth;
     }
 }

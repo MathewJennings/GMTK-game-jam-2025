@@ -35,7 +35,8 @@ public class LevelManager : MonoBehaviour
 
     private void OnTargetPointsMet()
     {
-        // winAndLoseUIManager.ShowWinText();
+        currentLevel.isBossFight = true;
+        currentLevel.SetPointsForStartOfBossFight();
     }
 
     private void OnLoseConditionMet()

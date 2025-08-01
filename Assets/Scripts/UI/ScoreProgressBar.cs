@@ -12,13 +12,11 @@ public class ScoreProgressBar : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentScoreText;
 
     [Header("Animation Settings")]
-    [SerializeField] private float animationSpeed = 2f;
     [SerializeField] private AnimationCurve animationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] private float momentumDecay = 0.95f;
     [SerializeField] private float smoothTime = 0.3f;
 
     [Header("Visual Effects")]
-    [SerializeField] private Color fillColor = Color.green;
     [SerializeField] private Gradient progressGradient;
     [SerializeField] private bool useGradient = true;
 
@@ -28,7 +26,7 @@ public class ScoreProgressBar : MonoBehaviour
     [SerializeField] private bool enableScoreChangeEffects = true;
 
     [Header("Score Decay Settings")]
-    [SerializeField] private bool enableScoreDecay = true;
+    [SerializeField] private bool isScoreDecayEnabled = true;
     [SerializeField] private float minDecayRate = 0.5f; // Minimum decay when far from target score
     [SerializeField] private float maxDecayRate = 2.0f; // Maximum decay when close to target score
     [SerializeField] private AnimationCurve decayCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -68,11 +66,15 @@ public class ScoreProgressBar : MonoBehaviour
 
     void Update()
     {
-        if (levelManager == null ||
-        (levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0) ||
-        (levelManager.currentLevel.HasReachedTargetPoints() && displayedScore >= levelManager.currentLevel.targetPoints)) return;
+        UpdateScoreDisplayState();
+        MaybeApplyScoreDecay();
+        AnimateScore();
+        UpdateProgressBar();
+        UpdateTextDisplay();
+    }
 
-        // Check for score changes
+    private void UpdateScoreDisplayState()
+    {
         if (levelManager.currentLevel.currentPoints != lastKnownScore)
         {
             float scoreChange = levelManager.currentLevel.currentPoints - lastKnownScore;
@@ -85,14 +87,16 @@ public class ScoreProgressBar : MonoBehaviour
                 lastScoreIncreaseTime = Time.time;
             }
         }
-        if (enableScoreDecay)
+    }
+
+    private void MaybeApplyScoreDecay()
+    {
+        if (isScoreDecayEnabled &&
+                !(levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0) &&
+                !levelManager.currentLevel.isBossFight)
         {
             ApplyScoreDecay();
         }
-        // Animate the displayed score with momentum
-        AnimateScore();
-        UpdateProgressBar();
-        UpdateTextDisplay();
     }
 
     private void SetupProgressBar()
@@ -244,18 +248,12 @@ public class ScoreProgressBar : MonoBehaviour
         }
     }
 
-    // Public methods for external control
-    public void SetAnimationSpeed(float speed)
-    {
-        animationSpeed = speed;
-    }
-
     /// <summary>
     /// Temporarily pause score decay (useful for cutscenes, menus, powerups, etc.)
     /// </summary>
     public void PauseDecay(bool pause)
     {
-        enableScoreDecay = !pause;
+        isScoreDecayEnabled = !pause;
     }
 
     /// <summary>
@@ -279,7 +277,7 @@ public class ScoreProgressBar : MonoBehaviour
     /// </summary>
     public bool IsDecaying()
     {
-        return isDecaying && enableScoreDecay;
+        return isDecaying && isScoreDecayEnabled;
     }
 
     /// <summary>

@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         currentHealth--;
         if (currentHealth > 0)
         {
+            transform.localScale *= 0.95f;
             return new LoopResult(0, $"{currentHealth} more", transform.position);
         }
         Destroy(gameObject);

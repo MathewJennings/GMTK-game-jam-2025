@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfinityCoinsHandler : MonoBehaviour
+public class InfinityCoinsHandler : BossHealth
 {
     [SerializeField]
     private float minRotationSpeed = 30f; // Minimum rotation speed in degrees per second
@@ -20,6 +20,16 @@ public class InfinityCoinsHandler : MonoBehaviour
 
     private float rotationSpeed;
     private float timeSinceLastChange;
+
+    void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public override LoopResult HandleLooped(GameObject line)
+    {
+        return new LoopResult(0, null, transform.position);
+    }
 
     public static void HandleMultipleInfinityCoins(List<ILoopable> loopables)
     {
@@ -111,6 +121,7 @@ public class InfinityCoinsHandler : MonoBehaviour
 
     public void HandleGetHit()
     {
+        currentHealth--;
         // Increase min and max rotation speed and change speed.
         float oldRotationSpeed = rotationSpeed;
         minRotationSpeed += rotationSpeedHitIncrease;

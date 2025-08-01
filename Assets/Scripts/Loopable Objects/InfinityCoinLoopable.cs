@@ -55,7 +55,6 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
         int points = isActive ? loopCount : -1 * loopCount;
-        levelManager.currentLevel.currentPoints += points;
 
         if (!isActive)
         {

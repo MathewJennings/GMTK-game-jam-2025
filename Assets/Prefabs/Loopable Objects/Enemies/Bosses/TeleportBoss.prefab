@@ -908,6 +908,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f64d088908c0c9438ae19f7c9f79d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDropList: {fileID: 0}
+  maxHealth: 50
+  shrinkOnHit: 0
+  callbackFunction:
+    m_PersistentCalls:
+      m_Calls: []
+  deathTextOverride: 
   minRotationSpeed: 30
   maxRotationSpeed: 90
   rotationSpeedHitIncrease: 5

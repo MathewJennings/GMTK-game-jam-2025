@@ -901,8 +901,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2114484304}
-  radius: 1
-  speed: 3
+  radius: 2
+  speed: 3.5
   fadeDuration: 1
 --- !u!1 &1017465462
 GameObject:

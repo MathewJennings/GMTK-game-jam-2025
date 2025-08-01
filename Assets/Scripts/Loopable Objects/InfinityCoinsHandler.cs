@@ -101,13 +101,44 @@ public class InfinityCoinsHandler : MonoBehaviour
             rotationSpeed = -rotationSpeed;
         }
 
+        SetRandomActiveChild();
+    }
+    
+    private void SetRandomActiveChild()
+    {
+        List<InfinityCoinLoopable> children = new List<InfinityCoinLoopable>();
+        InfinityCoinLoopable activeChild = null;
+
+        // Collect all children and find the active one
         foreach (Transform child in transform)
         {
             InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();
             if (loopable != null)
             {
-                loopable.ToggleIsActive();
+                children.Add(loopable);
+                if (loopable.GetIsActive())
+                {
+                    activeChild = loopable;
+                }
             }
         }
+
+        // If no children or only one child exists, do nothing
+        if (children.Count <= 1) return;
+
+        // Deactivate the currently active child
+        if (activeChild != null)
+        {
+            activeChild.SetIsActive(false);
+        }
+
+        // Select a random different child to activate
+        InfinityCoinLoopable newActiveChild;
+        do
+        {
+            newActiveChild = children[Random.Range(0, children.Count)];
+        } while (newActiveChild == activeChild);
+
+        newActiveChild.SetIsActive(true);
     }
 }

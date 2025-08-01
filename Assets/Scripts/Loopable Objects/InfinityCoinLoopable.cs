@@ -26,12 +26,24 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
                 Debug.LogError("SpriteRenderer not found on the child object.");
             }
         }
-        spriteRenderer.color = isActive ? Color.green : Color.purple;
+        spriteRenderer.color = isActive ? Color.red : Color.purple;
     }
 
     public bool GetIsActive()
     {
         return isActive;
+    }
+
+    public void SetIsActive(bool b)
+    {
+        isActive = b;
+        spriteRenderer.color = isActive ? Color.red : Color.purple;
+    }
+
+    public void ToggleIsActive()
+    {
+        isActive = !isActive;
+        spriteRenderer.color = isActive ? Color.red : Color.purple;
     }
 
     public LoopResult HandleLooped(GameObject line)
@@ -51,11 +63,5 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         }
 
         return new LoopResult(score, score > 0 ? $"+{score}" : $"{score}", transform.position);
-    }
-
-    public void ToggleIsActive()
-    {
-        isActive = !isActive;
-        spriteRenderer.color = isActive ? Color.green : Color.purple;
     }
 }

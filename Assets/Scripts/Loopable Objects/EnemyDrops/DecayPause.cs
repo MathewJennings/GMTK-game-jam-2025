@@ -21,10 +21,10 @@ public class DecayPause : MonoBehaviour, ILoopable
         }
     }
 
-    public LoopResult HandleLooped(GameObject line)
+    public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         waveProgressBar.PauseDecay(duration);
         Destroy(gameObject);
-        return new LoopResult(0, "Decay paused!", transform.position);
+        return new LoopResult(0, "Decay paused!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
     }
 }

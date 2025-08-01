@@ -9,7 +9,6 @@ public class CircleAround : MonoBehaviour
     public float fadeDuration = 1f;
     [Header("Circle Drawing")]
     public float circleLineWidth = 0.1f;
-    public Color circleColor = Color.cyan;
 
     private float angle = 0f;
     private SpriteRenderer spriteRenderer;
@@ -86,7 +85,7 @@ public class CircleAround : MonoBehaviour
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
             transform.position = target.position + new Vector3(x, y, 0f);
-            if (completedLoops % 2 == 0)
+            if (completedLoops % 4 < 3)
             {
                 AddPointToTrail();
             }
@@ -113,7 +112,7 @@ public class CircleAround : MonoBehaviour
         // Add and configure LineRenderer
         circleLineRenderer = circleObject.AddComponent<LineRenderer>();
         Material circleMaterial = new Material(Shader.Find("Sprites/Default"));
-        circleMaterial.color = circleColor;
+        circleMaterial.color = Color.red;
         circleLineRenderer.material = circleMaterial;
         circleLineRenderer.startWidth = circleLineWidth;
         circleLineRenderer.endWidth = circleLineWidth;
@@ -132,6 +131,26 @@ public class CircleAround : MonoBehaviour
         if (hasCompletedFirstRotation && normalizedLastAngle < normalizedAngle)
         {
             completedLoops++;
+            ClearTrail();
+            if (completedLoops % 4 == 0)
+            {
+                circleLineRenderer.material.color = Color.red;
+                speed = 3.5f;
+            }
+            else if (completedLoops % 4 == 1)
+            {
+                circleLineRenderer.material.color = Color.yellow;
+                speed = 5f;
+            }
+            else if (completedLoops % 4 == 2)
+            {
+                circleLineRenderer.material.color = Color.green;
+                speed = 6.5f;
+            }
+            else if (completedLoops % 4 == 3)
+            {
+                speed = 5f;
+            }
         }
 
         // Mark that we've started rotating (after the first significant movement)

@@ -5,4 +5,5 @@ using UnityEngine;
 public class EnemyDropList : ScriptableObject
 {
     public List<GameObject> enemyDropPrefabs;
+    public List<float> enemyDropWeights;
 }

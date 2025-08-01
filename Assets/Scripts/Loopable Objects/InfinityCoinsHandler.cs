@@ -15,6 +15,9 @@ public class InfinityCoinsHandler : MonoBehaviour
     [SerializeField]
     private float rotationChangeInterval = 5f; // Time in seconds to change rotation speed
 
+    List<InfinityCoinLoopable> children;
+    InfinityCoinLoopable activeChild;
+
     private float rotationSpeed;
     private float timeSinceLastChange;
 
@@ -59,6 +62,23 @@ public class InfinityCoinsHandler : MonoBehaviour
     {
         // Initialize with a random rotation speed
         ChangeRotationSpeed();
+
+        children = new List<InfinityCoinLoopable>();
+        activeChild = null;
+
+        // Collect all children and find the active one
+        foreach (Transform child in transform)
+        {
+            InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();
+            if (loopable != null)
+            {
+                children.Add(loopable);
+                if (loopable.GetIsActive())
+                {
+                    activeChild = loopable;
+                }
+            }
+        }
     }
 
     void Update()
@@ -106,23 +126,6 @@ public class InfinityCoinsHandler : MonoBehaviour
     
     private void SetRandomActiveChild()
     {
-        List<InfinityCoinLoopable> children = new List<InfinityCoinLoopable>();
-        InfinityCoinLoopable activeChild = null;
-
-        // Collect all children and find the active one
-        foreach (Transform child in transform)
-        {
-            InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();
-            if (loopable != null)
-            {
-                children.Add(loopable);
-                if (loopable.GetIsActive())
-                {
-                    activeChild = loopable;
-                }
-            }
-        }
-
         // If no children or only one child exists, do nothing
         if (children.Count <= 1) return;
 
@@ -139,6 +142,7 @@ public class InfinityCoinsHandler : MonoBehaviour
             newActiveChild = children[Random.Range(0, children.Count)];
         } while (newActiveChild == activeChild);
 
-        newActiveChild.SetIsActive(true);
+        activeChild = newActiveChild;
+        activeChild.SetIsActive(true);
     }
 }

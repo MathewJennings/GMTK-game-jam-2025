@@ -36,6 +36,10 @@ public class LoopCounter : MonoBehaviour
     {
         currentLoopCount++;
         List<LoopResult> results = new();
+        
+        // First check if there are two infinity coins that share the same parent.
+        InfinityCoinsHandler.HandleMultipleInfinityCoins(loopDetector.GetLoopablesInLoop());
+
         foreach (ILoopable loopable in loopDetector.GetLoopablesInLoop())
         {
             LoopResult result = loopable.HandleLooped(gameObject);

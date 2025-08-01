@@ -64,7 +64,9 @@ public class ScoreProgressBar : MonoBehaviour
 
     void Update()
     {
-        if (scoreData == null || scoreData.hasLost || scoreData.hasWon) return;
+        if (scoreData == null ||
+        (scoreData.hasLost && displayedScore <= 0) ||
+        (scoreData.hasWon && displayedScore >= scoreData.targetScore)) return;
 
         // Check for score changes
         if (scoreData.currentScore != lastKnownScore)
@@ -98,12 +100,6 @@ public class ScoreProgressBar : MonoBehaviour
             {
                 fillImage = progressBarFill.gameObject.AddComponent<Image>();
             }
-        }
-        if (fillImage != null)
-        {
-            fillImage.color = fillColor;
-            fillImage.type = Image.Type.Filled;
-            fillImage.fillMethod = Image.FillMethod.Vertical;
         }
     }
 

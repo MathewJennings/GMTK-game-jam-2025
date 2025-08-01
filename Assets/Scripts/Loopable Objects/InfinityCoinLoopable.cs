@@ -47,7 +47,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
         }
         else
         {
-            infinityCoinsHandler.ToggleActiveCoins();
+            infinityCoinsHandler.HandleGetHit();
         }
 
         return new LoopResult(score, score > 0 ? $"+{score}" : $"{score}", transform.position);

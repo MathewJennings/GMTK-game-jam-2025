@@ -4,11 +4,17 @@ using UnityEngine;
 public class InfinityCoinsHandler : MonoBehaviour
 {
     [SerializeField]
-    private float maxRotationSpeed = 45f; // Maximum rotation speed in degrees per second
+    private float minRotationSpeed = 30f; // Minimum rotation speed in degrees per second
+
+    [SerializeField]
+    private float maxRotationSpeed = 90f; // Maximum rotation speed in degrees per second
     
     [SerializeField]
+    private float rotationSpeedHitIncrease = 5f; // How much speed increases with each hit
+
+    [SerializeField]
     private float rotationChangeInterval = 5f; // Time in seconds to change rotation speed
-    
+
     private float rotationSpeed;
     private float timeSinceLastChange;
 
@@ -67,18 +73,34 @@ public class InfinityCoinsHandler : MonoBehaviour
         if (timeSinceLastChange >= rotationChangeInterval)
         {
             ChangeRotationSpeed();
-            timeSinceLastChange = 0f;
         }
     }
 
     private void ChangeRotationSpeed()
     {
-        // Randomize the rotation speed and direction
-        rotationSpeed = Random.Range(-1 * maxRotationSpeed, maxRotationSpeed);
+        // Randomize the rotation speed.
+        rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
+        // Randomly reverse the direction
+        if (Random.value < 0.5f)
+        {
+            rotationSpeed = -rotationSpeed;
+        }
+
+        timeSinceLastChange = 0f;
     }
-    
-    public void ToggleActiveCoins()
+
+    public void HandleGetHit()
     {
+        // Increase min and max rotation speed and change speed.
+        float oldRotationSpeed = rotationSpeed;
+        minRotationSpeed += rotationSpeedHitIncrease;
+        maxRotationSpeed += rotationSpeedHitIncrease;
+        ChangeRotationSpeed();
+        if (Mathf.Sign(rotationSpeed) == Mathf.Sign(oldRotationSpeed))
+        {
+            rotationSpeed = -rotationSpeed;
+        }
+
         foreach (Transform child in transform)
         {
             InfinityCoinLoopable loopable = child.GetComponent<InfinityCoinLoopable>();

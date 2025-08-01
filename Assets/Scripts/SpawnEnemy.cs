@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Assign in Inspector
+    public List<GameObject> enemyPrefabs; // Assign in Inspector
 
     private float timer = 0f;
     public float spawnInterval = 2f;
@@ -26,7 +27,7 @@ public class SpawnEnemy : MonoBehaviour
         Vector2 screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
-        if (enemyPrefab != null)
+        if (enemyPrefabs.Count > 0)
         {
             int side = Random.Range(0, 4); // 0 = top, 1 = bottom, 2 = left, 3 = right
             Vector2 spawnPosition = Vector2.zero;
@@ -55,8 +56,9 @@ public class SpawnEnemy : MonoBehaviour
                     break;
             }
 
+            int enemyIndex = Random.Range(0, enemyPrefabs.Count);
             // Instantiate the object
-            GameObject obj = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            GameObject obj = Instantiate(enemyPrefabs[enemyIndex], spawnPosition, Quaternion.identity);
 
             // Assign direction and speed
             TargetMover mover = obj.AddComponent<TargetMover>();

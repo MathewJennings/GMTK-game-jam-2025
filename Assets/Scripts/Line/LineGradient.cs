@@ -8,13 +8,12 @@ public class LineGradient : MonoBehaviour
     public void SetLoopTextGenerator(LoopTextGenerator loopTextGenerator)
     {
         this.loopTextGenerator = loopTextGenerator;
+        UpdateGradient();
     }
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        Canvas canvas = FindFirstObjectByType<Canvas>();
-        UpdateGradient();
     }
 
     public void UpdateGradient()

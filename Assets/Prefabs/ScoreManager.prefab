@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreScriptableObject: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
-  targetScore: 1000
+  targetScore: 100
   nextSceneName: NextLevel
   nextSceneLoadDelay: 2

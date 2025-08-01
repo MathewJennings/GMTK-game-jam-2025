@@ -406,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayOffsetX: 100
   displayOffsetY: 50
-  fontSize: 66
+  fontSize: 32
   fontColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   fadeDuration: 0.3
   verticalMovementAnimationDistance: 50

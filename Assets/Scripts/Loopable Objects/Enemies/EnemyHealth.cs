@@ -24,6 +24,6 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         }
         Destroy(gameObject);
         scoreScriptableObject.currentScore += maxHealth;
-        return new LoopResult(maxHealth, "DEFEATED!", transform.position);
+        return new LoopResult(maxHealth, $"+{maxHealth}pts!", transform.position);
     }
 }

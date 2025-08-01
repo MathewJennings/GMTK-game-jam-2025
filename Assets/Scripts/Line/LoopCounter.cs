@@ -10,9 +10,8 @@ public class LoopCounter : MonoBehaviour
     public float displayOffsetY = 50f;
     private int currentLoopCount = 0;
     private Camera mainCamera;
-    private Canvas canvas;
-    private Vector2 currentCounterTextPosition;
     private LoopDetector loopDetector;
+    private LoopTextGenerator loopTextGenerator;
 
     void Start()
     {
@@ -25,9 +24,9 @@ public class LoopCounter : MonoBehaviour
         return currentLoopCount;
     }
 
-    public void SetCanvas(Canvas newCanvas)
+    public void SetLoopTextGenerator(LoopTextGenerator newLoopTextGenerator)
     {
-        canvas = newCanvas;
+        loopTextGenerator = newLoopTextGenerator;
     }
 
     /// <summary>
@@ -45,24 +44,11 @@ public class LoopCounter : MonoBehaviour
                 results.Add(result);
             }
         }
-        float textSpacing = 50f;
         for (int i = 0; i < results.Count; i++)
         {
             Vector2 resultScreenPos = mainCamera.WorldToScreenPoint(results[i].position);
-            Vector2 weightedCenterPosition = (2f * currentCounterTextPosition + 3f * resultScreenPos) / 5f;
-            float totalSize = (results.Count - 1) * textSpacing;
-            Vector2 stackOffset = new(0, (i * textSpacing) - (totalSize * 0.5f));
-            Vector2 textPosition = weightedCenterPosition + stackOffset;
-            canvas.GetComponent<LoopTextGenerator>().CreateLoopCountText(results[i].displayText, textPosition);
+            Vector2 textPosition = resultScreenPos + new Vector2(displayOffsetX, displayOffsetY);
+            loopTextGenerator.CreateLoopCountText(results[i].displayText, textPosition);
         }
-    }
-
-    /// <summary>
-    /// Update the position where the tip of the line cursor currently is.
-    /// </summary>
-    /// <param name="worldPosition">The current world position of the line drawing.</param>
-    public void UpdateLineTipPosition(Vector2 worldPosition)
-    {
-        currentCounterTextPosition = mainCamera.WorldToScreenPoint(worldPosition);
     }
 }

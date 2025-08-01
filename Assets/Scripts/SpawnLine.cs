@@ -6,7 +6,7 @@ public class SpawnLine : MonoBehaviour
 {
     [SerializeField]
     Canvas canvas;
-    
+
     [SerializeField]
     GameObject audioManager;
 
@@ -33,9 +33,13 @@ public class SpawnLine : MonoBehaviour
 
             LineBreaker lineBreaker = line.GetComponent<LineBreaker>();
             lineBreaker.SetAudioManager(audioManager);
-            
+
+            LoopTextGenerator loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
             LoopCounter loopCounter = line.GetComponent<LoopCounter>();
-            loopCounter.SetCanvas(canvas);
+            loopCounter.SetLoopTextGenerator(loopTextGenerator);
+
+            LineGradient lineGradient = line.GetComponent<LineGradient>();
+            lineGradient.SetLoopTextGenerator(loopTextGenerator);
         }
     }
 }

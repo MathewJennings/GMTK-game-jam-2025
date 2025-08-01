@@ -56,7 +56,6 @@ public class LineDrawing : MonoBehaviour
         loopCounter = GetComponent<LoopCounter>();
         loopDetector = GetComponent<LoopDetector>();
         lineGradient = GetComponent<LineGradient>();
-        lineGradient.SetMaxLineLength(maxLineLength);
 
         drawPositions = new(maxLineLength);
         drawTimes = new(maxLineLength);
@@ -101,7 +100,6 @@ public class LineDrawing : MonoBehaviour
             {
                 AddNewPointToLine(currentPosition, Time.time);
                 lineGradient.UpdateGradient();
-                loopCounter.UpdateLineTipPosition(currentPosition);
             }
         }
     }

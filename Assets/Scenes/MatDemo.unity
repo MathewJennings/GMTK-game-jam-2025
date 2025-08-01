@@ -435,6 +435,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1645233448453492769, guid: 1c47fd2865c2c9e4bb808ec0a177bb08, type: 3}
+      propertyPath: maxVelocity
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645233448453492769, guid: 1c47fd2865c2c9e4bb808ec0a177bb08, type: 3}
+      propertyPath: minVelocity
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645233448453492769, guid: 1c47fd2865c2c9e4bb808ec0a177bb08, type: 3}
       propertyPath: enemyPrefabs.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -668,6 +676,10 @@ PrefabInstance:
       propertyPath: lineTimeToFade
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
+      propertyPath: loopTextFontSize
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
       value: Line Spawner
@@ -688,6 +700,10 @@ PrefabInstance:
     - target: {fileID: 957207914959527687, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Name
       value: UI Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285673275662093765, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: fontSize
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Pivot.x
@@ -845,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: targetScore
-      value: 500
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4871144236748661180, guid: f637c6b7c1b1acf44b296f53c8e62e40, type: 3}
       propertyPath: nextSceneName

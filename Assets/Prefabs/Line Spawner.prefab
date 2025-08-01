@@ -44,12 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5738cda47f14544fa69e025aafef6a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   audioManager: {fileID: 0}
   linePrefab: {fileID: 5641382915828232499, guid: 93feeccdc2e3e8549a676855bd9cf1f7, type: 3}
   lineTimeToFade: 1.5
   maxLineLength: 0
-  loopCounterOffsetX: 100
-  loopCounterOffsetY: 50
-  loopCounterFontSize: 66
-  loopCounterFadeDuration: 0.3
-  loopCounterVerticalMovementAnimationDistance: 50
+  loopTextFontSize: 20

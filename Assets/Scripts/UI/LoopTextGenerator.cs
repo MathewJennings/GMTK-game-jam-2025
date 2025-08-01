@@ -13,30 +13,9 @@ public class LoopTextGenerator : MonoBehaviour
     public float fadeDuration = 0.5f;
     public float verticalMovementAnimationDistance = 50f;
 
-    public void SetFontSize(int size)
-    {
-        fontSize = size < 8 ? 8 : size;
-    }
-
     public void SetFontColor(Color color)
     {
         fontColor = color;
-    }
-
-    public void SetFadeDuration(float duration)
-    {
-        fadeDuration = duration < 0.1f ? 0.1f : duration;
-    }
-
-    public void SetVerticalMovementAnimationDistance(float distance)
-    {
-        verticalMovementAnimationDistance = distance;
-    }
-
-    public void SetDisplayOffset(float offsetX, float offsetY)
-    {
-        displayOffsetX = offsetX;
-        displayOffsetY = offsetY;
     }
 
     public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition)

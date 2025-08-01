@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class LineGradient : MonoBehaviour
 {
-    [SerializeField]
-    private Gradient lineColorGradient;
-
-    [SerializeField]
-    private int maxLineLength;
-
     private LineRenderer lineRenderer;
-    private LoopTextGenerator _loopTextGenerator;
+    private LoopTextGenerator loopTextGenerator;
 
-    public void SetMaxLineLength(int length)
+    public void SetLoopTextGenerator(LoopTextGenerator loopTextGenerator)
     {
-        maxLineLength = length;
+        this.loopTextGenerator = loopTextGenerator;
     }
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         Canvas canvas = FindFirstObjectByType<Canvas>();
-        _loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
         UpdateGradient();
     }
 
@@ -50,6 +43,6 @@ public class LineGradient : MonoBehaviour
 
         currentGradient.SetKeys(colorKeys, alphaKeys);
         lineRenderer.colorGradient = currentGradient;
-        _loopTextGenerator.SetFontColor(colorAtEndOfLine);
+        loopTextGenerator.SetFontColor(colorAtEndOfLine);
     }
 }

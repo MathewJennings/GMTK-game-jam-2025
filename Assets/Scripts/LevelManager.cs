@@ -8,15 +8,12 @@ public class LevelManager : MonoBehaviour
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public SpawnEnemy spawnEnemy; // Assign in Inspector
 
-    [SerializeField]
-    private int initialScoreBuffer = 20; // Creates a buffer for the constant decay of the score
-
     void Awake()
     {
         if (spawnEnemy != null && currentLevel != null)
         {
             spawnEnemy.PlayLevel(currentLevel);
-            currentLevel.currentPoints = initialScoreBuffer;
+            currentLevel.currentPoints = currentLevel.initialPointsBuffer;
         }
         else
         {

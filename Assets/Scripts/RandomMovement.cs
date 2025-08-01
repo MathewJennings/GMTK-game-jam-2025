@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// This script is used to move an object randomly around the screen.
@@ -26,14 +27,17 @@ public class RandomMovement : MonoBehaviour
     private float directionChangeInterval = 3f; // Time between direction changes
 
     [SerializeField]
+    private bool constrainMovementRange = true; // Whether to restrict where the random movement can go
+    
+    [SerializeField]
     private Vector2 movementRange = new Vector2(5f, 5f); // How far from starting position it can move
 
     [Header("Screen Boundary Settings")]
     [SerializeField]
     private bool constrainToScreen = true;
 
-    [SerializeField]
-    private float screenPadding = 1f; // Distance from screen edges
+    [FormerlySerializedAs("screenPadding")] [SerializeField]
+    private float screenPaddingInPx = 50f; // Distance from screen edges
 
     [Header("Smoothness Settings")]
     [SerializeField]
@@ -50,7 +54,7 @@ public class RandomMovement : MonoBehaviour
     private Vector2 targetDirection;
     private float directionChangeTimer;
     private Camera mainCamera;
-    private Vector2 screenBounds;
+    private Vector2 screenBoundsInPx;
     private float noiseOffset;
 
     void Start()
@@ -60,7 +64,7 @@ public class RandomMovement : MonoBehaviour
 
         if (constrainToScreen && mainCamera != null)
         {
-            screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+            screenBoundsInPx = new Vector2(Screen.width, Screen.height);
         }
         SetRandomDirection();
         currentDirection = targetDirection;
@@ -79,6 +83,41 @@ public class RandomMovement : MonoBehaviour
         {
             MoveWithRandomDirection();
         }
+
+        CheckScreenBoundsAndMaybeChangeDirection();
+    }
+
+    private void CheckScreenBoundsAndMaybeChangeDirection()
+    {
+        if (constrainToScreen && mainCamera != null)
+        {
+            Vector3 viewportPos = mainCamera.WorldToViewportPoint(transform.position);
+            float hardPaddingX = screenPaddingInPx / screenBoundsInPx.x;
+            float hardPaddingY = screenPaddingInPx / screenBoundsInPx.y;
+            
+            float softPaddingX = hardPaddingX + 0.15f;
+            float softPaddingY = hardPaddingY + 0.15f;
+
+            // If near the screen boundary, bias direction toward the screen center
+            if (viewportPos.x < softPaddingX || viewportPos.x > 1f - softPaddingX || viewportPos.y < softPaddingY || viewportPos.y > 1f - softPaddingY)
+            {
+                Vector2 directionToCenter = (mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, transform.position.z)) - transform.position).normalized;
+                // Generate a random angle offset within ±45 degrees
+                float randomAngle = Random.Range(-45f, 45f) * Mathf.Deg2Rad;
+
+                // Rotate the directionToCenter vector by the random angle
+                float cosAngle = Mathf.Cos(randomAngle);
+                float sinAngle = Mathf.Sin(randomAngle);
+                Vector2 directionNearCenter = new Vector2(
+                    directionToCenter.x * cosAngle - directionToCenter.y * sinAngle,
+                    directionToCenter.x * sinAngle + directionToCenter.y * cosAngle
+                ).normalized;
+                
+                targetDirection = Vector2.Lerp(targetDirection, directionNearCenter, 0.2f).normalized;
+                directionChangeTimer = 0f;
+            }
+            
+        }
     }
 
     private void MoveWithRandomDirection()
@@ -87,7 +126,6 @@ public class RandomMovement : MonoBehaviour
         if (directionChangeTimer >= directionChangeInterval)
         {
             SetRandomDirection();
-            directionChangeTimer = 0f;
         }
         currentDirection = Vector2.Lerp(currentDirection, targetDirection, smoothness * Time.deltaTime * 2f);
 
@@ -114,20 +152,28 @@ public class RandomMovement : MonoBehaviour
     {
         float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
         targetDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        
+        // Ensure the angle between currentDirection and targetDirection is <= 90 degrees
+        if (Vector2.Dot(currentDirection, targetDirection) < 0)
+        {
+            targetDirection = -targetDirection; // Flip the direction to make it closer
+        }
 
         // If we're near the movement range boundary, bias direction toward center
         Vector3 currentOffset = transform.position - startingPosition;
-        if (currentOffset.magnitude > movementRange.magnitude * 0.7f)
+        if (constrainMovementRange && currentOffset.magnitude > movementRange.magnitude * 0.7f)
         {
             Vector2 directionToCenter = (startingPosition - transform.position).normalized;
-            targetDirection = Vector2.Lerp(targetDirection, directionToCenter, 0.6f).normalized;
+            targetDirection = Vector2.Lerp(targetDirection, directionToCenter, 0.2f).normalized;
         }
+
+        directionChangeTimer = 0f;
     }
 
     private Vector3 ApplyConstraints(Vector3 newPosition)
     {
         Vector3 offset = newPosition - startingPosition;
-        if (offset.magnitude > movementRange.magnitude)
+        if (constrainMovementRange && offset.magnitude > movementRange.magnitude)
         {
             offset = offset.normalized * movementRange.magnitude;
             newPosition = startingPosition + offset;
@@ -135,8 +181,8 @@ public class RandomMovement : MonoBehaviour
         if (constrainToScreen && mainCamera != null)
         {
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(newPosition);
-            float paddingX = screenPadding / screenBounds.x;
-            float paddingY = screenPadding / screenBounds.y;
+            float paddingX = screenPaddingInPx / screenBoundsInPx.x;
+            float paddingY = screenPaddingInPx / screenBoundsInPx.y;
 
             viewportPos.x = Mathf.Clamp(viewportPos.x, paddingX, 1f - paddingX);
             viewportPos.y = Mathf.Clamp(viewportPos.y, paddingY, 1f - paddingY);
@@ -165,6 +211,18 @@ public class RandomMovement : MonoBehaviour
    public void SetMoveSpeed(float speed)
     {
         moveSpeed = speed;
+    }
+
+    public void InitializeBossPreset()
+    {
+        moveSpeed = 5f;
+        directionChangeInterval = 0.5f;
+        constrainMovementRange = false;
+        constrainToScreen = true;
+        screenPaddingInPx = 50f;
+        smoothness = 0.5f;
+        usePerlinNoise = false;
+        noiseScale = 0.5f;
     }
 
     // Draw gizmos in the editor to visualize movement range

@@ -13,8 +13,6 @@ public enum SpawnType
 
 public class SpawnEnemy : MonoBehaviour
 {
-    public List<GameObject> enemyPrefabs; // Assign in Inspector
-
     private float timer = 0f;
     private float curveTime = 0f;
     private AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 5, 10, 5);
@@ -54,22 +52,39 @@ public class SpawnEnemy : MonoBehaviour
 
     void Update()
     {
-        if (currentLevel != null &&
-            (currentLevel.HasReachedTargetPoints() || currentLevel.HasRunOutOfPoints()))
+        if (currentLevel.HasReachedTargetPoints())
         {
+            OnTargetPointsMet();
+        }
+        else if (currentLevel.HasRunOutOfPoints())
+        {
+            // Implement this
+            // OnLoseConditionMet();
             return;
         }
+        else
+        {
+            SpawnEnemies();
+        }
+        
+    }
 
+    private void OnTargetPointsMet()
+    {
+        if (!isBossSpawned)
+        {
+            GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
+            RandomMovement randomMovement = boss.AddComponent<RandomMovement>();
+            randomMovement.InitializeBossPreset();
+            isBossSpawned = true;
+        }
+    }
+
+    private void SpawnEnemies()
+    {
         timer += Time.deltaTime;
         curveTime += Time.deltaTime;
 
-        float curveLength = spawnIntervalCurve.keys[spawnIntervalCurve.length - 1].time;
-        if (!isBossSpawned && curveTime > curveLength)
-        {
-            isBossSpawned = true;
-            //LATER: This will eventually be a single call to spawn boss
-            Debug.Log("Spawning boss for: " + currentLevel.levelName);
-        }
         float currentInterval = spawnIntervalCurve.Evaluate(curveTime);
 
         //if currentInterval == 0, we don't spawn enemies
@@ -82,6 +97,7 @@ public class SpawnEnemy : MonoBehaviour
             timer = 0f;
         }
     }
+
 
     public void PlayLevel(LevelScriptableObject level)
     {
@@ -157,13 +173,13 @@ public class SpawnEnemy : MonoBehaviour
         Vector2 screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
-        if (enemyPrefabs.Count > 0)
+        if (currentLevel.enemyPrefabs.Count > 0)
         {
             int side = Random.Range(0, 4); // 0 = top, 1 = bottom, 2 = left, 3 = right
             Vector2 spawnPosition = GetSpawnPosition(side, screenMin, screenMax);
             Vector2 targetPosition = GetTargetPosition(side);
 
-            int enemyIndex = Random.Range(0, enemyPrefabs.Count);
+            int enemyIndex = Random.Range(0, currentLevel.enemyPrefabs.Count);
             var baseVelocity = Random.Range(minVelocity, maxVelocity);
 
             for (int i = 0; i < numEnemies; i++)
@@ -187,7 +203,7 @@ public class SpawnEnemy : MonoBehaviour
                 Vector2 actualSpawnPos = spawnPosition + offset;
                 Vector2 actualTargetPos = targetPosition + offset;
 
-                GameObject obj = Instantiate(enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
+                GameObject obj = Instantiate(currentLevel.enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
                 EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
                 enemyHealth.SetCurrentLevel(currentLevel);
 

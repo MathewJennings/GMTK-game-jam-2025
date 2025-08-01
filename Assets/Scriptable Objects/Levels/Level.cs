@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelScriptableObject", menuName = "Scriptable Objects/LevelScriptableObject")]
@@ -7,7 +8,11 @@ public class LevelScriptableObject : ScriptableObject
     public LevelScriptableObject nextLevel;
     public AnimationCurve spawnInterval = AnimationCurve.Linear(0, 1, 1, 1);
     public float currentPoints = 20;
+    public float initialPointsBuffer = 20;
     public float targetPoints = 100;
+
+    public List<GameObject> enemyPrefabs;
+    public GameObject bossPrefab;
 
     public bool HasReachedTargetPoints()
     {

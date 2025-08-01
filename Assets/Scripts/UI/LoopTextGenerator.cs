@@ -20,6 +20,11 @@ public class LoopTextGenerator : MonoBehaviour
 
     public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition)
     {
+        CreateLoopCountText(text,currentCounterTextPosition, fontColor);
+    }
+
+    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, Color c)
+    {
         GameObject loopCountTextGameObject = new($"Loop Count Text {text}");
         loopCountTextGameObject.transform.SetParent(transform, false);
 
@@ -27,7 +32,7 @@ public class LoopTextGenerator : MonoBehaviour
         loopCountText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         loopCountText.fontSize = fontSize;
         loopCountText.fontStyle = FontStyle.Bold;
-        loopCountText.color = fontColor;
+        loopCountText.color = c;
         loopCountText.alignment = TextAnchor.MiddleCenter;
         loopCountText.text = text;
 

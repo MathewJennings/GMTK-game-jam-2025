@@ -104,6 +104,7 @@ public class LineDrawing : MonoBehaviour
             {
                 AddNewPointToLine(currentPosition, Time.time);
                 lineGradient.UpdateGradient();
+                loopCounter.UpdateLineTipPosition(currentPosition);
             }
         }
     }
@@ -131,8 +132,8 @@ public class LineDrawing : MonoBehaviour
             if (loopDetector.GetLoopablesInLoop().Count > 0)
             {
                 audioManager.GetComponent<AudioClipManager>().PlayCompletedLoopClip();
+                loopCounter.IncrementLoopCountAndHandleLoopables();
             }
-            loopCounter.IncrementLoopCountAndHandleLoopables();
         }
     }
 

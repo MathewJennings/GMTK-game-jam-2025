@@ -36,8 +36,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     {
         return maxHealth;
     }
-
-    public virtual LoopResult HandleLooped(GameObject line)
+    public virtual LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
         currentHealth--;
         if (currentHealth > 0)
@@ -46,15 +45,15 @@ public class EnemyHealth : MonoBehaviour, ILoopable
             {
                 transform.localScale *= 0.95f;
             }
-            return new LoopResult(0, $"{currentHealth} more", transform.position);
+            return new LoopResult(0, $"{currentHealth} more", Color.red, transform.position);
         }
         Destroy(gameObject);
         MaybeDropItem();
         if (currentLevel != null)
         {
-            currentLevel.currentPoints += maxHealth;
+            currentLevel.currentPoints += maxHealth * multiplier;
         }
-        return new LoopResult(maxHealth, $"+{maxHealth}pts!", transform.position);
+        return new LoopResult(maxHealth, $"+{maxHealth}pts!", Color.red, transform.position);
     }
 
     private void MaybeDropItem()

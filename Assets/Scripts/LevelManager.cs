@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     public SpawnEnemy spawnEnemy; // Assign in Inspector
     public WaveAndBossBarsManager waveAndBossBarsManager; // Assign in Inspector
     public BossProgressBar bossProgressBar; // Assign in Inspector
+    [SerializeField]
+    private GameObject gameOverCanvas; // Assign in Inspector
 
     void Awake()
     {
@@ -22,13 +24,25 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void PrepareCurrentLevel()
+    public void PrepareCurrentLevel()
     {
+        ResetCurrentLevel();
         currentLevel.currentPoints = currentLevel.initialPointsBuffer;
         currentLevel.hasPreparedBossFight = false;
         currentLevel.hasCompletedBossFight = false;
         spawnEnemy.PlayLevel(currentLevel);
         waveAndBossBarsManager.SetWaveBarActive();
+    }
+
+    private void ResetCurrentLevel()
+    {
+        gameOverCanvas.SetActive(false);
+        // Destroy all objects labeled "loopableObject"
+        GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
+        foreach (GameObject obj in loopableObjects)
+        {
+            Destroy(obj);
+        }
     }
 
     private void PrepareNextLevel()
@@ -73,9 +87,16 @@ public class LevelManager : MonoBehaviour
         currentLevel.hasPreparedBossFight = true;
     }
 
-    private void OnLoseConditionMet()
+    public void OnLoseConditionMet()
     {
-        // winAndLoseUIManager.ShowLoseText();
+        if (gameOverCanvas != null)
+        {
+            gameOverCanvas.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("GameManager: Game Over Canvas is not assigned.");
+        }
     }
 
     /// <summary>

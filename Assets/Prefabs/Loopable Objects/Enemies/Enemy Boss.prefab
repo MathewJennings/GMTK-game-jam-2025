@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      propertyPath: enemyDropList
+      value: 
+      objectReference: {fileID: 11400000, guid: 898c19c12d064154882f657733ceab72, type: 2}
     - target: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: m_Name
       value: Enemy Boss

@@ -23,8 +23,6 @@ public class SpawnLine : MonoBehaviour
     [SerializeField]
     int maxLineLength;
 
-    private GameObject currentLine;
-
     void Awake()
     {
         if (levelManager == null)
@@ -39,28 +37,22 @@ public class SpawnLine : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+            GameObject line = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
 
-            LineDrawing lineManagement = currentLine.GetComponent<LineDrawing>();
+            LineDrawing lineManagement = line.GetComponent<LineDrawing>();
             lineManagement.SetTimeToFade(lineTimeToFade);
             lineManagement.SetMaxLineLength(maxLineLength);
             lineManagement.SetAudioManager(audioManager);
 
-            LineBreaker lineBreaker = currentLine.GetComponent<LineBreaker>();
+            LineBreaker lineBreaker = line.GetComponent<LineBreaker>();
             lineBreaker.SetAudioManager(audioManager);
 
             LoopTextGenerator loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
-            LoopCounter loopCounter = currentLine.GetComponent<LoopCounter>();
+            LoopCounter loopCounter = line.GetComponent<LoopCounter>();
             loopCounter.SetLoopTextGenerator(loopTextGenerator);
 
-            LineGradient lineGradient = currentLine.GetComponent<LineGradient>();
+            LineGradient lineGradient = line.GetComponent<LineGradient>();
             lineGradient.SetLoopTextGenerator(loopTextGenerator);
-        }
-
-        if (Mouse.current.leftButton.wasReleasedThisFrame && currentLine != null)
-        {
-            currentLine.GetComponent<LineDrawing>().DestroyLine();
-            currentLine = null;
         }
     }
 }

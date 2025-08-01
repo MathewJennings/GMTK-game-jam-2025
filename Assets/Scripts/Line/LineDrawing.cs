@@ -89,6 +89,10 @@ public class LineDrawing : MonoBehaviour
         {
             finishedDrawing = true;
         }
+        if (finishedDrawing && drawPositions.Count >= 2)
+        {
+            RemovePointFromLine(0);
+        }
     }
 
     private void CheckKeepDrawing()

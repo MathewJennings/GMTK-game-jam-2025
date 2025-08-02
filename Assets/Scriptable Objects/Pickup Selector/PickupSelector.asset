@@ -18,3 +18,8 @@ MonoBehaviour:
   - {fileID: 4827265980704315333, guid: 52c56865d7980465b93758659b6c2573, type: 3}
   - {fileID: 4827265980704315333, guid: f71f693b93ee34512b9ba3f59696a3a4, type: 3}
   hasPickup: 00000000
+  pickupDescriptions:
+  - Time Warp\nCause time to temporarily move at a snail's pace.
+  - Decay Pause\nCorruption build up will temporarily come to a halt.
+  - Gravity Well\nCreate a gravitational force that pulls in all enemies and objects.
+  - Ghost\nCreate lines that can phase through enemies and objects.

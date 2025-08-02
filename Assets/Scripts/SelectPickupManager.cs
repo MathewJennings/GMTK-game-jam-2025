@@ -25,7 +25,8 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
         if (pickups == null || pickups.Count <= 0)
         {
             Debug.LogError("Not enough pickups available.");
-            StartCoroutine(BeginNextLevelCoroutine());
+            BeginNextLevel();
+            return;
         }
 
         // Instantiate the pickups at pointA and pointB
@@ -73,8 +74,11 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
     private IEnumerator BeginNextLevelCoroutine()
     {
         yield return new WaitForSeconds(2f);
-        
-        
+        BeginNextLevel();
+    }
+
+    private void BeginNextLevel()
+    {
         // Call PrepareCurrentLevel in LevelManager
         if (levelManager != null)
         {

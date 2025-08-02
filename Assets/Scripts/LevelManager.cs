@@ -6,7 +6,6 @@ using UnityEditor;
 public class LevelManager : MonoBehaviour
 {
     public LevelScriptableObject currentLevel; // Assign in Inspector
-    public LevelScriptableObject bossModeLevel;
     public SpawnEnemy spawnEnemy; // Assign in Inspector
     public WaveAndBossBarsManager waveAndBossBarsManager; // Assign in Inspector
     public BossProgressBar bossProgressBar; // Assign in Inspector
@@ -91,8 +90,6 @@ public class LevelManager : MonoBehaviour
         boss.GetComponent<EnemyHealth>().SetCurrentLevel(currentLevel);
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
-        Debug.Log($"Preparing boss fight for level: {bossModeLevel}");
-        spawnEnemy.PlayLevel(bossModeLevel, true);
         currentLevel.hasPreparedBossFight = true;
     }
 

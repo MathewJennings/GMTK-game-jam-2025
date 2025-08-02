@@ -598,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: MatDemo
+  pickupSelector: {fileID: 11400000, guid: 2b01907c581cc614fa63bc4e4b13c4ce, type: 2}
 --- !u!223 &636971177 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 936403723498394182, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
@@ -1057,7 +1058,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 656143348457952800, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 957207914959527687, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Name
@@ -1197,6 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95fc93a626b88b04f9ddd3e304f8e72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSelector: {fileID: 0}
   enemyDropList: {fileID: 0}
   maxHealth: 3
   shrinkOnHit: 0

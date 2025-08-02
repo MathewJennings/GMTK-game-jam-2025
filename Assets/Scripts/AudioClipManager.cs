@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreakingObserver, ILoopObserver
@@ -14,22 +15,54 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     [SerializeField]
     private AudioClip lineSnappingBackClip;
 
+    [SerializeField]
+    private List<AudioClip> enemyWaveBackgroundMusicTracks;
+
+    [SerializeField]
+    private List<AudioClip> bossBackgroundMusicTracks;
+
+    public static AudioClipManager Instance { get; private set; }
+
     private AudioSource soundEffectAudioSource;
     private AudioSource lineDrawingAudioSource;
+    private AudioSource backgroundMusicAudioSource;
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            InstantiateAudioClipManager();
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+        RegisterObservers();
+    }
+
+    private void InstantiateAudioClipManager()
+    {
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
         AudioSource[] audioSources = GetComponents<AudioSource>();
         soundEffectAudioSource = audioSources[0];
         lineDrawingAudioSource = audioSources[1];
         lineDrawingAudioSource.loop = true;
         lineDrawingAudioSource.clip = drawingLineClip;
-        lineDrawingAudioSource.volume = 0.1f;
+        lineDrawingAudioSource.volume = 0.2f;
+        backgroundMusicAudioSource = audioSources[2];
+        backgroundMusicAudioSource.loop = true;
+        backgroundMusicAudioSource.clip = enemyWaveBackgroundMusicTracks[0];
+        backgroundMusicAudioSource.volume = 0.5f;
+        backgroundMusicAudioSource.Play();
+    }
 
+    private void RegisterObservers()
+    {
         SpawnLine spawnLine = FindFirstObjectByType<SpawnLine>();
-        spawnLine.RegisterLineDrawingObserver(this);
-        spawnLine.RegisterLineBreakingObserver(this);
-        spawnLine.RegisterLoopObserver(this);
+        spawnLine.RegisterLineDrawingObserver(Instance);
+        spawnLine.RegisterLineBreakingObserver(Instance);
+        spawnLine.RegisterLoopObserver(Instance);
     }
 
     void OnDestroy()
@@ -54,7 +87,7 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
         if (numPoints > 10)
         {
             RandomizePitch(soundEffectAudioSource);
-            soundEffectAudioSource.volume = 0.2f;
+            soundEffectAudioSource.volume = 0.5f;
             soundEffectAudioSource.PlayOneShot(lineSnappingBackClip);
         }
     }

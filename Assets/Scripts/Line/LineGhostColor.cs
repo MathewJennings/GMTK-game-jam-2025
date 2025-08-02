@@ -5,18 +5,21 @@ public class LineGhostColor : MonoBehaviour
 {
     private LineRenderer lineRenderer;
     private LineGradient lineGradient;
+    private LoopTextGenerator loopTextGenerator;
 
     private Coroutine gradientCoroutine;
     private bool isGhostModeActive = false;
     private Gradient greyGradient;
 
     private Gradient originalGradient;
+    private Color originalColor;
     private float ghostifyTimeLeft = 0f;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineGradient = GetComponent<LineGradient>();
+        loopTextGenerator = GetComponent<LoopCounter>().loopTextGenerator;
         // Create a grey gradient with 50% alpha
         greyGradient = new Gradient();
         GradientColorKey[] colorKeys = new GradientColorKey[2];
@@ -38,6 +41,7 @@ public class LineGhostColor : MonoBehaviour
     {
         if (isGhostModeActive && lineRenderer != null)
         {
+            loopTextGenerator.SetFontColor(Color.grey);
             lineRenderer.colorGradient = greyGradient;
         }
     }
@@ -58,6 +62,7 @@ public class LineGhostColor : MonoBehaviour
     {
         lineGradient.enabled = false;
         isGhostModeActive = true;
+        originalColor = loopTextGenerator.fontColor;
         originalGradient = lineRenderer.colorGradient;
         ghostifyTimeLeft = duration;
 
@@ -65,6 +70,8 @@ public class LineGhostColor : MonoBehaviour
 
         isGhostModeActive = false;
         lineGradient.enabled = true;
+        loopTextGenerator.fontColor = originalColor;
+
         if (lineRenderer != null && originalGradient != null)
         {
             lineRenderer.colorGradient = originalGradient;

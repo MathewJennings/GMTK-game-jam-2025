@@ -11,7 +11,7 @@ public class LoopCounter : MonoBehaviour, ILoopObserver
     private int currentLoopCount = 0;
     private Camera mainCamera;
     private LoopDetector loopDetector;
-    private LoopTextGenerator loopTextGenerator;
+    public LoopTextGenerator loopTextGenerator;
     private Vector2 currentCounterTextPosition;
 
 

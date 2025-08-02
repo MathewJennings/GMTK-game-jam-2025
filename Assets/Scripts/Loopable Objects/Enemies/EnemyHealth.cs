@@ -56,7 +56,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         {
             currentLevel.currentCorruption -= maxHealth * multiplier;
         }
-        return new LoopResult((int)maxHealth, $"+{maxHealth}pts!", Color.red, transform.position);
+        return new LoopResult((int)maxHealth, $"-{maxHealth} corruption!", Color.red, transform.position);
     }
 
     private void MaybeDropItem()

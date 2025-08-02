@@ -18,6 +18,6 @@ public class CoinHandler : MonoBehaviour, ILoopable
         LoopCounter lineCounter = line.GetComponent<LoopCounter>();
         int loopCount = lineCounter.GetCurrentLoopCount();
         levelManager.currentLevel.currentCorruption -= loopCount;
-        return new LoopResult(loopCount, $"+{loopCount}", Color.yellow, transform.position);
+        return new LoopResult(loopCount, $"-{loopCount}", Color.yellow, transform.position);
     }
 }

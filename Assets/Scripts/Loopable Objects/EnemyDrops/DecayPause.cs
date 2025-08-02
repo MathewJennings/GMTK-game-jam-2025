@@ -34,6 +34,6 @@ public class DecayPause : MonoBehaviour, ILoopable
             Destroy(gameObject);
         }
 
-        return new LoopResult(0, "Decay paused!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
+        return new LoopResult(0, "Corruption paused!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
     }
 }

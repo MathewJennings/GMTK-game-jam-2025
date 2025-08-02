@@ -43,6 +43,6 @@ public class Ghost : MonoBehaviour, ILoopable
         {
             Destroy(gameObject);
         }
-        return new LoopResult(0, "Ghost activated", Color.grey, transform.position);
+        return new LoopResult(0, "Ghost mode activated!", Color.grey, transform.position);
     }
 }

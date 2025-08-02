@@ -17,6 +17,7 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
 
     private bool pickupSelected = false;
     private LevelManager levelManager; // Reference to the LevelManager
+    private LoopTextGenerator loopTextGenerator;
 
     void Start()
     {
@@ -26,6 +27,17 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
 
         pickupSelected = false;
         levelManager = FindObjectOfType<LevelManager>();
+
+        // Get the LoopTextGenerator from the Canvas
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas != null)
+        {
+            loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
+            if (loopTextGenerator == null)
+            {
+                Debug.LogError("LoopTextGenerator not found on the Canvas.");
+            }
+        }
 
         // Get two random pickups that haven't been found
         List<GameObject> pickups = pickupSelector.GetUpToTwoRandomPickups();
@@ -57,17 +69,39 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
     {
         if (pickupSelected)
         {
+            Debug.Log("Returning");
             return;
         }
-        // TODO: When multiple things are looped, we should probably print some unique message saying to pick one.
-        if (line.GetComponent<LoopDetector>().GetLoopablesInLoop().Count == 1)
+
+        int loopablesCount = line.GetComponent<LoopDetector>().GetLoopablesInLoop().Count;
+        if (loopablesCount == 1)
         {
+            Debug.Log("1 loopable");
             ILoopable loopable = line.GetComponent<LoopDetector>().GetLoopablesInLoop()[0];
             OnPickupSelected(loopable);
+        } else if (loopablesCount > 1)
+        {
+            Debug.Log("2+ loopable");
+            OnManyPickupsSelected(line, loopablesCount);
         }
     }
 
-    public void OnPickupSelected(ILoopable loopable)
+    private void OnManyPickupsSelected(GameObject line, int loopablesCount)
+    {
+        // If there are multiple loopables, show a message.
+        string message = "Pick one only";
+        if (loopTextGenerator != null)
+        {
+            Vector2 textPosition = Camera.main.WorldToScreenPoint(line.transform.position);
+            loopTextGenerator.CreateLoopCountText(message, textPosition, Color.red);
+        }
+        else
+        {
+            Debug.LogWarning("LoopTextGenerator is not set. Cannot display selection message.");
+        }
+    }
+
+    private void OnPickupSelected(ILoopable loopable)
     {
         // Find the matching pickupPrefab
         for (int i = 0; i < pickupSelector.pickupPrefabs.Count; i++)

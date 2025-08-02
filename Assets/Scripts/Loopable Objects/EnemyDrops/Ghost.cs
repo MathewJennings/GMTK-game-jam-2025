@@ -14,8 +14,13 @@ public class Ghost : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
-        GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
+        if (isPickupScene)
+        {
+            return new LoopResult(0, "Unlocked ghost mode!", Color.grey, transform.position);
+        }
         
+        GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
+
         foreach (GameObject lineObj in lines)
         {
             LineBreaker lineBreaker = lineObj.GetComponent<LineBreaker>();
@@ -23,6 +28,14 @@ public class Ghost : MonoBehaviour, ILoopable
             {
                 lineBreaker.SetGhostMode(ghostDuration);
             }
+
+            // Add LineGhostColor component if not already present
+            LineGhostColor ghostColor = lineObj.GetComponent<LineGhostColor>();
+            if (ghostColor == null)
+            {
+                ghostColor = lineObj.AddComponent<LineGhostColor>();
+            }
+            ghostColor.GhostifyLine(ghostDuration);
         }
 
         // Find the "Line Spawner" GameObject and call SetGhostMode on it
@@ -39,10 +52,7 @@ public class Ghost : MonoBehaviour, ILoopable
             Debug.Log("Line Spawner not found or SpawnLine component missing.");
         }
 
-        if (!isPickupScene)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
         return new LoopResult(0, "Ghost mode activated!", Color.grey, transform.position);
     }
 }

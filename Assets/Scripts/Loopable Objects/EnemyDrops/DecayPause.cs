@@ -28,12 +28,13 @@ public class DecayPause : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        waveProgressBar.PauseCorruption(duration);
-        if (!isPickupScene)
+        if (isPickupScene)
         {
-            Destroy(gameObject);
+            return new LoopResult(0, "Unlocked decay pause!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
         }
 
+        waveProgressBar.PauseCorruption(duration);
+        Destroy(gameObject);
         return new LoopResult(0, "Corruption paused!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
     }
 }

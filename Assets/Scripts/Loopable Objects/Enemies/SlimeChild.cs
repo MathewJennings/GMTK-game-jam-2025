@@ -38,7 +38,7 @@ public class SlimeChild : MonoBehaviour, ILoopable
             damage = health;
         }
         health -= damage;
-        LoopResult result = slimeBoss.HandleGetHit(damage, health);
+        LoopResult result = slimeBoss.HandleGetHit(damage, health, transform.position);
 
         if (ShouldSplit())
         {
@@ -54,7 +54,7 @@ public class SlimeChild : MonoBehaviour, ILoopable
 
         return result;
     }
-    
+
     private bool ShouldSplit()
     {
         // Slime can still split, has less than half health, but still has some health left.

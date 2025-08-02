@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   levelName: Easy Breezy
-  nextLevel: {fileID: 0}
+  nextLevel: {fileID: 11400000, guid: fe1096c2b11804b31b5c40e826cfbbbc, type: 2}
   spawnInterval:
     serializedVersion: 2
     m_Curve:
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 78.999626
+  currentPoints: 75.07025
   initialPointsBuffer: 10
   targetPoints: 70
   hasPreparedBossFight: 1

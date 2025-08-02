@@ -36,17 +36,18 @@ public class SlimeBoss : BossHealth
         }
     }
 
-    public LoopResult HandleGetHit(float damage, float remainingSlimeHealth)
+    public LoopResult HandleGetHit(float damage, float remainingSlimeHealth, Vector3 slimePosition)
     {
         currentHealth -= damage;
         // There might be floating point errors with reporting health from all the children, so checking health against
         // a small threshold is sufficient.
         if (currentHealth <= 0.001)
         {
-            Destroy(gameObject);
-            return new LoopResult(0, "Slime Boss defeated!", Color.red, transform.position);
+            return OnDefeatBoss();
         }
-        return new LoopResult(0,  $"{Mathf.Ceil(remainingSlimeHealth)} more", Color.red, transform.position);
+        float v = Mathf.Ceil(remainingSlimeHealth);
+        string text = v > 0 ? $"{v} more" : "DEFEATED!";
+        return new LoopResult(0,  text, Color.red, slimePosition);
     }
 
     public void HandleSplit(Transform slimeTransform, float health, int splitsRemaining, float moveSpeed)
@@ -67,11 +68,5 @@ public class SlimeBoss : BossHealth
                 slimeChild.SetMoveSpeed(moveSpeed * 2f);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

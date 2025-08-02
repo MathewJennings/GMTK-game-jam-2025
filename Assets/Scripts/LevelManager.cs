@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
 {
     [SerializeField]
     private string pickupScene = "SelectPickup"; // The scene to load for selecting pickups
-    
+
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public LevelScriptableObject bossModeLevel;
     public SpawnEnemy spawnEnemy; // Assign in Inspector
@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
     public void PrepareCurrentLevel()
     {
         ResetCurrentLevel();
-        currentLevel.currentPoints = currentLevel.initialPointsBuffer;
+        currentLevel.currentCorruption = currentLevel.initialCorruption;
         inPickupScene = false;
         spawnEnemy.ResumeSpawning();
         spawnEnemy.PlayLevel(currentLevel);
@@ -93,7 +93,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
             youWinUI.ShowYouWinScreen();
         }
     }
-    
+
     private IEnumerator LoadPickupSceneCoroutine()
     {
         yield return new WaitForSeconds(2f);
@@ -110,11 +110,11 @@ public class LevelManager : MonoBehaviour, IBossObserver
         {
             return;
         }
-        if (currentLevel.HasReachedTargetPoints() && !hasPreparedBossFight)
+        if (currentLevel.HasClearedAllCorruption() && !hasPreparedBossFight)
         {
             PrepareBossFight();
         }
-        else if (currentLevel.HasRunOutOfPoints())
+        else if (currentLevel.HasReachedMaxCorruption())
         {
             OnLoseConditionMet();
         }

@@ -22,13 +22,13 @@ public class DecayPause : MonoBehaviour, ILoopable
             Debug.LogWarning("DecayPause: Missing reference to WaveProgressBar.");
             Destroy(gameObject);
         }
-        
+
         isPickupScene = GameObject.Find("/SelectPickupManager") != null;
     }
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        waveProgressBar.PauseDecay(duration);
+        waveProgressBar.PauseCorruption(duration);
         if (!isPickupScene)
         {
             Destroy(gameObject);

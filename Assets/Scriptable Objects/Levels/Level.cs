@@ -7,22 +7,22 @@ public class LevelScriptableObject : ScriptableObject
     public string levelName;
     public LevelScriptableObject nextLevel;
     public AnimationCurve spawnInterval = AnimationCurve.Linear(0, 1, 1, 1);
-    public float currentPoints = 20;
-    public float initialPointsBuffer = 20;
-    public float targetPoints = 100;
+    public float currentCorruption = 0;
+    public float initialCorruption = 50;
+    public float totalCorruption = 100;
 
     public List<GameObject> enemyPrefabs;
     public List<float> enemyPrefabWeights; // Parallel list to enemyPrefabs
 
     public GameObject bossPrefab;
 
-    public bool HasReachedTargetPoints()
+    public bool HasClearedAllCorruption()
     {
-        return currentPoints >= targetPoints;
+        return currentCorruption <= 0;
     }
 
-    public bool HasRunOutOfPoints()
+    public bool HasReachedMaxCorruption()
     {
-        return currentPoints <= 0;
+        return currentCorruption >= totalCorruption;
     }
 }

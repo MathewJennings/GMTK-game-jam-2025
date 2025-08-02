@@ -18,6 +18,9 @@ public class SpawnLine : MonoBehaviour
     float lineTimeToFade;
 
     [SerializeField]
+    float lineTimeToFadeWhenFinishedDrawing;
+
+    [SerializeField]
     int maxLineLength;
 
     private readonly List<ILoopObserver> loopObservers = new();
@@ -67,6 +70,7 @@ public class SpawnLine : MonoBehaviour
     {
         LineDrawing lineDrawing = line.GetComponent<LineDrawing>();
         lineDrawing.SetTimeToFade(lineTimeToFade);
+        lineDrawing.SetTimeToFadeWhenFinishedDrawing(lineTimeToFadeWhenFinishedDrawing);
         lineDrawing.SetMaxLineLength(maxLineLength);
         lineDrawing.SetNotifyOnLineDrawingEnded((numPoints) =>
         {

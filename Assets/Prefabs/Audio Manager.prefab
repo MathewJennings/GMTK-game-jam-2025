@@ -243,4 +243,4 @@ MonoBehaviour:
   completedLoopClip: {fileID: 8300000, guid: 6412141e842acd5429fe4a773bd587e3, type: 3}
   brokenLineClip: {fileID: 8300000, guid: a069e870467a66b4a984c0ecfd085979, type: 3}
   drawingLineClip: {fileID: 8300000, guid: f9162144e26a0d948b10a1e170f8ff39, type: 3}
-  lineSnappingBackClip: {fileID: 8300000, guid: 4fc6c19cc01f1ff42958a9107e11ac25, type: 3}
+  lineSnappingBackClip: {fileID: 8300000, guid: e6ecad09a6e819140b3d46d90a4d8a13, type: 3}

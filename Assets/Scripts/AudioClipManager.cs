@@ -51,10 +51,10 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     public void NotifyLineDrawingEnded(int numPoints)
     {
         lineDrawingAudioSource.Stop();
-        if (numPoints < 60)
+        if (numPoints > 10)
         {
             RandomizePitch(soundEffectAudioSource);
-            soundEffectAudioSource.volume = 0.3f;
+            soundEffectAudioSource.volume = 0.2f;
             soundEffectAudioSource.PlayOneShot(lineSnappingBackClip);
         }
     }

@@ -11,6 +11,9 @@ public class LineDrawing : MonoBehaviour
     [SerializeField]
     float timeToFade;
 
+    [SerializeField]
+    float timeToFadeWhenFinishedDrawing;
+
     private LineRenderer lineRenderer;
     private LineGradient lineGradient;
     private EdgeCollider2D edgeCollider;
@@ -18,6 +21,8 @@ public class LineDrawing : MonoBehaviour
     private LoopDetector loopDetector;
 
     private bool finishedDrawing = false;
+    private int numPointsToRemoveWhenFinishedDrawing = 0;
+    private float timeElapsedSinceFinishedDrawing = 0f;
     private List<Vector2> drawPositions;
     private List<float> drawTimes;
     private List<bool> drawValidForLoops;
@@ -32,6 +37,11 @@ public class LineDrawing : MonoBehaviour
     public void SetTimeToFade(float time)
     {
         timeToFade = time < 1 ? 1 : time;
+    }
+
+    public void SetTimeToFadeWhenFinishedDrawing(float time)
+    {
+        timeToFadeWhenFinishedDrawing = time > 1 ? 1 : time;
     }
 
     /// Cannot be less than 150
@@ -84,12 +94,38 @@ public class LineDrawing : MonoBehaviour
     {
         if (!finishedDrawing && !Mouse.current.leftButton.IsPressed())
         {
-            finishedDrawing = true;
-            notifyOnLineDrawingEnded(drawPositions.Count);
+            FinishDrawing();
         }
         if (finishedDrawing && drawPositions.Count >= 2)
         {
-            RemovePointFromLine(0);
+            EraseFinishedLine();
+        }
+    }
+
+    private void FinishDrawing()
+    {
+        finishedDrawing = true;
+        numPointsToRemoveWhenFinishedDrawing = drawPositions.Count;
+        timeElapsedSinceFinishedDrawing = 0f;
+        notifyOnLineDrawingEnded(drawPositions.Count);
+    }
+
+    private void EraseFinishedLine()
+    {
+        timeElapsedSinceFinishedDrawing += Time.deltaTime;
+        float fadeProgress = timeElapsedSinceFinishedDrawing / timeToFadeWhenFinishedDrawing;
+        fadeProgress = Mathf.Clamp01(fadeProgress);
+        // Apply an ease-out curve (starts fast, slows down)
+        float curvedProgress = 1f - Mathf.Pow(1f - fadeProgress, 3f);
+        int targetPointsRemoved = Mathf.RoundToInt(curvedProgress * numPointsToRemoveWhenFinishedDrawing);
+        int currentPointsRemoved = numPointsToRemoveWhenFinishedDrawing - drawPositions.Count;
+        int pointsToRemove = targetPointsRemoved - currentPointsRemoved;
+        if (pointsToRemove > 0)
+        {
+            for (int i = pointsToRemove; i > 0 && drawPositions.Count >= 2; i--)
+            {
+                RemovePointFromLine(i - 1);
+            }
         }
     }
 

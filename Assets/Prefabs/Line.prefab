@@ -231,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLineLength: 150
   timeToFade: 1.5
-  scoreData: {fileID: 11400000, guid: 3ea37bc8608e8d64981ab5bad3baa0c1, type: 2}
+  timeToFadeWhenFinishedDrawing: 0.5
 --- !u!114 &-7970680117031427676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayOffsetX: 100
   displayOffsetY: 50
+  perLoopMultiplier: 0.1
 --- !u!114 &2516808368803930003
 MonoBehaviour:
   m_ObjectHideFlags: 0

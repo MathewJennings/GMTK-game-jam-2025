@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FelixDebug
   m_EditorClassIdentifier: 
   levelName: 
-  nextLevel: {fileID: 0}
+  nextLevel: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
   spawnInterval:
     serializedVersion: 2
     m_Curve:
@@ -38,11 +38,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  currentPoints: 18.10693
+  currentPoints: 14.645633
   initialPointsBuffer: 15
-  targetPoints: 100
-  hasPreparedBossFight: 1
-  hasCompletedBossFight: 1
+  targetPoints: 15
+  hasPreparedBossFight: 0
+  hasCompletedBossFight: 0
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 8703a353748e64aee94c7a6aa7a5ca28, type: 3}
   enemyPrefabWeights:

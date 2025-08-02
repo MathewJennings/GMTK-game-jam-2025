@@ -7,7 +7,7 @@ public class PickupSelector : ScriptableObject
     public List<GameObject> pickupPrefabs;
     public List<bool> hasPickup;
 
-    public List<GameObject> GetTwoRandomPickups()
+    public List<GameObject> GetUpToTwoRandomPickups()
     {
         List<GameObject> availablePickups = new List<GameObject>();
 
@@ -20,10 +20,10 @@ public class PickupSelector : ScriptableObject
             }
         }
 
-        // Ensure there are at least two available pickups
-        if (availablePickups.Count < 2)
+        // If there are two or fewer available pickups, return them all.
+        if (availablePickups.Count <= 2)
         {
-            return null;
+            return availablePickups;
         }
 
         // Randomly select two pickups

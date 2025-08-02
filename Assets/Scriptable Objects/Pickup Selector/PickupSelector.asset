@@ -15,4 +15,4 @@ MonoBehaviour:
   pickupPrefabs:
   - {fileID: 4827265980704315333, guid: be06567c4fc829945990606f60dcdaaa, type: 3}
   - {fileID: 4827265980704315333, guid: 8805cf2bc313012449a1cea82032ecc1, type: 3}
-  hasPickup: 0101
+  hasPickup: 0000

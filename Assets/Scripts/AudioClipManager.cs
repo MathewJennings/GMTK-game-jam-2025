@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreakingObserver, ILoopObserver
+public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreakingObserver, ILoopObserver, IBossObserver
 {
     [SerializeField]
     private AudioClip completedLoopClip;
@@ -15,17 +16,29 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     [SerializeField]
     private AudioClip lineSnappingBackClip;
 
+    [Header("Background Music")]
+
+    [SerializeField]
+    private float crossfadeDuration = 2.0f;
+
     [SerializeField]
     private List<AudioClip> enemyWaveBackgroundMusicTracks;
 
     [SerializeField]
+    private List<float> enemyWaveBackgroundMusicClipVolumes;
+
+    [SerializeField]
     private List<AudioClip> bossBackgroundMusicTracks;
+
+    [SerializeField]
+    private List<float> bossBackgroundMusicClipVolumes;
 
     public static AudioClipManager Instance { get; private set; }
 
     private AudioSource soundEffectAudioSource;
     private AudioSource lineDrawingAudioSource;
-    private AudioSource backgroundMusicAudioSource;
+    private AudioSource waveBackgroundMusicAudioSource;
+    private AudioSource bossBackgroundMusicAudioSource;
 
     void Awake()
     {
@@ -46,15 +59,22 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
         DontDestroyOnLoad(this.gameObject);
         AudioSource[] audioSources = GetComponents<AudioSource>();
         soundEffectAudioSource = audioSources[0];
+
         lineDrawingAudioSource = audioSources[1];
         lineDrawingAudioSource.loop = true;
         lineDrawingAudioSource.clip = drawingLineClip;
         lineDrawingAudioSource.volume = 0.2f;
-        backgroundMusicAudioSource = audioSources[2];
-        backgroundMusicAudioSource.loop = true;
-        backgroundMusicAudioSource.clip = enemyWaveBackgroundMusicTracks[0];
-        backgroundMusicAudioSource.volume = 0.5f;
-        backgroundMusicAudioSource.Play();
+
+        waveBackgroundMusicAudioSource = audioSources[2];
+        bossBackgroundMusicAudioSource = audioSources[3];
+        waveBackgroundMusicAudioSource.loop = true;
+        bossBackgroundMusicAudioSource.loop = true;
+        waveBackgroundMusicAudioSource.volume = 0.5f;
+        bossBackgroundMusicAudioSource.volume = 0.5f;
+        waveBackgroundMusicAudioSource.clip = enemyWaveBackgroundMusicTracks[0];
+        bossBackgroundMusicAudioSource.clip = bossBackgroundMusicTracks[0];
+        waveBackgroundMusicAudioSource.Play();
+        bossBackgroundMusicAudioSource.Stop();
     }
 
     private void RegisterObservers()
@@ -63,6 +83,8 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
         spawnLine.RegisterLineDrawingObserver(Instance);
         spawnLine.RegisterLineBreakingObserver(Instance);
         spawnLine.RegisterLoopObserver(Instance);
+        LevelManager levelManager = FindFirstObjectByType<LevelManager>();
+        levelManager.RegisterBossObserver(Instance);
     }
 
     void OnDestroy()
@@ -117,5 +139,34 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     private void RandomizePitch(AudioSource audioSource)
     {
         audioSource.pitch = Random.Range(0.99f, 1.01f);
+    }
+
+    public void NotifyBossSpawned()
+    {
+        StartCoroutine(CrossfadeMusic(waveBackgroundMusicAudioSource, bossBackgroundMusicAudioSource, bossBackgroundMusicClipVolumes[0]));
+    }
+
+    public void NotifyBossDefeated()
+    {
+        StartCoroutine(CrossfadeMusic(bossBackgroundMusicAudioSource, waveBackgroundMusicAudioSource, enemyWaveBackgroundMusicClipVolumes[0]));
+    }
+
+    private IEnumerator CrossfadeMusic(AudioSource oldAudioSource, AudioSource newAudioSource, float targetVolume)
+    {
+        newAudioSource.volume = 0.0f;
+        newAudioSource.Play();
+        Debug.Log($"Crossfading music from {oldAudioSource.clip.name} to {newAudioSource.clip.name}");
+        float timer = 0.0f;
+        while (timer < crossfadeDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / crossfadeDuration;
+            oldAudioSource.volume = targetVolume * (1.0f - t);
+            newAudioSource.volume = targetVolume * t;
+            yield return null;
+        }
+        oldAudioSource.volume = 0.0f;
+        newAudioSource.volume = targetVolume;
+        oldAudioSource.Stop();
     }
 }

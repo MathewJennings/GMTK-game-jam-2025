@@ -122,7 +122,7 @@ public class InfinityCoinsHandler : BossHealth
 
     public LoopResult HandleIncorrectLoop(GameObject line, Color spriteColor, float multiplier = 1.0f)
     {
-        currentHealth += Mathf.Clamp(1*multiplier, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + 1*multiplier, 0, maxHealth);
         // Decrease min and max rotation speed and change speed.
         minRotationSpeed -= rotationSpeedHitIncrease * 1.1f;
         maxRotationSpeed -= rotationSpeedHitIncrease * 1.1f;

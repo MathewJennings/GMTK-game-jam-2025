@@ -106,7 +106,6 @@ public class SpawnLine : MonoBehaviour
             }
         });
 
-        Debug.Log($"Setting ghost mode on line breaker for {ghostModeTimeRemaining} seconds.");
         // Pass remaining ghost mode time to the line breaker if active
         if (isGhostMode && ghostModeTimeRemaining > 0f)
         {
@@ -136,6 +135,12 @@ public class SpawnLine : MonoBehaviour
     {
         LineGradient lineGradient = line.GetComponent<LineGradient>();
         lineGradient.SetLoopTextGenerator(loopTextGenerator);
+        //Has to be after initializing the line gradient so the color can be a gradient after update
+        if (isGhostMode)
+        {
+            LineGhostColor lineGhostColor = line.AddComponent<LineGhostColor>();
+            lineGhostColor.GhostifyLine(ghostModeTimeRemaining);
+        }
     }
     public void SetGhostMode(float duration)
     {

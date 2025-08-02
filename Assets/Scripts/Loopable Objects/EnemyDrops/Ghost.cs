@@ -4,11 +4,10 @@ public class Ghost : MonoBehaviour, ILoopable
 {
     [SerializeField]
     private float ghostDuration = 3f; // Configurable in the Inspector
-
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
         GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
-        
+
         foreach (GameObject lineObj in lines)
         {
             LineBreaker lineBreaker = lineObj.GetComponent<LineBreaker>();
@@ -16,6 +15,14 @@ public class Ghost : MonoBehaviour, ILoopable
             {
                 lineBreaker.SetGhostMode(ghostDuration);
             }
+
+            // Add LineGhostColor component if not already present
+            LineGhostColor ghostColor = lineObj.GetComponent<LineGhostColor>();
+            if (ghostColor == null)
+            {
+                ghostColor = lineObj.AddComponent<LineGhostColor>();
+            }
+            ghostColor.GhostifyLine(ghostDuration);
         }
 
         // Find the "Line Spawner" GameObject and call SetGhostMode on it

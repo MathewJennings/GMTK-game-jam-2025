@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,7 +14,6 @@ public class LineDrawing : MonoBehaviour
     private LineRenderer lineRenderer;
     private LineGradient lineGradient;
     private EdgeCollider2D edgeCollider;
-    private GameObject audioManager;
     private LoopCounter loopCounter;
     private LoopDetector loopDetector;
 
@@ -21,6 +21,12 @@ public class LineDrawing : MonoBehaviour
     private List<Vector2> drawPositions;
     private List<float> drawTimes;
     private List<bool> drawValidForLoops;
+
+    private Action notifyOnLineDrawingEnded;
+    public void SetNotifyOnLineDrawingEnded(Action notifyOnLineDrawingEnded)
+    {
+        this.notifyOnLineDrawingEnded = notifyOnLineDrawingEnded;
+    }
 
     /// Cannot be less than 1 second
     public void SetTimeToFade(float time)
@@ -33,15 +39,6 @@ public class LineDrawing : MonoBehaviour
     {
         maxLineLength = length < 150 ? 150 : length;
         InitializeLine();
-    }
-
-    /// <summary>
-    /// Must set the audio manager after instantiating the line drawing for playing audio feedback when a loop is created.
-    /// </summary>
-    /// <param name="audioManager">The Audio Manager GameObject.</param>
-    public void SetAudioManager(GameObject audioManager)
-    {
-        this.audioManager = audioManager;
     }
 
     private void Awake()
@@ -88,6 +85,7 @@ public class LineDrawing : MonoBehaviour
         if (!finishedDrawing && !Mouse.current.leftButton.IsPressed())
         {
             finishedDrawing = true;
+            notifyOnLineDrawingEnded();
         }
         if (finishedDrawing && drawPositions.Count >= 2)
         {
@@ -131,7 +129,6 @@ public class LineDrawing : MonoBehaviour
         {
             if (loopDetector.GetLoopablesInLoop().Count > 0)
             {
-                audioManager.GetComponent<AudioClipManager>().PlayCompletedLoopClip();
                 loopCounter.IncrementLoopCountAndHandleLoopables();
             }
         }

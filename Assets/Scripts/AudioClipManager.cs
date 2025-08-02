@@ -1,35 +1,74 @@
 using UnityEngine;
 
-public class AudioClipManager : MonoBehaviour
+public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreakingObserver, ILoopObserver
 {
     [SerializeField]
     private AudioClip completedLoopClip;
 
     [SerializeField]
-    private AudioClip brokenLoopClip;
+    private AudioClip brokenLineClip;
 
-    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip drawingLineClip;
+
+    private AudioSource soundEffectAudioSource;
+    private AudioSource lineDrawingAudioSource;
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        soundEffectAudioSource = audioSources[0];
+        lineDrawingAudioSource = audioSources[1];
+        lineDrawingAudioSource.loop = true;
+        lineDrawingAudioSource.clip = drawingLineClip;
+        lineDrawingAudioSource.volume = 0.1f;
+
+        SpawnLine spawnLine = FindFirstObjectByType<SpawnLine>();
+        spawnLine.RegisterLineDrawingObserver(this);
+        spawnLine.RegisterLineBreakingObserver(this);
+        spawnLine.RegisterLoopObserver(this);
     }
 
-    public void PlayCompletedLoopClip()
+    void OnDestroy()
     {
-        RandomizePitchAndVolume();
-        audioSource.PlayOneShot(completedLoopClip);
+        SpawnLine spawnLine = FindFirstObjectByType<SpawnLine>();
+        if (spawnLine != null)
+        {
+            spawnLine.UnregisterLineDrawingObserver(this);
+            spawnLine.UnregisterLineBreakingObserver(this);
+            spawnLine.UnregisterLoopObserver(this);
+        }
     }
 
-    public void PlayBrokenLoopClip()
-    {
-        RandomizePitchAndVolume();
-        audioSource.PlayOneShot(brokenLoopClip);
-    }
-
-    private void RandomizePitchAndVolume()
+    private void RandomizePitchAndVolume(AudioSource audioSource)
     {
         audioSource.pitch = Random.Range(0.99f, 1.01f);
         audioSource.volume = Random.Range(0.8f, 1.0f);
+    }
+
+    public void NotifyLineDrawingStarted()
+    {
+        lineDrawingAudioSource.Play();
+    }
+
+    public void NotifyLineDrawingEnded()
+    {
+        lineDrawingAudioSource.Stop();
+    }
+
+    public void NotifyLineBroke()
+    {
+        lineDrawingAudioSource.Stop();
+        RandomizePitchAndVolume(soundEffectAudioSource);
+        soundEffectAudioSource.PlayOneShot(brokenLineClip);
+    }
+
+    public void NotifyLoopCompleted(GameObject line)
+    {
+        if (line.GetComponent<LoopDetector>().GetLoopablesInLoop().Count > 0)
+        {
+            RandomizePitchAndVolume(soundEffectAudioSource);
+            soundEffectAudioSource.PlayOneShot(completedLoopClip);
+        }
     }
 }

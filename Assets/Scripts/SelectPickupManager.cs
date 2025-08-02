@@ -59,7 +59,9 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
         // Find the matching pickupPrefab
         for (int i = 0; i < pickupSelector.pickupPrefabs.Count; i++)
         {
-            if (pickupSelector.pickupPrefabs[i].GetComponent(loopable.GetType()) != null)
+            // GetComponentInChildren checks both itself and its children. This is necessary for gravity well where the
+            // loopable is actually on a child object.
+            if (pickupSelector.pickupPrefabs[i].GetComponentInChildren(loopable.GetType()) != null)
             {
                 // Mark the pickup as found
                 pickupSelector.hasPickup[i] = true;

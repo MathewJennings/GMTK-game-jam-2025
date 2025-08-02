@@ -17,12 +17,13 @@ public class TimeSlower : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        if (!isPickupScene)
+        if (isPickupScene)
         {
-            TimeManager.SetTimeScale(timeFraction, duration);
-            Destroy(gameObject);
+            return new LoopResult(0, "Unlocked time warp!", Color.blue, transform.position);
         }
 
-        return new LoopResult(0, "Time slow activated!", Color.blue, transform.position);
+        TimeManager.SetTimeScale(timeFraction, duration);
+        Destroy(gameObject);
+        return new LoopResult(0, "Time warp activated!", Color.blue, transform.position);
     }
 }

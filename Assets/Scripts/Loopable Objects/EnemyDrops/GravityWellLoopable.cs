@@ -13,11 +13,13 @@ public class GravityWellLoopable : MonoBehaviour, ILoopable
     }
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        if (!isPickupScene)
+        if (isPickupScene)
         {
-            gravityWellSuck.Activate();
-            Destroy(gameObject);
+            return new LoopResult(0, "Unlocked gravity well!", Color.purple, transform.position);
         }
+
+        gravityWellSuck.Activate();
+        Destroy(gameObject);
         return new LoopResult(0, "Gravity Well activated!", Color.purple, transform.position);
     }
 

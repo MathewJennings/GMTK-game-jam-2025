@@ -499,10 +499,6 @@ PrefabInstance:
       propertyPath: loopTextFontSize
       value: 24
       objectReference: {fileID: 0}
-    - target: {fileID: 3047969872434303930, guid: f64262a836960874f8e94869d4f26de9, type: 3}
-      propertyPath: lineTimeToFadeWhenFinishedDrawing
-      value: 0.333
-      objectReference: {fileID: 0}
     - target: {fileID: 5146217917576570582, guid: f64262a836960874f8e94869d4f26de9, type: 3}
       propertyPath: m_Name
       value: Line Spawner

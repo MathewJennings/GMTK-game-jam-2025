@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
     protected LevelScriptableObject currentLevel;
-    
+
     [SerializeField]
     private PickupSelector pickupSelector;
 
@@ -65,7 +65,6 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
         int prefabCount = enemyDropList.enemyDropPrefabs.Count;
         int weightCount = enemyDropList.enemyDropWeights.Count;
-
         if (prefabCount == 0 || prefabCount != weightCount) return;
 
         float randomWeight = UnityEngine.Random.Range(0f, 1f);

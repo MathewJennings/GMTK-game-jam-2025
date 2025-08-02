@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,11 +7,19 @@ public class BossHealth : EnemyHealth, ILoopable
 
     [SerializeField]
     private UnityEvent onDeath;
+
     [SerializeField]
     private UnityEvent<float, float> onDamage;
 
     [SerializeField]
     private string deathTextOverride; // Optional override for death text
+
+    private Action NotifyBossDefeated;
+
+    public void SetNotifyBossDefeated(Action notifyBossDefeated)
+    {
+        NotifyBossDefeated = notifyBossDefeated;
+    }
 
     void Awake()
     {
@@ -32,10 +41,7 @@ public class BossHealth : EnemyHealth, ILoopable
     {
         Destroy(gameObject);
         onDeath?.Invoke();
-        if (currentLevel != null)
-        {
-            currentLevel.hasCompletedBossFight = true;
-        }
+        NotifyBossDefeated();
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
         return new LoopResult((int)maxHealth, resultText, Color.red, transform.position);
     }

@@ -10,8 +10,6 @@ public class LevelScriptableObject : ScriptableObject
     public float currentPoints = 20;
     public float initialPointsBuffer = 20;
     public float targetPoints = 100;
-    public bool hasPreparedBossFight = false;
-    public bool hasCompletedBossFight = false;
 
     public List<GameObject> enemyPrefabs;
     public List<float> enemyPrefabWeights; // Parallel list to enemyPrefabs

@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 651226815294165859, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 651226815294165859, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1002334185403504299, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_Color.b
       value: 0

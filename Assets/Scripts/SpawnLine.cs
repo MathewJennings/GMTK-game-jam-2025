@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -22,6 +23,18 @@ public class SpawnLine : MonoBehaviour
 
     [SerializeField]
     int maxLineLength;
+
+    private readonly List<ILoopObserver> loopObservers = new();
+
+    public void RegisterLoopObserver(ILoopObserver loopObserver)
+    {
+        loopObservers.Add(loopObserver);
+    }
+
+    public void UnregisterLoopObserver(ILoopObserver loopObserver)
+    {
+        loopObservers.Remove(loopObserver);
+    }
 
     void Awake()
     {
@@ -53,6 +66,14 @@ public class SpawnLine : MonoBehaviour
 
             LineGradient lineGradient = line.GetComponent<LineGradient>();
             lineGradient.SetLoopTextGenerator(loopTextGenerator);
+
+            LoopDetector loopDetector = line.GetComponent<LoopDetector>();
+            loopDetector.SetNotifyOnLoopCompleted((gameObject) => {
+                foreach (ILoopObserver loopObserver in loopObservers)
+                {
+                    loopObserver.NotifyLoopCompleted(gameObject);
+                }
+            });
         }
     }
 }

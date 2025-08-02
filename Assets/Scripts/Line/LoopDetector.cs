@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class LoopDetector : MonoBehaviour
     float minimumLoopArea = 1.0f;
 
     private List<ILoopable> loopablesInLoop = new();
+    private Action<GameObject> notifyOnLoopCompleted;
 
     public List<ILoopable> GetLoopablesInLoop()
     {
@@ -16,6 +18,11 @@ public class LoopDetector : MonoBehaviour
     public void ClearLoopablesInLoop()
     {
         loopablesInLoop.Clear();
+    }
+
+    public void SetNotifyOnLoopCompleted(Action<GameObject> notifyOnLoopCompleted)
+    {
+        this.notifyOnLoopCompleted = notifyOnLoopCompleted;
     }
 
     // Check if the very last point in drawPositions is close to any other point.
@@ -50,6 +57,7 @@ public class LoopDetector : MonoBehaviour
                 if (area > minimumLoopArea)
                 {
                     ProcessObjectsInLoop(drawPositions.GetRange(i, drawPositions.Count - i));
+                    notifyOnLoopCompleted(gameObject);
                     return true;
                 }
                 return false;

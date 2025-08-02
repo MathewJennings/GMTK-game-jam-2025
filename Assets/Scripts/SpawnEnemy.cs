@@ -56,7 +56,7 @@ public class SpawnEnemy : MonoBehaviour
     void Update()
     {
         if (paused) return;
-        if (isBossMode || !currentLevel.HasReachedTargetPoints())
+        if (isBossMode || !currentLevel.HasClearedAllCorruption())
         {
             SpawnEnemies();
         }
@@ -94,7 +94,7 @@ public class SpawnEnemy : MonoBehaviour
             timer = 0f;
         }
     }
-    
+
     public void PauseSpawning()
     {
         paused = true;
@@ -236,10 +236,15 @@ public class SpawnEnemy : MonoBehaviour
 
                 GameObject obj = Instantiate(level.enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
                 activeEnemies.Add(obj);
-                if (!isBossMode)
-                {
                 EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
-                enemyHealth.SetCurrentLevel(currentLevel);
+                // currentLevel is hacked when isBossMode is true
+                if (isBossMode)
+                {
+                    enemyHealth.SetBossMode(true);
+                }
+                else
+                {
+                    enemyHealth.SetCurrentLevel(currentLevel);
                 }
 
                 TargetMover mover = obj.AddComponent<TargetMover>();

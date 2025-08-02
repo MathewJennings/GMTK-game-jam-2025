@@ -38,11 +38,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  currentPoints: 14.645633
-  initialPointsBuffer: 15
-  targetPoints: 15
-  hasPreparedBossFight: 0
-  hasCompletedBossFight: 0
+  currentCorruption: 1
+  initialCorruption: 1
+  totalCorruption: 100
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 8703a353748e64aee94c7a6aa7a5ca28, type: 3}
   enemyPrefabWeights:

@@ -6,6 +6,7 @@ public class PickupSelector : ScriptableObject
 {
     public List<GameObject> pickupPrefabs;
     public List<bool> hasPickup;
+    public List<string> pickupDescriptions;
 
     public List<GameObject> GetUpToTwoRandomPickups()
     {
@@ -61,6 +62,18 @@ public class PickupSelector : ScriptableObject
             }
         }
         return false;
+    }
+    
+    public string GetPickupDescription(GameObject pickup)
+    {
+        for (int i = 0; i < pickupPrefabs.Count; i++)
+        {
+            if (pickupPrefabs[i] == pickup)
+            {
+                return pickupDescriptions[i];
+            }
+        }
+        return "";
     }
 
     public void ClearAllPickups()

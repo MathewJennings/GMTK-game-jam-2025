@@ -51,7 +51,7 @@ public class SpawnLine : MonoBehaviour
     private void Update()
     {
         if (levelManager.currentLevel == null ||
-            levelManager.currentLevel.HasRunOutOfPoints()) return;
+            levelManager.currentLevel.HasReachedMaxCorruption()) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

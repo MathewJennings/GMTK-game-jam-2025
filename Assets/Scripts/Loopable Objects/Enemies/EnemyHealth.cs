@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
     protected LevelScriptableObject currentLevel;
+    protected bool isBossMode = false;
 
     [SerializeField]
     private PickupSelector pickupSelector;
@@ -28,6 +29,11 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     public void SetCurrentLevel(LevelScriptableObject level)
     {
         currentLevel = level;
+    }
+
+    public void SetBossMode(bool isBossMode)
+    {
+        this.isBossMode = isBossMode;
     }
 
     public float GetCurrentHealth()
@@ -54,9 +60,10 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         MaybeDropItem();
         if (currentLevel != null)
         {
-            currentLevel.currentPoints += maxHealth * multiplier;
+            currentLevel.currentCorruption -= maxHealth * multiplier;
         }
-        return new LoopResult((int)maxHealth, $"+{maxHealth}pts!", Color.red, transform.position);
+        string displayText = isBossMode ? "" : $"-{maxHealth} corruption!";
+        return new LoopResult((int)maxHealth, displayText, Color.red, transform.position);
     }
 
     private void MaybeDropItem()

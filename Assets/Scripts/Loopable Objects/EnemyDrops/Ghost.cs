@@ -4,6 +4,14 @@ public class Ghost : MonoBehaviour, ILoopable
 {
     [SerializeField]
     private float ghostDuration = 3f; // Configurable in the Inspector
+
+    private bool isPickupScene = false;
+    
+    void Awake()
+    {
+        isPickupScene = GameObject.Find("/SelectPickupManager") != null;
+    }
+
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
         GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
@@ -39,7 +47,10 @@ public class Ghost : MonoBehaviour, ILoopable
             Debug.Log("Line Spawner not found or SpawnLine component missing.");
         }
 
-        Destroy(gameObject);
-        return new LoopResult(0, "Ghost activated", Color.grey, transform.position);
+        if (!isPickupScene)
+        {
+            Destroy(gameObject);
+        }
+        return new LoopResult(0, "Ghost mode activated!", Color.grey, transform.position);
     }
 }

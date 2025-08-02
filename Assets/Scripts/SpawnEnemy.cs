@@ -17,6 +17,8 @@ public class SpawnEnemy : MonoBehaviour
     private float curveTime = 0f;
     private AnimationCurve spawnIntervalCurve = AnimationCurve.Linear(0, 5, 10, 5);
     private HashSet<GameObject> activeEnemies = new();
+    private bool isBossMode = false;
+    LevelScriptableObject bossModeLevel;
 
     [Header("Velocity Settings")]
     [Space]
@@ -52,7 +54,7 @@ public class SpawnEnemy : MonoBehaviour
 
     void Update()
     {
-        if (!currentLevel.HasReachedTargetPoints())
+        if (isBossMode || !currentLevel.HasReachedTargetPoints())
         {
             SpawnEnemies();
         }
@@ -76,36 +78,43 @@ public class SpawnEnemy : MonoBehaviour
 
     private void SpawnEnemies()
     {
+
         timer += Time.deltaTime;
         curveTime += Time.deltaTime;
 
         float currentInterval = spawnIntervalCurve.Evaluate(curveTime);
-
         //if currentInterval == 0, we don't spawn enemies
         if (currentInterval != 0 && timer >= currentInterval)
         {
-            int numEnemies = Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
+            int numEnemies = isBossMode ? 1 : Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
             SpawnType selectedType = GetWeightedSpawnType();
             SpawnTarget(numEnemies, selectedType);
             timer = 0f;
         }
     }
 
-
-    public void PlayLevel(LevelScriptableObject level)
+    public void PlayLevel(LevelScriptableObject level, bool isBossMode = false)
     {
-        currentLevel = level;
-        if (currentLevel != null)
+        if (!isBossMode)
         {
-            spawnIntervalCurve = currentLevel.spawnInterval;
+            currentLevel = level;
+        }
+        else
+        {
+            bossModeLevel = level;
+        }
+        this.isBossMode = isBossMode;
+        if (isBossMode || currentLevel != null)
+        {
+
+            spawnIntervalCurve = level.spawnInterval;
             curveTime = 0f;
-            Debug.Log($"Playing level: {currentLevel.levelName}");
         }
     }
 
     public void SpawnRandomEnemy()
     {
-        int numEnemies = Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
+        int numEnemies = isBossMode ? 1 : Random.Range(minEnemies, maxEnemies + 1); // Inclusive of maxEnemies
         SpawnTarget(numEnemies, SpawnType.Random);
     }
 
@@ -165,7 +174,8 @@ public class SpawnEnemy : MonoBehaviour
         Vector2 screenMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
         Vector2 screenMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
-        if (currentLevel.enemyPrefabs.Count > 0)
+        LevelScriptableObject level = isBossMode ? bossModeLevel : currentLevel;
+        if (level.enemyPrefabs.Count > 0)
         {
             int side = Random.Range(0, 4); // 0 = top, 1 = bottom, 2 = left, 3 = right
             Vector2 spawnPosition = GetSpawnPosition(side, screenMin, screenMax);
@@ -173,16 +183,16 @@ public class SpawnEnemy : MonoBehaviour
 
             // weighted random selection
             float totalWeight = 0f;
-            for (int i = 0; i < currentLevel.enemyPrefabWeights.Count; i++)
+            for (int i = 0; i < level.enemyPrefabWeights.Count; i++)
             {
-                totalWeight += currentLevel.enemyPrefabWeights[i];
+                totalWeight += level.enemyPrefabWeights[i];
             }
             float randomValue = Random.Range(0f, totalWeight);
             float cumulative = 0f;
             int enemyIndex = 0;
-            for (int i = 0; i < currentLevel.enemyPrefabWeights.Count; i++)
+            for (int i = 0; i < level.enemyPrefabWeights.Count; i++)
             {
-                cumulative += currentLevel.enemyPrefabWeights[i];
+                cumulative += level.enemyPrefabWeights[i];
                 if (randomValue <= cumulative)
                 {
                     enemyIndex = i;
@@ -213,10 +223,13 @@ public class SpawnEnemy : MonoBehaviour
                 Vector2 actualSpawnPos = spawnPosition + offset;
                 Vector2 actualTargetPos = targetPosition + offset;
 
-                GameObject obj = Instantiate(currentLevel.enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
+                GameObject obj = Instantiate(level.enemyPrefabs[enemyIndex], actualSpawnPos, Quaternion.identity);
                 activeEnemies.Add(obj);
+                if (!isBossMode)
+                {
                 EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
                 enemyHealth.SetCurrentLevel(currentLevel);
+                }
 
                 TargetMover mover = obj.AddComponent<TargetMover>();
                 mover.direction = (actualTargetPos - actualSpawnPos).normalized;

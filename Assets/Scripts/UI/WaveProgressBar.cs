@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class WaveProgressBar : MonoBehaviour
+public class WaveProgressBar : MonoBehaviour, IBossObserver
 {
     [SerializeField] private LevelManager levelManager;
 
@@ -67,6 +67,15 @@ public class WaveProgressBar : MonoBehaviour
             targetDisplayScore = lastKnownScore;
             lastScoreIncreaseTime = Time.time;
         }
+        levelManager.RegisterBossObserver(this);
+    }
+
+    void OnDestroy()
+    {
+        if (levelManager != null)
+        {
+            levelManager.UnregisterBossObserver(this);
+        }
     }
 
     void Update()
@@ -97,11 +106,20 @@ public class WaveProgressBar : MonoBehaviour
     private void MaybeApplyScoreDecay()
     {
         if (isScoreDecayEnabled &&
-                !(levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0) &&
-                !levelManager.currentLevel.hasPreparedBossFight)
+                !(levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0))
         {
             ApplyScoreDecay();
         }
+    }
+
+    public void NotifyBossSpawned()
+    {
+        isScoreDecayEnabled = false;
+    }
+
+    public void NotifyBossDefeated()
+    {
+        isScoreDecayEnabled = true;
     }
 
     private void SetupProgressBar()

@@ -1,9 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour, IBossObserver
 {
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public LevelScriptableObject bossModeLevel;
@@ -13,6 +15,20 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverCanvas; // Assign in Inspector
     public YouWinUI youWinUI; // Assign in Inspector
+
+    private readonly List<IBossObserver> bossObservers = new();
+    public void RegisterBossObserver(IBossObserver observer) { bossObservers.Add(observer); }
+    public void UnregisterBossObserver(IBossObserver observer) { bossObservers.Remove(observer); }
+    private void NotifyBossSpawned()
+    {
+        foreach (IBossObserver observer in bossObservers) { observer.NotifyBossSpawned(); }
+    }
+    private void NotifyBossDefeated()
+    {
+        foreach (IBossObserver observer in bossObservers) { observer.NotifyBossDefeated(); }
+    }
+
+    private bool hasPreparedBossFight = false;
 
     void Awake()
     {
@@ -24,14 +40,18 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy, StartingLevel, WaveAndBossBarsManager, BossProgressBar, or YouWinUI.");
         }
+        RegisterBossObserver(this);
+    }
+
+    void OnDestroy()
+    {
+        UnregisterBossObserver(this);
     }
 
     public void PrepareCurrentLevel()
     {
         ResetCurrentLevel();
         currentLevel.currentPoints = currentLevel.initialPointsBuffer;
-        currentLevel.hasPreparedBossFight = false;
-        currentLevel.hasCompletedBossFight = false;
         spawnEnemy.PlayLevel(currentLevel);
         waveAndBossBarsManager.SetWaveBarActive();
     }
@@ -39,6 +59,7 @@ public class LevelManager : MonoBehaviour
     private void ResetCurrentLevel()
     {
         gameOverCanvas.SetActive(false);
+        hasPreparedBossFight = false;
         // Destroy all objects labeled "loopableObject"
         GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
         foreach (GameObject obj in loopableObjects)
@@ -66,17 +87,13 @@ public class LevelManager : MonoBehaviour
         {
             return;
         }
-        if (currentLevel.HasReachedTargetPoints() && !currentLevel.hasPreparedBossFight)
+        if (currentLevel.HasReachedTargetPoints() && !hasPreparedBossFight)
         {
             PrepareBossFight();
         }
         else if (currentLevel.HasRunOutOfPoints())
         {
             OnLoseConditionMet();
-        }
-        else if (currentLevel.hasCompletedBossFight)
-        {
-            PrepareNextLevel();
         }
     }
 
@@ -88,12 +105,23 @@ public class LevelManager : MonoBehaviour
     private void PrepareBossFight()
     {
         GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
-        boss.GetComponent<EnemyHealth>().SetCurrentLevel(currentLevel);
+        boss.GetComponent<BossHealth>().SetNotifyBossDefeated(NotifyBossDefeated);
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
         Debug.Log($"Preparing boss fight for level: {bossModeLevel}");
         spawnEnemy.PlayLevel(bossModeLevel, true);
-        currentLevel.hasPreparedBossFight = true;
+        NotifyBossSpawned();
+        hasPreparedBossFight = true;
+    }
+
+    void IBossObserver.NotifyBossSpawned()
+    {
+        // Level Manager spawns the boss in PrepareBossFight(), so it doesn't react to it
+    }
+
+    void IBossObserver.NotifyBossDefeated()
+    {
+        PrepareNextLevel();
     }
 
     public void OnLoseConditionMet()

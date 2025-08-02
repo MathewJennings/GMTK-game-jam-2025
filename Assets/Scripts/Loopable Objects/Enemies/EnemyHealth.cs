@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
     protected LevelScriptableObject currentLevel;
-    
+
     [SerializeField]
     private PickupSelector pickupSelector;
 

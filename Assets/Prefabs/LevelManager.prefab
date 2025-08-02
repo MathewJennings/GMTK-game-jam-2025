@@ -554,7 +554,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
+  bossModeLevel: {fileID: 11400000, guid: d4e909a4a0ef343799dc905af8e578a7, type: 2}
   spawnEnemy: {fileID: 0}
   waveAndBossBarsManager: {fileID: 0}
   bossProgressBar: {fileID: 0}
   gameOverCanvas: {fileID: 7459233523469388961}
+  youWinUI: {fileID: 0}

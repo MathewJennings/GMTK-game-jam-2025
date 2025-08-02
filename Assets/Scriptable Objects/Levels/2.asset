@@ -83,7 +83,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 75.07025
+  currentPoints: 73.05611
   initialPointsBuffer: 10
   targetPoints: 70
   hasPreparedBossFight: 1
@@ -100,4 +100,4 @@ MonoBehaviour:
   - 3
   - 3
   - 3
-  bossPrefab: {fileID: 7248937843699327009, guid: ddeea5542cfcbcb4f9a929ae9f8b4ebc, type: 3}
+  bossPrefab: {fileID: 8210314934849023821, guid: 7b82d7faa100d4d2fa9457ab9ebafed1, type: 3}

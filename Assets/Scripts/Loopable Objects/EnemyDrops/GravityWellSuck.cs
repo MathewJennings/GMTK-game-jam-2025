@@ -34,7 +34,7 @@ public class GravityWellSuck : MonoBehaviour
     {
         foreach (GameObject obj in loopables)
         {
-            if (obj != null && obj != gameObject)
+            if (obj != null && obj != gameObject && !IsTeleportBossCoin(obj))
             {
                 Vector2 direction = (transform.position - obj.transform.position).normalized;
                 float moveStep = pullStrength * Time.deltaTime;
@@ -45,5 +45,10 @@ public class GravityWellSuck : MonoBehaviour
                 );
             }
         }
+    }
+
+    private bool IsTeleportBossCoin(GameObject obj)
+    {
+        return obj.GetComponent<InfinityCoinLoopable>() != null;
     }
 }

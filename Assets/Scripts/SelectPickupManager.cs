@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SelectPickupManager : MonoBehaviour, ILoopObserver
 {
@@ -11,6 +12,9 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
     public PickupSelector pickupSelector; // Reference to the PickupSelector ScriptableObject
     public Transform pointA; // Position for the first pickup
     public Transform pointB; // Position for the second pickup
+    public TextMeshProUGUI pickupAText; // Text field for the first pickup
+    public TextMeshProUGUI pickupBText; // Text field for the second pickup
+
     
     private LevelManager levelManager; // Reference to the LevelManager
 
@@ -31,9 +35,11 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
 
         // Instantiate the pickups at pointA and pointB
         Instantiate(pickups[0], pointA.position, Quaternion.identity);
+        pickupAText.text = pickupSelector.GetPickupDescription(pickups[0]);
         if (pickups.Count > 1)
         {
             Instantiate(pickups[1], pointB.position, Quaternion.identity);
+            pickupBText.text = pickupSelector.GetPickupDescription(pickups[1]);
         }
     }
 

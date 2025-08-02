@@ -14,6 +14,14 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     private AudioClip drawingLineClip;
 
     [SerializeField]
+    private AudioClip bossSpawnedClip;
+
+
+    [SerializeField]
+    private AudioClip bossDefeatedClip;
+
+
+    [SerializeField]
     private AudioClip lineSnappingBackClip;
 
     [Header("Background Music")]
@@ -143,11 +151,13 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
 
     public void NotifyBossSpawned()
     {
+        soundEffectAudioSource.PlayOneShot(bossSpawnedClip);
         StartCoroutine(CrossfadeMusic(waveBackgroundMusicAudioSource, bossBackgroundMusicAudioSource, bossBackgroundMusicClipVolumes[0]));
     }
 
     public void NotifyBossDefeated()
     {
+        soundEffectAudioSource.PlayOneShot(bossDefeatedClip);
         StartCoroutine(CrossfadeMusic(bossBackgroundMusicAudioSource, waveBackgroundMusicAudioSource, enemyWaveBackgroundMusicClipVolumes[0]));
     }
 

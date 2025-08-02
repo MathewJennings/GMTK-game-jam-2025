@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public BossProgressBar bossProgressBar; // Assign in Inspector
     [SerializeField]
     private GameObject gameOverCanvas; // Assign in Inspector
+    public YouWinUI youWinUI; // Assign in Inspector
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy, StartingLevel, WaveAndBossBarsManager, or BossProgressBar.");
+            Debug.LogWarning("LevelManager: Missing reference to SpawnEnemy, StartingLevel, WaveAndBossBarsManager, BossProgressBar, or YouWinUI.");
         }
     }
 
@@ -48,7 +49,14 @@ public class LevelManager : MonoBehaviour
     private void PrepareNextLevel()
     {
         currentLevel = currentLevel.nextLevel;
-        PrepareCurrentLevel();
+        if (currentLevel != null)
+        {
+            PrepareCurrentLevel();
+        }
+        else
+        {
+            youWinUI.ShowYouWinScreen();
+        }
     }
 
     void Update()
@@ -73,7 +81,7 @@ public class LevelManager : MonoBehaviour
 
     private bool IsFullyConfigured()
     {
-        return spawnEnemy != null && currentLevel != null && waveAndBossBarsManager != null && bossProgressBar != null;
+        return spawnEnemy != null && currentLevel != null && waveAndBossBarsManager != null && bossProgressBar != null && youWinUI != null;
     }
 
     private void PrepareBossFight()

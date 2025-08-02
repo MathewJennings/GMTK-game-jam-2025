@@ -101,10 +101,11 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 50.441402
+  currentPoints: 10
   initialPointsBuffer: 10
   targetPoints: 50
-  isBossFight: 1
+  hasPreparedBossFight: 0
+  hasCompletedBossFight: 0
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
   - {fileID: 5262231215530053152, guid: 9fdf8fc687539df45833d12b3bed8ff7, type: 3}

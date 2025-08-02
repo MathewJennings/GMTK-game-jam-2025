@@ -33,7 +33,7 @@ public class SpawnLine : MonoBehaviour
 
     private void Update()
     {
-        if (levelManager.currentLevel.HasRunOutOfPoints()) return;
+        if (levelManager.currentLevel == null || levelManager.currentLevel.HasRunOutOfPoints()) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

@@ -32,7 +32,10 @@ public class BossHealth : EnemyHealth, ILoopable
     {
         Destroy(gameObject);
         onDeath?.Invoke();
-        currentLevel.hasCompletedBossFight = true;
+        if (currentLevel != null)
+        {
+            currentLevel.hasCompletedBossFight = true;
+        }
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
         return new LoopResult((int)maxHealth, resultText, Color.red, transform.position);
     }

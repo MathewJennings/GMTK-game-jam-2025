@@ -56,7 +56,7 @@ public class SpawnEnemy : MonoBehaviour
     void Update()
     {
         if (paused) return;
-        if (isBossMode || !currentLevel.HasReachedTargetPoints())
+        if (isBossMode || !currentLevel.HasClearedAllCorruption())
         {
             SpawnEnemies();
         }
@@ -94,7 +94,7 @@ public class SpawnEnemy : MonoBehaviour
             timer = 0f;
         }
     }
-    
+
     public void PauseSpawning()
     {
         paused = true;

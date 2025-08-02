@@ -119,3 +119,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
+  currentVirulence: 0
+  initialVirulence: 80
+  totalVirulence: 100
+  enemyPrefabs: []
+  enemyPrefabWeights: []
+  bossPrefab: {fileID: 0}

@@ -16,40 +16,36 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
     [SerializeField] private float momentumDecay = 0.95f;
     [SerializeField] private float smoothTime = 0.3f;
 
-    [Header("Visual Effects")]
-    [SerializeField] private Gradient progressGradient;
-    [SerializeField] private bool useGradient = true;
-
     [Header("Juice Effects")]
     [SerializeField] private float pulseIntensity = 1.1f;
     [SerializeField] private float pulseDuration = 0.2f;
     [SerializeField] private bool enableScoreChangeEffects = true;
 
-    [Header("Score Decay Settings")]
-    [SerializeField] private bool isScoreDecayEnabled = true;
-    [SerializeField] private float minDecayRate = 0.5f; // Minimum decay when far from target score
-    [SerializeField] private float maxDecayRate = 2.0f; // Maximum decay when close to target score
-    [SerializeField] private AnimationCurve decayCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    [SerializeField] private float decayGracePeriod = 2f; // Seconds of no decay after score increase
-    [SerializeField] private float lowScoreThreshold = 0.2f; // Below this percentage, use gentler decay
-    [SerializeField] private float highScoreThreshold = 0.8f; // Above this percentage, use aggressive decay
+    [Header("Score Corruption Settings")]
+    [SerializeField] private bool isAddCorruptionEnabled = true;
+    [SerializeField] private float minCorruptRate = 0.5f; // Minimum corruption when close to max corruption
+    [SerializeField] private float maxCorruptRate = 2.0f; // Maximum corruption when close to zero corruption
+    [SerializeField] private AnimationCurve corruptionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [SerializeField] private float corruptionGracePeriod = 2f; // Seconds of no corruption after corruption decrease
+    [SerializeField] private float lowCorruptionThreshold = 0.2f; // Below this percentage, use aggressive corruption
+    [SerializeField] private float highCorruptionThreshold = 0.8f; // Above this percentage, use gentle corruption
 
-    private float displayedScore = 0f;
-    private float targetDisplayScore = 0f;
+    private float displayedCorruption = 0f;
+    private float targetDisplayCorruption = 0f;
     private float velocity = 0f;
-    private float lastKnownScore = 0;
+    private float lastKnownCorruption = 0;
     private Image fillImage;
     private Vector3 originalScale;
     private Color originalColor;
 
-    // Decay system variables
-    private float lastScoreIncreaseTime = 0f;
-    private float currentDecayRate = 0f;
-    private bool isDecaying = false;
-    private bool isDecayWarningEffectActive = false;
-    private Coroutine decayWarningCoroutine;
-    private bool decayPaused = false;
-    private Coroutine pauseDecayCoroutine;
+    // Corruption system variables
+    private float lastCorruptionDecreaseTime = 0f;
+    private float currentCorrutionRate = 0f;
+    private bool isCorrupting = false;
+    private bool isCorruptionWarningEffectActive = false;
+    private Coroutine corruptionWarningCoroutine;
+    private bool corruptionPaused = false;
+    private Coroutine pauseCorruptionCoroutine;
 
     void Awake()
     {
@@ -58,14 +54,14 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
         originalColor = fillImage.color;
         if (levelManager == null)
         {
-            Debug.LogWarning("ScoreProgressBar: Missing reference to LevelManager.");
+            Debug.LogWarning("WaveProgressBar: Missing reference to LevelManager.");
         }
         else
         {
-            lastKnownScore = levelManager.currentLevel.currentPoints;
-            displayedScore = lastKnownScore;
-            targetDisplayScore = lastKnownScore;
-            lastScoreIncreaseTime = Time.time;
+            lastKnownCorruption = levelManager.currentLevel.currentCorruption;
+            displayedCorruption = lastKnownCorruption;
+            targetDisplayCorruption = lastKnownCorruption;
+            lastCorruptionDecreaseTime = Time.time;
         }
         levelManager.RegisterBossObserver(this);
     }
@@ -80,46 +76,46 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
 
     void Update()
     {
-        UpdateScoreDisplayState();
-        MaybeApplyScoreDecay();
-        AnimateScore();
+        UpdateCorruptionDisplayState();
+        MaybeApplyAdditionalCorruption();
+        AnimateCorruption();
         UpdateProgressBar();
         UpdateTextDisplay();
     }
 
-    private void UpdateScoreDisplayState()
+    private void UpdateCorruptionDisplayState()
     {
-        if (levelManager.currentLevel.currentPoints != lastKnownScore)
+        if (levelManager.currentLevel.currentCorruption != lastKnownCorruption)
         {
-            float scoreChange = levelManager.currentLevel.currentPoints - lastKnownScore;
-            OnScoreChanged(scoreChange);
-            lastKnownScore = levelManager.currentLevel.currentPoints;
-            targetDisplayScore = levelManager.currentLevel.currentPoints;
-            // Reset decay timer when score increases
-            if (scoreChange > 0)
+            float corruptionChange = levelManager.currentLevel.currentCorruption - lastKnownCorruption;
+            OnCorruptionChanged(corruptionChange);
+            lastKnownCorruption = levelManager.currentLevel.currentCorruption;
+            targetDisplayCorruption = levelManager.currentLevel.currentCorruption;
+            // Reset corruption timer when corruption decreases
+            if (corruptionChange < 0)
             {
-                lastScoreIncreaseTime = Time.time;
+                lastCorruptionDecreaseTime = Time.time;
             }
         }
     }
 
-    private void MaybeApplyScoreDecay()
+    private void MaybeApplyAdditionalCorruption()
     {
-        if (isScoreDecayEnabled &&
-                !(levelManager.currentLevel.HasRunOutOfPoints() && displayedScore <= 0))
+        if (isAddCorruptionEnabled &&
+                !(levelManager.currentLevel.HasReachedMaxCorruption() && displayedCorruption < levelManager.currentLevel.totalCorruption))
         {
-            ApplyScoreDecay();
+            ApplyCorruption();
         }
     }
 
     public void NotifyBossSpawned()
     {
-        isScoreDecayEnabled = false;
+        isAddCorruptionEnabled = false;
     }
 
     public void NotifyBossDefeated()
     {
-        isScoreDecayEnabled = true;
+        isAddCorruptionEnabled = true;
     }
 
     private void SetupProgressBar()
@@ -134,67 +130,67 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
         }
     }
 
-    private void ApplyScoreDecay()
+    private void ApplyCorruption()
     {
         // Check if we're in grace period
-        float timeSinceLastIncrease = Time.time - lastScoreIncreaseTime;
-        if (timeSinceLastIncrease < decayGracePeriod)
+        float timeSinceLastDecrease = Time.time - lastCorruptionDecreaseTime;
+        if (timeSinceLastDecrease < corruptionGracePeriod)
         {
-            isDecaying = false;
+            isCorrupting = false;
             return;
         }
-        if (levelManager.currentLevel.currentPoints <= 0)
+        if (levelManager.currentLevel.HasReachedMaxCorruption())
         {
-            isDecaying = false;
+            isCorrupting = false;
             return;
         }
-        if (decayPaused)
+        if (corruptionPaused)
         {
-            isDecaying = false;
+            isCorrupting = false;
             return;
         }
-        float progressPercentage = levelManager.currentLevel.currentPoints / levelManager.currentLevel.targetPoints;
-        float decayMultiplier = CalculateDecayMultiplier(progressPercentage);
-        currentDecayRate = Mathf.Lerp(minDecayRate, maxDecayRate, decayMultiplier);
-        float decayAmount = currentDecayRate * Time.deltaTime;
-        float newScore = Mathf.Max(0, levelManager.currentLevel.currentPoints - decayAmount);
-        if (newScore != levelManager.currentLevel.currentPoints)
+        float progressPercentage = levelManager.currentLevel.currentCorruption / levelManager.currentLevel.totalCorruption;
+        float corruptionMultiplier = CalculateCorruptionMultiplier(progressPercentage);
+        currentCorrutionRate = Mathf.Lerp(minCorruptRate, maxCorruptRate, corruptionMultiplier);
+        float corruptAmount = currentCorrutionRate * Time.deltaTime;
+        float newCorruption = Mathf.Max(0, levelManager.currentLevel.currentCorruption + corruptAmount);
+        if (newCorruption != levelManager.currentLevel.currentCorruption)
         {
-            levelManager.currentLevel.currentPoints = newScore;
-            isDecaying = true;
+            levelManager.currentLevel.currentCorruption = newCorruption;
+            isCorrupting = true;
         }
     }
 
-    private float CalculateDecayMultiplier(float progressPercentage)
+    private float CalculateCorruptionMultiplier(float progressPercentage)
         {
-        if (progressPercentage <= lowScoreThreshold)
+        if (progressPercentage <= lowCorruptionThreshold)
         {
-            float lowScoreProgress = progressPercentage / lowScoreThreshold;
-            return Mathf.Lerp(0f, 0.3f, decayCurve.Evaluate(lowScoreProgress));
+            float lowCorruptionProgress = progressPercentage / lowCorruptionThreshold;
+            return Mathf.Lerp(0.7f, 1f, corruptionCurve.Evaluate(lowCorruptionProgress));
         }
-        else if (progressPercentage >= highScoreThreshold)
+        else if (progressPercentage >= highCorruptionThreshold)
         {
-            float highScoreProgress = (progressPercentage - highScoreThreshold) / (1f - highScoreThreshold);
-            return Mathf.Lerp(0.7f, 1f, decayCurve.Evaluate(highScoreProgress));
+            float highCorruptionProgress = (progressPercentage - highCorruptionThreshold) / (1f - highCorruptionThreshold);
+            return Mathf.Lerp(0f, 0.3f, corruptionCurve.Evaluate(highCorruptionProgress));
         }
         else
         {
-            float midProgress = (progressPercentage - lowScoreThreshold) / (highScoreThreshold - lowScoreThreshold);
-            return Mathf.Lerp(0.3f, 0.7f, decayCurve.Evaluate(midProgress));
+            float midProgress = (progressPercentage - lowCorruptionThreshold) / (highCorruptionThreshold - lowCorruptionThreshold);
+            return Mathf.Lerp(0.3f, 0.7f, corruptionCurve.Evaluate(midProgress));
         }
     }
 
-    private void OnScoreChanged(float scoreChange)
+    private void OnCorruptionChanged(float corruptionChange)
     {
         if (enableScoreChangeEffects)
         {
-            if (scoreChange > 0)
+            if (corruptionChange < 0)
             {
                 StartCoroutine(PulseEffect());
             }
-            else if (scoreChange < 0 && isDecaying && !decayPaused && !isDecayWarningEffectActive)
+            else if (corruptionChange > 0 && isCorrupting && !corruptionPaused && !isCorruptionWarningEffectActive)
             {
-                decayWarningCoroutine = StartCoroutine(DecayWarningEffect());
+                corruptionWarningCoroutine = StartCoroutine(CorruptionWarningEffect());
             }
         }
     }
@@ -213,11 +209,11 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
         transform.localScale = originalScale;
     }
 
-    private IEnumerator DecayWarningEffect()
+    private IEnumerator CorruptionWarningEffect()
     {
-        isDecayWarningEffectActive = true;
-        // Subtle red flash to indicate decay
-        Color warningColor = Color.Lerp(originalColor, Color.red, 0.3f);
+        isCorruptionWarningEffectActive = true;
+        // Subtle black flash to indicate corruption
+        Color warningColor = Color.Lerp(originalColor, Color.black, 0.3f);
 
         float elapsedTime = 0f;
         float effectDuration = 0.5f;
@@ -229,41 +225,35 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
             Color currentColor = progress < 0.5f
                 ? Color.Lerp(originalColor, warningColor, progress * 2f)
                 : Color.Lerp(warningColor, originalColor, (progress - 0.5f) * 2f);
-            if (fillImage != null && !useGradient)
+            if (fillImage != null)
             {
                 fillImage.color = currentColor;
             }
             yield return null;
         }
-        if (fillImage != null && !useGradient)
+        if (fillImage != null)
         {
             fillImage.color = originalColor;
         }
-        isDecayWarningEffectActive = false;
+        isCorruptionWarningEffectActive = false;
     }
 
-    private void AnimateScore()
+    private void AnimateCorruption()
     {
-        displayedScore = Mathf.SmoothDamp(displayedScore, targetDisplayScore, ref velocity, smoothTime);
+        displayedCorruption = Mathf.SmoothDamp(displayedCorruption, targetDisplayCorruption, ref velocity, smoothTime);
         velocity *= momentumDecay;
-        displayedScore = Mathf.Clamp(displayedScore, 0, levelManager.currentLevel.targetPoints);
+        displayedCorruption = Mathf.Clamp(displayedCorruption, 0, levelManager.currentLevel.totalCorruption);
     }
 
     private void UpdateProgressBar()
     {
         if (progressBarFill == null || levelManager == null) return;
 
-        float progress = levelManager.currentLevel.targetPoints > 0 ? displayedScore / levelManager.currentLevel.targetPoints : 0f;
+        float progress = levelManager.currentLevel.totalCorruption > 0 ? displayedCorruption / levelManager.currentLevel.totalCorruption : 0f;
         progress = Mathf.Clamp01(progress);
-
-        // Update fill amount
         if (fillImage != null)
         {
             fillImage.fillAmount = progress;
-            if (useGradient && progressGradient != null)
-            {
-                fillImage.color = progressGradient.Evaluate(progress);
-            }
         }
     }
 
@@ -271,90 +261,81 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
     {
         if (currentScoreText != null)
         {
-            currentScoreText.text = Mathf.RoundToInt(displayedScore).ToString();
+            currentScoreText.text = Mathf.RoundToInt(displayedCorruption).ToString();
         }
     }
 
     /// <summary>
-    /// Temporarily pause score decay (useful for cutscenes, menus, powerups, etc.)
+    /// Temporarily pause corruption (useful for cutscenes, menus, powerups, etc.)
     /// </summary>
-    public void PauseDecay(float duration)
+    public void PauseCorruption(float duration)
     {
-        // Stop current decay coroutine so we can reset the duration.
-        if (pauseDecayCoroutine != null)
+        // Stop current corruption coroutine so we can reset the duration.
+        if (pauseCorruptionCoroutine != null)
         {
-            StopCoroutine(pauseDecayCoroutine);
+            StopCoroutine(pauseCorruptionCoroutine);
         }
-        // Stop decay warning coroutine to avoid interfering with color changes.
-        if (decayWarningCoroutine != null)
+        // Stop corruption warning coroutine to avoid interfering with color changes.
+        if (corruptionWarningCoroutine != null)
         {
-            StopCoroutine(decayWarningCoroutine);
-            decayWarningCoroutine = null;
-            isDecayWarningEffectActive = false;
+            StopCoroutine(corruptionWarningCoroutine);
+            corruptionWarningCoroutine = null;
+            isCorruptionWarningEffectActive = false;
         }
 
-        pauseDecayCoroutine = StartCoroutine(PauseDecayCoroutine(duration));
+        pauseCorruptionCoroutine = StartCoroutine(PauseCorruptionCoroutine(duration));
     }
 
-    private IEnumerator PauseDecayCoroutine(float duration)
+    private IEnumerator PauseCorruptionCoroutine(float duration)
     {
-        isScoreDecayEnabled = false;
-        decayPaused = true;
+        isAddCorruptionEnabled = false;
+        corruptionPaused = true;
         // Lerp to a light blue ice color
-        Color decayFrozenColor = new Color(100 / 255f, 255 / 255f, 255 / 255f); // Normalize RGB values to 0-1
+        Color corruptionFrozenColor = new Color(100 / 255f, 255 / 255f, 255 / 255f); // Normalize RGB values to 0-1
         float transitionDuration = 0.3f;
 
         for (float t = 0; t < transitionDuration; t += Time.deltaTime)
         {
-            fillImage.color = Color.Lerp(originalColor, decayFrozenColor, t / transitionDuration);
+            fillImage.color = Color.Lerp(originalColor, corruptionFrozenColor, t / transitionDuration);
             yield return null;
         }
-        fillImage.color = decayFrozenColor;
+        fillImage.color = corruptionFrozenColor;
 
         yield return new WaitForSeconds(duration);
-        
+
         // Lerp back to the original color over 0.3 seconds
         for (float t = 0; t < transitionDuration; t += Time.deltaTime)
         {
-            fillImage.color = Color.Lerp(decayFrozenColor, originalColor, t / transitionDuration);
+            fillImage.color = Color.Lerp(corruptionFrozenColor, originalColor, t / transitionDuration);
             yield return null;
         }
         fillImage.color = originalColor;
-        isScoreDecayEnabled = true;
-        decayPaused = false;
-        pauseDecayCoroutine = null;
+        isAddCorruptionEnabled = true;
+        corruptionPaused = false;
+        pauseCorruptionCoroutine = null;
     }
 
     /// <summary>
-    /// Reset the decay grace period (gives player more time before decay starts)
+    /// Reset the corruption grace period (gives player more time before corruption starts)
     /// </summary>
-    public void ResetDecayGracePeriod()
+    public void ResetCorruptionGracePeriod()
     {
-        lastScoreIncreaseTime = Time.time;
+        lastCorruptionDecreaseTime = Time.time;
     }
 
-    /// <summary>
-    /// Get current decay rate for debugging/UI purposes
-    /// </summary>
-    public float GetCurrentDecayRate()
+    public float GetCurrentCorruptionRate()
     {
-        return currentDecayRate;
+        return currentCorrutionRate;
     }
 
-    /// <summary>
-    /// Check if score is currently decaying
-    /// </summary>
-    public bool IsDecaying()
+    public bool IsCorrupting()
     {
-        return isDecaying && isScoreDecayEnabled;
+        return isCorrupting && isAddCorruptionEnabled;
     }
 
-    /// <summary>
-    /// Get time remaining in grace period
-    /// </summary>
     public float GetGracePeriodTimeRemaining()
     {
-        float timeSinceLastIncrease = Time.time - lastScoreIncreaseTime;
-        return Mathf.Max(0f, decayGracePeriod - timeSinceLastIncrease);
+        float timeSinceLastDecrease = Time.time - lastCorruptionDecreaseTime;
+        return Mathf.Max(0f, corruptionGracePeriod - timeSinceLastDecrease);
     }
 }

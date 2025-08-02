@@ -19,7 +19,7 @@ public class GravityWellLoopable : MonoBehaviour, ILoopable
             Destroy(gameObject);
         }
         Destroy(gameObject);
-        return new LoopResult(0, "Gravity Well!", Color.purple, transform.position);
+        return new LoopResult(0, "Gravity Well activated!", Color.purple, transform.position);
     }
 
 }

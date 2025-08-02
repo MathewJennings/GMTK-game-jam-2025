@@ -23,6 +23,6 @@ public class TimeSlower : MonoBehaviour, ILoopable
             Destroy(gameObject);
         }
 
-        return new LoopResult(0, "Time slowed!", Color.blue, transform.position);
+        return new LoopResult(0, "Time slow activated!", Color.blue, transform.position);
     }
 }

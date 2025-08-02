@@ -15,13 +15,14 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
     public TextMeshProUGUI pickupAText; // Text field for the first pickup
     public TextMeshProUGUI pickupBText; // Text field for the second pickup
 
-    
+    private bool pickupSelected = false;
     private LevelManager levelManager; // Reference to the LevelManager
 
     void Start()
     {
         FindFirstObjectByType<SpawnLine>().RegisterLoopObserver(this);
-        
+
+        pickupSelected = false;
         levelManager = FindObjectOfType<LevelManager>();
 
         // Get two random pickups that haven't been found
@@ -52,7 +53,11 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
 
     public void NotifyLoopCompleted(GameObject line)
     {
-        // TODO: Handle when multiple things are looped.
+        if (pickupSelected)
+        {
+            return;
+        }
+        // TODO: When multiple things are looped, we should probably print some unique message saying to pick one.
         if (line.GetComponent<LoopDetector>().GetLoopablesInLoop().Count == 1)
         {
             ILoopable loopable = line.GetComponent<LoopDetector>().GetLoopablesInLoop()[0];
@@ -74,6 +79,8 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
                 break;
             }
         }
+
+        pickupSelected = true;
 
         // Begin next level
         StartCoroutine(BeginNextLevelCoroutine());

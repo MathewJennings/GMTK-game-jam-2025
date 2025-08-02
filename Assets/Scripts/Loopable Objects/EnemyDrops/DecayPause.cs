@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class DecayPause : MonoBehaviour, ILoopable
@@ -6,6 +7,8 @@ public class DecayPause : MonoBehaviour, ILoopable
     private float duration = 5f;
 
     private WaveProgressBar waveProgressBar;
+
+    private bool isPickupScene = false;
 
     void Awake()
     {
@@ -19,12 +22,18 @@ public class DecayPause : MonoBehaviour, ILoopable
             Debug.LogWarning("DecayPause: Missing reference to WaveProgressBar.");
             Destroy(gameObject);
         }
+        
+        isPickupScene = GameObject.Find("/SelectPickupManager") != null;
     }
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         waveProgressBar.PauseDecay(duration);
-        Destroy(gameObject);
+        if (!isPickupScene)
+        {
+            Destroy(gameObject);
+        }
+
         return new LoopResult(0, "Decay paused!", new Color(100f / 255f, 255f / 255f, 255f / 255f), transform.position);
     }
 }

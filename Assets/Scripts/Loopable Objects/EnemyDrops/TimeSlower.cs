@@ -8,10 +8,21 @@ public class TimeSlower : MonoBehaviour, ILoopable
     [SerializeField]
     private float duration = 2f;
 
+    private bool isPickupScene = false;
+
+    void Awake()
+    {
+        isPickupScene = GameObject.Find("/SelectPickupManager") != null;
+    }
+
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         TimeManager.SetTimeScale(timeFraction, duration);
-        Destroy(gameObject);
+        if (!isPickupScene)
+        {
+            Destroy(gameObject);
+        }
+
         return new LoopResult(0, "Time slowed!", Color.blue, transform.position);
     }
 }

@@ -83,7 +83,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 73.05611
+  currentPoints: 80
   initialPointsBuffer: 10
   targetPoints: 70
   hasPreparedBossFight: 1

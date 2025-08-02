@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 651226815294165859, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 651226815294165859, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1002334185403504299, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -121,10 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad977feb659e324a85fcc1d8d00bd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSelector: {fileID: 11400000, guid: 2b01907c581cc614fa63bc4e4b13c4ce, type: 2}
   enemyDropList: {fileID: 11400000, guid: 8bb20ca63fcf8cd4db8a10d8e2abe6f5, type: 2}
   maxHealth: 1
   shrinkOnHit: 1
-  callbackFunction:
-    m_PersistentCalls:
-      m_Calls: []
-  deathTextOverride: 
+  currentHealth: 0

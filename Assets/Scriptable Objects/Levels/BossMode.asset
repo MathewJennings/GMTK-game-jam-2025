@@ -38,16 +38,13 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentPoints: 50
+  currentPoints: 2
   initialPointsBuffer: 10
-  targetPoints: 50
+  targetPoints: 100
   hasPreparedBossFight: 1
   hasCompletedBossFight: 0
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 8703a353748e64aee94c7a6aa7a5ca28, type: 3}
   enemyPrefabWeights:
   - 1
-  powerupPrefabs:
-  - {fileID: 4827265980704315333, guid: be06567c4fc829945990606f60dcdaaa, type: 3}
-  powerupPrefabWeights: []
-  bossPrefab: {fileID: 8066606338228497719, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+  bossPrefab: {fileID: 0}

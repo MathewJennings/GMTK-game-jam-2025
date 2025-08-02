@@ -5,6 +5,9 @@ using UnityEngine.Events;
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
     protected LevelScriptableObject currentLevel;
+    
+    [SerializeField]
+    private PickupSelector pickupSelector;
 
     [SerializeField]
     private EnemyDropList enemyDropList;
@@ -62,7 +65,6 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
         int prefabCount = enemyDropList.enemyDropPrefabs.Count;
         int weightCount = enemyDropList.enemyDropWeights.Count;
-
         if (prefabCount == 0 || prefabCount != weightCount) return;
 
         float randomWeight = UnityEngine.Random.Range(0f, 1f);
@@ -75,9 +77,22 @@ public class EnemyHealth : MonoBehaviour, ILoopable
             if (randomWeight <= cumulativeWeight)
             {
                 GameObject randomDrop = enemyDropList.enemyDropPrefabs[i];
-                Instantiate(randomDrop, transform.position, Quaternion.identity);
+                if (PickupUnlocked(randomDrop))
+                {
+                    Instantiate(randomDrop, transform.position, Quaternion.identity);
+                }
                 break;
             }
         }
+    }
+
+    private bool PickupUnlocked(GameObject pickup)
+    {
+        if (pickupSelector == null)
+        {
+            return false;
+        }
+
+        return pickupSelector.IsPickupUnlocked(pickup);
     }
 }

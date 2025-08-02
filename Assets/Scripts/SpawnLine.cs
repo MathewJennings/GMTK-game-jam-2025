@@ -23,6 +23,11 @@ public class SpawnLine : MonoBehaviour
     [SerializeField]
     int maxLineLength;
 
+    [SerializeField]
+    private bool isGhostMode = false;
+
+    private float ghostModeTimeRemaining = 0f;
+
     private readonly List<ILoopObserver> loopObservers = new();
     public void RegisterLoopObserver(ILoopObserver loopObserver) { loopObservers.Add(loopObserver); }
     public void UnregisterLoopObserver(ILoopObserver loopObserver) { loopObservers.Remove(loopObserver); }
@@ -100,6 +105,13 @@ public class SpawnLine : MonoBehaviour
                 lineBreakingObserver.NotifyLineBroke();
             }
         });
+
+        Debug.Log($"Setting ghost mode on line breaker for {ghostModeTimeRemaining} seconds.");
+        // Pass remaining ghost mode time to the line breaker if active
+        if (isGhostMode && ghostModeTimeRemaining > 0f)
+        {
+            lineBreaker.SetGhostMode(ghostModeTimeRemaining);
+        }
     }
 
     private void InitializeLoopDetector(GameObject line)
@@ -125,4 +137,24 @@ public class SpawnLine : MonoBehaviour
         LineGradient lineGradient = line.GetComponent<LineGradient>();
         lineGradient.SetLoopTextGenerator(loopTextGenerator);
     }
+    public void SetGhostMode(float duration)
+    {
+        isGhostMode = true;
+        ghostModeTimeRemaining = duration;
+        StartCoroutine(GhostModeCoroutine(duration));
+    }
+
+    private System.Collections.IEnumerator GhostModeCoroutine(float duration)
+    {
+        float timer = duration;
+        while (timer > 0f)
+        {
+            ghostModeTimeRemaining = timer;
+            yield return null;
+            timer -= Time.deltaTime;
+        }
+        isGhostMode = false;
+        ghostModeTimeRemaining = 0f;
+    }
+
 }

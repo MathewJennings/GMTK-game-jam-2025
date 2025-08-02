@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoopCounter : MonoBehaviour
+public class LoopCounter : MonoBehaviour, ILoopObserver
 {
 
     public float displayOffsetX = 100f; // Offset from the current mouse position
@@ -23,6 +23,16 @@ public class LoopCounter : MonoBehaviour
     {
         mainCamera = Camera.main;
         loopDetector = GetComponent<LoopDetector>();
+        FindFirstObjectByType<SpawnLine>().RegisterLoopObserver(this);
+    }
+
+    void OnDestroy()
+    {
+        SpawnLine spawnLine = FindFirstObjectByType<SpawnLine>();
+        if (spawnLine != null)
+        {
+            spawnLine.UnregisterLoopObserver(this);
+        }
     }
 
     public int GetCurrentLoopCount()
@@ -35,11 +45,12 @@ public class LoopCounter : MonoBehaviour
         loopTextGenerator = newLoopTextGenerator;
     }
 
-    /// <summary>
-    /// Increment the loop count and trigger HandleLooped for the loopables.
-    /// </summary>
-    public void IncrementLoopCountAndHandleLoopables()
+    public void NotifyLoopCompleted(GameObject line)
     {
+        if (loopDetector.GetLoopablesInLoop().Count <= 0)
+        {
+            return;
+        }
         currentLoopCount++;
         List<LoopResult> results = new();
 

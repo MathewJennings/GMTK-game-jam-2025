@@ -124,14 +124,7 @@ public class LineDrawing : MonoBehaviour
         drawValidForLoops.Add(true);
         lineRenderer.SetPositions(Vector2ListToVector3List(drawPositions).ToArray());
         edgeCollider.points = drawPositions.ToArray();
-
-        if (loopDetector.CreatedLoop(drawPositions, drawValidForLoops))
-        {
-            if (loopDetector.GetLoopablesInLoop().Count > 0)
-            {
-                loopCounter.IncrementLoopCountAndHandleLoopables();
-            }
-        }
+        loopDetector.CheckCreatedLoop(drawPositions, drawValidForLoops);
     }
 
     private void CheckFadeOldPoints()

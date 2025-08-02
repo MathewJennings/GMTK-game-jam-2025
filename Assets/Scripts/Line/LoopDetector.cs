@@ -27,7 +27,7 @@ public class LoopDetector : MonoBehaviour
 
     // Check if the very last point in drawPositions is close to any other point.
     // Ignore the 15 latest points to avoid false positives.
-    public bool CreatedLoop(List<Vector2> drawPositions, List<bool> drawValidForLoops)
+    public bool CheckCreatedLoop(List<Vector2> drawPositions, List<bool> drawValidForLoops)
     {
         if (drawPositions.Count < 15) return false;
 

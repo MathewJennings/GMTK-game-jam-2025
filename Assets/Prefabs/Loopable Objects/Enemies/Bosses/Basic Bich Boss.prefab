@@ -293,7 +293,11 @@ MonoBehaviour:
   enemyDropList: {fileID: 0}
   maxHealth: 50
   shrinkOnHit: 0
-  callbackFunction:
+  currentHealth: 0
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamage:
     m_PersistentCalls:
       m_Calls: []
   deathTextOverride: 

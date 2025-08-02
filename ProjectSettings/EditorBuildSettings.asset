@@ -9,17 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: e5501f6cdf2dd4a9f8a830b3d447344c
+  - enabled: 1
     path: Assets/Scenes/MatDemo.unity
     guid: 13d7dff30981fdb4f8253ca8e252d7ae
-  - enabled: 0
-    path: Assets/Scenes/Franklin Demo.unity
-    guid: ea6db7de35bf54ccda06f3139f161575
   - enabled: 1
     path: Assets/Scenes/FelixDemo.unity
-    guid: 7dce8ac79fd1c18448e259f5edb81abf
-  - enabled: 1
-    path: Assets/Scenes/NewSamDemo.unity
-    guid: 6cd0875b07c1a8544bf94ebf6a7bcb02
+    guid: d15df28878fd3c84aa566a493af66462
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

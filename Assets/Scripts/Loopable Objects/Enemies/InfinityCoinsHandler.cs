@@ -27,7 +27,6 @@ public class InfinityCoinsHandler : BossHealth
     }
 
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
-
     {
         return new LoopResult(0, null, Color.red, transform.position);
     }

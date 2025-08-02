@@ -96,8 +96,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime Boss
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 1220506604347110733, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    - {fileID: 8900106608822870948, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    - {fileID: 8584419761140623019, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    - {fileID: 1282555314203661074, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 6046413940734764744, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    - {fileID: 332086677339246298, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+    - {fileID: 3074443267690096882, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8066606338228497719, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
@@ -121,6 +128,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fa9956f4e9c47f4902beade30a1434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numTimesHalved: 0
+  enemyDropList: {fileID: 0}
+  maxHealth: 32
+  shrinkOnHit: 0
+  currentHealth: 0
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  deathTextOverride: 
+  slimeChildPrefab: {fileID: 8066606338228497719, guid: d91ca415fd7a523448d278d1dfa63ed0, type: 3}
+  numTimesHalved: 3
   maxSplits: 5
   initialMoveSpeed: 2

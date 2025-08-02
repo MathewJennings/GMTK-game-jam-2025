@@ -38,11 +38,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  currentPoints: 20
+  currentPoints: 18.10693
   initialPointsBuffer: 15
-  targetPoints: 30
-  hasPreparedBossFight: 0
-  hasCompletedBossFight: 0
+  targetPoints: 15
+  hasPreparedBossFight: 1
+  hasCompletedBossFight: 1
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
   - {fileID: 5262231215530053152, guid: 9fdf8fc687539df45833d12b3bed8ff7, type: 3}
@@ -55,4 +55,4 @@ MonoBehaviour:
   - 0.3
   - 0.2
   - 0.1
-  bossPrefab: {fileID: 7248937843699327009, guid: ddeea5542cfcbcb4f9a929ae9f8b4ebc, type: 3}
+  bossPrefab: {fileID: 8210314934849023821, guid: 7b82d7faa100d4d2fa9457ab9ebafed1, type: 3}

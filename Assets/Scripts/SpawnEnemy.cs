@@ -19,6 +19,7 @@ public class SpawnEnemy : MonoBehaviour
     private HashSet<GameObject> activeEnemies = new();
     private bool isBossMode = false;
     LevelScriptableObject bossModeLevel;
+    private bool paused = false;
 
     [Header("Velocity Settings")]
     [Space]
@@ -54,6 +55,7 @@ public class SpawnEnemy : MonoBehaviour
 
     void Update()
     {
+        if (paused) return;
         if (isBossMode || !currentLevel.HasReachedTargetPoints())
         {
             SpawnEnemies();
@@ -64,7 +66,7 @@ public class SpawnEnemy : MonoBehaviour
         }
     }
 
-    private void ClearRemainingEnemies()
+    public void ClearRemainingEnemies()
     {
         foreach (var enemy in activeEnemies)
         {
@@ -91,6 +93,15 @@ public class SpawnEnemy : MonoBehaviour
             SpawnTarget(numEnemies, selectedType);
             timer = 0f;
         }
+    }
+    
+    public void PauseSpawning()
+    {
+        paused = true;
+    }
+    public void ResumeSpawning()
+    {
+        paused = false;
     }
 
     public void PlayLevel(LevelScriptableObject level, bool isBossMode = false)

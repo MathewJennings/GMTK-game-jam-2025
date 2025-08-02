@@ -1,31 +1,39 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SelectPickupManager : MonoBehaviour, ILoopObserver
 {
+    [SerializeField]
+    private string levelScene;
+    
     public PickupSelector pickupSelector; // Reference to the PickupSelector ScriptableObject
     public Transform pointA; // Position for the first pickup
     public Transform pointB; // Position for the second pickup
-
-    private GameObject pickupAInstance;
-    private GameObject pickupBInstance;
+    
+    private LevelManager levelManager; // Reference to the LevelManager
 
     void Start()
     {
         FindFirstObjectByType<SpawnLine>().RegisterLoopObserver(this);
+        
+        levelManager = FindObjectOfType<LevelManager>();
 
         // Get two random pickups that haven't been found
-        List<GameObject> pickups = pickupSelector.GetTwoRandomPickups();
-        if (pickups == null || pickups.Count < 2)
+        List<GameObject> pickups = pickupSelector.GetUpToTwoRandomPickups();
+        if (pickups == null || pickups.Count <= 0)
         {
             Debug.LogError("Not enough pickups available.");
-            return;
+            StartCoroutine(BeginNextLevelCoroutine());
         }
 
         // Instantiate the pickups at pointA and pointB
-        pickupAInstance = Instantiate(pickups[0], pointA.position, Quaternion.identity);
-        pickupBInstance = Instantiate(pickups[1], pointB.position, Quaternion.identity);
+        Instantiate(pickups[0], pointA.position, Quaternion.identity);
+        if (pickups.Count > 1)
+        {
+            Instantiate(pickups[1], pointB.position, Quaternion.identity);
+        }
     }
 
     private void OnDestroy() {
@@ -58,7 +66,20 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
             }
         }
 
-        // Load the next scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // Begin next level
+        StartCoroutine(BeginNextLevelCoroutine());
+    }
+     
+    private IEnumerator BeginNextLevelCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        
+        // Call PrepareCurrentLevel in LevelManager
+        if (levelManager != null)
+        {
+            levelManager.PrepareCurrentLevel();
+        }
+        SceneManager.UnloadSceneAsync("SelectPickup");
     }
 }

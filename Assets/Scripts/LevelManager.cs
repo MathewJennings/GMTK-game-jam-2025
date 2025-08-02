@@ -1,10 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using NUnit.Framework.Constraints;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField]
+    private string pickupScene = "SelectPickup"; // The scene to load for selecting pickups
+    
     public LevelScriptableObject currentLevel; // Assign in Inspector
     public LevelScriptableObject bossModeLevel;
     public SpawnEnemy spawnEnemy; // Assign in Inspector
@@ -13,6 +19,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverCanvas; // Assign in Inspector
     public YouWinUI youWinUI; // Assign in Inspector
+
+    private bool inPickupScene;
 
     void Awake()
     {
@@ -32,6 +40,8 @@ public class LevelManager : MonoBehaviour
         currentLevel.currentPoints = currentLevel.initialPointsBuffer;
         currentLevel.hasPreparedBossFight = false;
         currentLevel.hasCompletedBossFight = false;
+        inPickupScene = false;
+        spawnEnemy.ResumeSpawning();
         spawnEnemy.PlayLevel(currentLevel);
         waveAndBossBarsManager.SetWaveBarActive();
     }
@@ -52,17 +62,30 @@ public class LevelManager : MonoBehaviour
         currentLevel = currentLevel.nextLevel;
         if (currentLevel != null)
         {
-            PrepareCurrentLevel();
+            StartCoroutine(LoadPickupSceneCoroutine());
+            spawnEnemy.ClearRemainingEnemies();
+            spawnEnemy.PauseSpawning();
+            inPickupScene = true;
         }
         else
         {
             youWinUI.ShowYouWinScreen();
         }
     }
+    
+    private IEnumerator LoadPickupSceneCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(pickupScene, LoadSceneMode.Additive);
+    }
 
     void Update()
     {
         if (!IsFullyConfigured())
+        {
+            return;
+        }
+        if (inPickupScene)
         {
             return;
         }

@@ -26,6 +26,16 @@ public class InfinityCoinsHandler : BossHealth
         currentHealth = maxHealth;
     }
 
+    public override void AddHealth(float additonalHealth)
+    {
+        float oldHealth = currentHealth;
+        base.AddHealth(additonalHealth);
+        float addedHealth = currentHealth - oldHealth;
+        minRotationSpeed -= rotationSpeedHitIncrease * addedHealth;
+        maxRotationSpeed -= rotationSpeedHitIncrease * addedHealth;
+        ChangeRotationSpeed(false);
+    }
+
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         return new LoopResult(0, null, Color.red, transform.position);
@@ -106,12 +116,12 @@ public class InfinityCoinsHandler : BossHealth
         }
     }
 
-    private void ChangeRotationSpeed()
+    private void ChangeRotationSpeed(bool changeDirection = true)
     {
         // Randomize the rotation speed.
         rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
         // Randomly reverse the direction
-        if (Random.value < 0.5f)
+        if (changeDirection && Random.value < 0.5f)
         {
             rotationSpeed = -rotationSpeed;
         }

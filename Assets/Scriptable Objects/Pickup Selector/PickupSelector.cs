@@ -50,4 +50,24 @@ public class PickupSelector : ScriptableObject
         }
         Debug.LogWarning($"Pickup '{pickupName}' not found in the list.");
     }
+
+    public bool IsPickupUnlocked(GameObject pickup)
+    {
+        for (int i = 0; i < pickupPrefabs.Count; i++)
+        {
+            if (pickupPrefabs[i] == pickup)
+            {
+                return hasPickup[i];
+            }
+        }
+        return false;
+    }
+
+    public void ClearAllPickups()
+    {
+        for (int i = 0; i < hasPickup.Count; i++)
+        {
+            hasPickup[i] = false;
+        }
+    }
 }

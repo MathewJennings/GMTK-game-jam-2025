@@ -33,6 +33,10 @@ public class SlimeChild : MonoBehaviour, ILoopable
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
         float damage = 1 * multiplier;
+        if (damage > health)
+        {
+            damage = health;
+        }
         health -= damage;
         LoopResult result = slimeBoss.HandleGetHit(damage, health);
 

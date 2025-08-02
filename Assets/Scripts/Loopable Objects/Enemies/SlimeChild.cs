@@ -17,6 +17,11 @@ public class SlimeChild : MonoBehaviour, ILoopable
     {
         maxHealth = h;
     }
+    public void IncrementHealthAndMaxHealth(float h)
+    {
+        health += h;
+        maxHealth += h;
+    }
     public void SetHealth(float h)
     {
         health = h;

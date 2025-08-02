@@ -655,44 +655,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   momentumDecay: 0.95
   smoothTime: 0.3
-  progressGradient:
-    serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 0}
-    key1: {r: 0, g: 0, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 1
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  useGradient: 0
-  pulseIntensity: 1.01
-  pulseDuration: 0.1
+  pulseIntensity: 1.1
+  pulseDuration: 0.2
   enableScoreChangeEffects: 1
-  isScoreDecayEnabled: 1
-  minDecayRate: 0.5
-  maxDecayRate: 2
-  decayCurve:
+  isAddCorruptionEnabled: 1
+  minCorruptRate: 0.5
+  maxCorruptRate: 2
+  corruptionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -716,9 +685,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  decayGracePeriod: 2
-  lowScoreThreshold: 0.2
-  highScoreThreshold: 0.8
+  corruptionGracePeriod: 2
+  lowCorruptionThreshold: 0.2
+  highCorruptionThreshold: 0.8
 --- !u!1 &4324450590704740114
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,8 +722,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 835.44995, y: -27.400024}
-  m_SizeDelta: {x: -1853.1217, y: 40}
+  m_AnchoredPosition: {x: 721.40234, y: -27}
+  m_SizeDelta: {x: -1651.7153, y: 48}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &8109031108690853472
 CanvasRenderer:
@@ -784,7 +753,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HP
+  m_text: CORRUPTION
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -889,8 +858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 763.5, y: -27.400024}
-  m_SizeDelta: {x: -1844.3, y: 40}
+  m_AnchoredPosition: {x: 543, y: -27}
+  m_SizeDelta: {x: -1844.3, y: 48}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2559572517865061175
 CanvasRenderer:

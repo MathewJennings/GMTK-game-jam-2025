@@ -21,6 +21,11 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     public float currentHealth;
 
+    public virtual void AddHealth(float additonalHealth)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + additonalHealth, 0, maxHealth);
+    }
+
     void Awake()
     {
         currentHealth = maxHealth;

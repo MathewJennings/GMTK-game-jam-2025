@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fa9956f4e9c47f4902beade30a1434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSelector: {fileID: 0}
   enemyDropList: {fileID: 0}
   maxHealth: 32
   shrinkOnHit: 0
@@ -141,5 +142,5 @@ MonoBehaviour:
   deathTextOverride: 
   slimeChildPrefab: {fileID: 8066606338228497719, guid: d91ca415fd7a523448d278d1dfa63ed0, type: 3}
   numTimesHalved: 3
-  maxSplits: 5
+  maxSplits: 4
   initialMoveSpeed: 2

@@ -1,16 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeBoss : BossHealth
 {
     [SerializeField]
     private GameObject slimeChildPrefab; // Set this in the Inspector
-    
+
     public int numTimesHalved = 0;
     [SerializeField]
     private int maxSplits = 3; // Set this in the Inspector
 
     [SerializeField]
     private float initialMoveSpeed = 1f; // Set this in the Inspector
+
+    private readonly List<SlimeChild> slimeChildren = new();
+
+    public override void AddHealth(float additonalHealth)
+    {
+        float oldHealth = currentHealth;
+        // currentHealth = Mathf.Clamp(currentHealth + additonalHealth, 0, maxHealth);
+        base.AddHealth(additonalHealth);
+        float addedHealth = currentHealth - oldHealth;
+        slimeChildren.RemoveAll(child => child == null);
+        foreach (SlimeChild child in slimeChildren)
+        {
+            child.IncrementHealthAndMaxHealth(addedHealth/slimeChildren.Count);
+        }
+    }
 
     // Override this to do nothing on looped result. That is handled by the children slimes.
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
@@ -25,6 +41,7 @@ public class SlimeBoss : BossHealth
         GameObject slime = Instantiate(slimeChildPrefab, Vector3.zero, Quaternion.identity);
         slime.GetComponent<RandomMovement>().moveSpeed = initialMoveSpeed;
         SlimeChild slimeChild = slime.GetComponent<SlimeChild>();
+        slimeChildren.Add(slimeChild);
         if (slimeChild != null)
         {
             slimeChild.SetSlimeBoss(this);
@@ -57,15 +74,16 @@ public class SlimeBoss : BossHealth
         {
             GameObject newSlime = Instantiate(slimeChildPrefab, slimeTransform.position, transform.rotation);
             newSlime.transform.localScale = slimeTransform.localScale * 0.5f;
-            newSlime.GetComponent<RandomMovement>().moveSpeed = moveSpeed * 2f;
+            newSlime.GetComponent<RandomMovement>().moveSpeed = moveSpeed * 1.5f;
             SlimeChild slimeChild = newSlime.GetComponent<SlimeChild>();
+            slimeChildren.Add(slimeChild);
             if (slimeChild != null)
             {
                 slimeChild.SetSlimeBoss(this);
                 slimeChild.SetMaxHealth(health / 2f);
                 slimeChild.SetHealth(health / 2f);
                 slimeChild.SetSplitsRemaining(splitsRemaining - 1);
-                slimeChild.SetMoveSpeed(moveSpeed * 2f);
+                slimeChild.SetMoveSpeed(moveSpeed * 1.5f);
             }
         }
     }

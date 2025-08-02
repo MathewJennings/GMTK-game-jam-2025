@@ -21,6 +21,8 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
     void Start()
     {
         FindFirstObjectByType<SpawnLine>().RegisterLoopObserver(this);
+        WaveAndBossBarsManager waveAndBossBarsManager = FindFirstObjectByType<WaveAndBossBarsManager>();
+        waveAndBossBarsManager.DisableBothBars();
 
         pickupSelected = false;
         levelManager = FindObjectOfType<LevelManager>();

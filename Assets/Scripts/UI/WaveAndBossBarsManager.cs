@@ -33,4 +33,16 @@ public class WaveAndBossBarsManager : MonoBehaviour
             gameObject.SetActive(true);
         }
     }
+
+    public void DisableBothBars()
+    {
+        foreach (var gameObject in waveBarGameObjects)
+        {
+            gameObject.SetActive(false);
+        }
+        foreach (var gameObject in bossBarGameObjects)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

@@ -228,6 +228,7 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
             if (fillImage != null)
             {
                 fillImage.color = currentColor;
+                Debug.Log(fillImage.color);
             }
             yield return null;
         }

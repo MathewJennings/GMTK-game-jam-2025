@@ -68,11 +68,11 @@ public class SpawnLine : MonoBehaviour
         LineDrawing lineDrawing = line.GetComponent<LineDrawing>();
         lineDrawing.SetTimeToFade(lineTimeToFade);
         lineDrawing.SetMaxLineLength(maxLineLength);
-        lineDrawing.SetNotifyOnLineDrawingEnded(() =>
+        lineDrawing.SetNotifyOnLineDrawingEnded((numPoints) =>
         {
             foreach (ILineDrawingObserver lineDrawingObserver in lineDrawingObservers)
             {
-                lineDrawingObserver.NotifyLineDrawingEnded();
+                lineDrawingObserver.NotifyLineDrawingEnded(numPoints);
             }
         });
         NotifyOnLineDrawingStarted();

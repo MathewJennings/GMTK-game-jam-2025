@@ -1,5 +1,5 @@
 public interface ILineDrawingObserver
 {
     void NotifyLineDrawingStarted();
-    void NotifyLineDrawingEnded();
+    void NotifyLineDrawingEnded(int numPoints);
 }

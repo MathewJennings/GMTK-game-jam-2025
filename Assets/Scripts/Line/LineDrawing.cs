@@ -22,8 +22,8 @@ public class LineDrawing : MonoBehaviour
     private List<float> drawTimes;
     private List<bool> drawValidForLoops;
 
-    private Action notifyOnLineDrawingEnded;
-    public void SetNotifyOnLineDrawingEnded(Action notifyOnLineDrawingEnded)
+    private Action<int> notifyOnLineDrawingEnded;
+    public void SetNotifyOnLineDrawingEnded(Action<int> notifyOnLineDrawingEnded)
     {
         this.notifyOnLineDrawingEnded = notifyOnLineDrawingEnded;
     }
@@ -85,7 +85,7 @@ public class LineDrawing : MonoBehaviour
         if (!finishedDrawing && !Mouse.current.leftButton.IsPressed())
         {
             finishedDrawing = true;
-            notifyOnLineDrawingEnded();
+            notifyOnLineDrawingEnded(drawPositions.Count);
         }
         if (finishedDrawing && drawPositions.Count >= 2)
         {

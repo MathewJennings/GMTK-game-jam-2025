@@ -11,6 +11,9 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     [SerializeField]
     private AudioClip drawingLineClip;
 
+    [SerializeField]
+    private AudioClip lineSnappingBackClip;
+
     private AudioSource soundEffectAudioSource;
     private AudioSource lineDrawingAudioSource;
 
@@ -40,20 +43,20 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
         }
     }
 
-    private void RandomizePitchAndVolume(AudioSource audioSource)
-    {
-        audioSource.pitch = Random.Range(0.99f, 1.01f);
-        audioSource.volume = Random.Range(0.8f, 1.0f);
-    }
-
     public void NotifyLineDrawingStarted()
     {
         lineDrawingAudioSource.Play();
     }
 
-    public void NotifyLineDrawingEnded()
+    public void NotifyLineDrawingEnded(int numPoints)
     {
         lineDrawingAudioSource.Stop();
+        if (numPoints < 60)
+        {
+            RandomizePitch(soundEffectAudioSource);
+            soundEffectAudioSource.volume = 0.3f;
+            soundEffectAudioSource.PlayOneShot(lineSnappingBackClip);
+        }
     }
 
     public void NotifyLineBroke()
@@ -70,5 +73,16 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
             RandomizePitchAndVolume(soundEffectAudioSource);
             soundEffectAudioSource.PlayOneShot(completedLoopClip);
         }
+    }
+
+    private void RandomizePitchAndVolume(AudioSource audioSource)
+    {
+        RandomizePitch(audioSource);
+        audioSource.volume = Random.Range(0.8f, 1.0f);
+    }
+
+    private void RandomizePitch(AudioSource audioSource)
+    {
+        audioSource.pitch = Random.Range(0.99f, 1.01f);
     }
 }

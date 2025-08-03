@@ -12,14 +12,14 @@ public class TutorialTrigger : EnemyHealth
 
     public override LoopResult HandleLooped(GameObject line, float multiplier)
     {
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         currentHealth -= 1 * multiplier;
         if (currentHealth > 0)
         {
-            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", ColorPalette.BrightYellow, transform.position);
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", spriteColor, transform.position);
         }
         Destroy(gameObject);
         tutorialManager.LoadSceneAfterDelay();
-        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         return new LoopResult(0, "CORRUPTION ELIMINATED", spriteColor, transform.position);
     }
 }

@@ -6,7 +6,7 @@ public class Ghost : MonoBehaviour, ILoopable
     private float ghostDuration = 3f; // Configurable in the Inspector
 
     private bool isPickupScene = false;
-    
+
     void Awake()
     {
         isPickupScene = GameObject.Find("/SelectPickupManager") != null;
@@ -18,7 +18,8 @@ public class Ghost : MonoBehaviour, ILoopable
         {
             return new LoopResult(0, "Unlocked ghost mode!", Color.grey, transform.position);
         }
-        
+
+        LogPowerupCollected();
         GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
 
         foreach (GameObject lineObj in lines)
@@ -47,12 +48,30 @@ public class Ghost : MonoBehaviour, ILoopable
             {
                 spawnLine.SetGhostMode(ghostDuration);
             }
-        } else
+        }
+        else
         {
             Debug.Log("Line Spawner not found or SpawnLine component missing.");
         }
 
         Destroy(gameObject);
         return new LoopResult(0, "Ghost mode activated!", Color.grey, transform.position);
+    }
+    
+    private void LogPowerupCollected()
+    {
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string powerupName = this.GetType().Name;
+            if (logManager.numPowerups.ContainsKey(powerupName))
+            {
+                logManager.numPowerups[powerupName]++;
+            }
+            else
+            {
+                logManager.numPowerups[powerupName] = 1;
+            }
+        }
     }
 }

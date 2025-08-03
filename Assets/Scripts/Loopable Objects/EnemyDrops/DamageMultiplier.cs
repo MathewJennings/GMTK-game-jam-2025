@@ -20,13 +20,14 @@ public class DamageMultiplier : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
+        Color spriteColor = GetComponent<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked damage multiplier!", Color.yellow, transform.position);
+            return new LoopResult(0, "Unlocked damage multiplier!", spriteColor, transform.position);
         }
 
         float newMult = spawnLine.TemporarilyAddBonusMultiplier(bonusMultiplier, duration);
         Destroy(gameObject);
-        return new LoopResult(0, $"{newMult}x damage activated!", Color.yellow, transform.position);
+        return new LoopResult(0, $"{newMult}x damage activated!", spriteColor, transform.position);
     }
 }

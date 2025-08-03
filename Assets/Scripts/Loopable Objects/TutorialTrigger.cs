@@ -19,6 +19,7 @@ public class TutorialTrigger : EnemyHealth
         }
         Destroy(gameObject);
         tutorialManager.LoadSceneAfterDelay();
-        return new LoopResult(0, "You get it!", ColorPalette.BrightYellow, transform.position);
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
+        return new LoopResult(0, "CORRUPTION ELIMINATED", spriteColor, transform.position);
     }
 }

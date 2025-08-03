@@ -67,7 +67,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
         {
             currentLevel.currentCorruption -= maxHealth * multiplier;
         }
-        string displayText = isBossMode ? "" : $"-{maxHealth} corruption!";
+        string displayText = isBossMode ? "" : $"-{maxHealth} corruption";
         return new LoopResult((int)maxHealth, displayText, spriteColor, transform.position);
     }
 

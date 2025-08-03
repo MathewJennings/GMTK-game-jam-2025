@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430bf6c23a24b98428c2fbbfd88a5fb9, type: 3}
   m_Name: Enemy4hp
   m_EditorClassIdentifier: 
-  dropPercentage: 0.3
+  dropPercentage: 0.1

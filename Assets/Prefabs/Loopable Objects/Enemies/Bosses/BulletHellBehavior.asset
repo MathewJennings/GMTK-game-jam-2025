@@ -1,0 +1,1105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7851041942375265177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: BulletHellBehavior Debug Info
+  m_EditorClassIdentifier: 
+  m_CodeBreakPointsList: []
+--- !u!114 &-7397322292393298933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: BulletHellBehavior
+  m_EditorClassIdentifier: 
+  Graphs:
+  - rid: 3518265758118576666
+  RootGraph:
+    rid: 3518265758118576666
+  m_DebugInfo: {fileID: -7851041942375265177}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 3518265758118576666
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 10985555911327790379
+          m_Value1: 2686259383625955480
+        m_DebugInfo: {fileID: 0}
+        BlackboardReference:
+          rid: 3518265758118576667
+        BlackboardGroupReferences: []
+        Root:
+          rid: 3518265758118576668
+        m_ActiveNodes: []
+        m_NodesToTick: []
+        m_NodesToEnd:
+          rid: 3518265758118576669
+        m_EndedNodes:
+          rid: 3518265758118576670
+        m_VersionTimestamp: 638897852476934130
+    - rid: 3518265758118576667
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 3518265758118576671
+        m_Source: {fileID: -7300701253288441993}
+    - rid: 3518265758118576668
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 5901890609350827706
+          m_Value1: 1417657763397714780
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 3518265758118576672
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 3518265758118576669
+      type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
+      data: 
+    - rid: 3518265758118576670
+      type: {class: 'HashSet`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: System.Core}
+      data: 
+    - rid: 3518265758118576671
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 3518265758118576673
+        - rid: 3518265758118576674
+        - rid: 3518265758118576675
+        - rid: 3518265758118576676
+        - rid: 3518265758118576677
+    - rid: 3518265758118576672
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 18427801813449333352
+          m_Value1: 6239112288062759590
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576668
+        m_Children:
+        - rid: 3518265758118576678
+        - rid: 3518265758118576679
+    - rid: 3518265758118576673
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 3518265758118576674
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265758118576675
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        m_Value: 1
+    - rid: 3518265758118576676
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        m_Value: 10
+    - rid: 3518265758118576677
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 18396241127579803025
+          m_Value1: 3833437388644116648
+        Name: pauseTime
+        m_Value: 3
+    - rid: 3518265758118576678
+      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 18427801813449333352
+          m_Value1: 6239112288062759590
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576672
+        SecondsToWait:
+          rid: 3518265758118576677
+    - rid: 3518265758118576679
+      type: {class: RandomComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 250700794529984328
+          m_Value1: 14546578204732482582
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576672
+        m_Children:
+        - rid: 3518265758118576680
+        - rid: 3518265758118576681
+        - rid: 3518265758118576682
+    - rid: 3518265758118576680
+      type: {class: RadialAttackAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 2197341316942522488
+          m_Value1: 6298322634609509782
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576679
+        NumBullets:
+          rid: 3518265758118576676
+        Bullets:
+          rid: 3518265758118576674
+        Self:
+          rid: 3518265758118576673
+        BulletSpeed:
+          rid: 3518265758118576675
+    - rid: 3518265758118576681
+      type: {class: SpiralAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 6161307258243831750
+          m_Value1: 7483213403304617002
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576679
+        NumBullets:
+          rid: 3518265758118576676
+        Bullets:
+          rid: 3518265758118576674
+        Self:
+          rid: 3518265758118576673
+        BulletSpeed:
+          rid: 3518265758118576675
+        delayBetweenBullets: 0.1
+    - rid: 3518265758118576682
+      type: {class: FireCannonsAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 10140047909702159692
+          m_Value1: 1282777810648645514
+        Graph:
+          rid: 3518265758118576666
+        m_Parent:
+          rid: 3518265758118576679
+        NumBullets:
+          rid: 3518265758118576676
+        Bullets:
+          rid: 3518265758118576674
+        BulletSpeed:
+          rid: 3518265758118576675
+--- !u!114 &-7300701253288441993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: BulletHellBehavior Blackboard
+  m_EditorClassIdentifier: 
+  VersionTimestamp: 638897822427012090
+  AssetID:
+    m_Value0: 10985555911327790379
+    m_Value1: 2686259383625955480
+  m_Blackboard:
+    m_Variables:
+    - rid: 3518265745210081766
+    - rid: 3518265745210081827
+    - rid: 3518265745210081871
+    - rid: 3518265758118576223
+    - rid: 3518265758118576374
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3518265745210081766
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 3518265745210081827
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265745210081871
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        m_Value: 1
+    - rid: 3518265758118576223
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        m_Value: 10
+    - rid: 3518265758118576374
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 18396241127579803025
+          m_Value1: 3833437388644116648
+        Name: pauseTime
+        m_Value: 3
+--- !u!114 &-3813990559284708078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: BulletHellBehavior Blackboard
+  m_EditorClassIdentifier: 
+  AssetID:
+    m_Value0: 10985555911327790379
+    m_Value1: 2686259383625955480
+  m_Variables:
+  - rid: 3518265745210081767
+  - rid: 3518265745210081816
+  - rid: 3518265745210081859
+  - rid: 3518265758118576206
+  - rid: 3518265758118576356
+  m_VersionTimestamp: 638897822427012090
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: -7300701253288441993}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3518265745210081767
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3518265745210081816
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265745210081859
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 1
+    - rid: 3518265758118576206
+      type: {class: 'TypedVariableModel`1[[System.Int32, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 10
+    - rid: 3518265758118576356
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 18396241127579803025
+          m_Value1: 3833437388644116648
+        Name: pauseTime
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 3
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: BulletHellBehavior
+  m_EditorClassIdentifier: 
+  Blackboard: {fileID: -3813990559284708078}
+  m_Description: 
+  m_Nodes:
+  - rid: 3518265745210081757
+  - rid: 3518265745210081768
+  - rid: 3518265745210081798
+  - rid: 3518265745210081960
+  - rid: 3518265758118576259
+  - rid: 3518265758118576432
+  m_VersionTimestamp: 638897852476934130
+  m_DebugInfo: {fileID: -7851041942375265177}
+  m_RuntimeGraph: {fileID: -7397322292393298933}
+  AssetID:
+    m_Value0: 10985555911327790379
+    m_Value1: 2686259383625955480
+  Story:
+    Story: 
+    StoryVariableNames: []
+    Variables: []
+  m_NodeModelsInfo:
+  - Name: On Start
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+  - Name: Random
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 15586748977048568638
+      m_Value1: 1886799870276249994
+    Variables: []
+    NamedChildren: []
+  - Name: RadialAttack
+    Story: 'shoot [numBullets] [bullets] in circle around [self] at speed [BulletSpeed]'
+    RuntimeTypeID:
+      m_Value0: 4947425575102236054
+      m_Value1: 17350156157271876954
+    Variables:
+    - Name: NumBullets
+      Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: Bullets
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Self
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: BulletSpeed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: Wait (Seconds)
+    Story: Wait for [SecondsToWait] seconds
+    RuntimeTypeID:
+      m_Value0: 7729581452106168333
+      m_Value1: 8820302366443624372
+    Variables:
+    - Name: SecondsToWait
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: Spiral
+    Story: 'shoot [numBullets] [bullets] in a spiral around [self] at [BulletSpeed]'
+    RuntimeTypeID:
+      m_Value0: 2839358298308128536
+      m_Value1: 9858389397662828910
+    Variables:
+    - Name: NumBullets
+      Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: Bullets
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Self
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: BulletSpeed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: FireCannons
+    Story: 'Fires [numBullets] [bullets] at [bulletSpeed]'
+    RuntimeTypeID:
+      m_Value0: 5611994801677999614
+      m_Value1: 15192943265812887267
+    Variables:
+    - Name: NumBullets
+      Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: Bullets
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: BulletSpeed
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: Spawn Cannons
+    Story: Spawns [numCannons] [canons] just outside of frame
+    RuntimeTypeID:
+      m_Value0: 3045083046375893004
+      m_Value1: 15986143574039108559
+    Variables:
+    - Name: NumCannons
+      Type:
+        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: Canons
+      Type:
+        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  m_Blackboards: []
+  m_MainBlackboardAuthoringAsset: {fileID: -3813990559284708078}
+  m_CommandBuffer:
+    m_Commands: []
+  m_SubgraphsInfo: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3518265745210081757
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 0, y: 0}
+        ID:
+          m_Value0: 5901890609350827706
+          m_Value1: 1417657763397714780
+        Parents: []
+        PortModels:
+        - rid: 3518265745210081758
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 3518265745210081758
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081757
+        m_Connections:
+        - rid: 3518265745210081961
+    - rid: 3518265745210081768
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 1.9445329, y: 241.66882}
+        ID:
+          m_Value0: 250700794529984328
+          m_Value1: 14546578204732482582
+        Parents: []
+        PortModels:
+        - rid: 3518265745210081769
+        - rid: 3518265745210081770
+        NodeType:
+          m_SerializableType: Unity.Behavior.RandomComposite, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 15586748977048568638
+          m_Value1: 1886799870276249994
+        m_FieldValues: []
+    - rid: 3518265745210081769
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081768
+        m_Connections:
+        - rid: 3518265745210081962
+    - rid: 3518265745210081770
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081768
+        m_Connections:
+        - rid: 3518265758118576433
+        - rid: 3518265758118576260
+        - rid: 3518265745210081799
+    - rid: 3518265745210081798
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -467.45236, y: 392.98062}
+        ID:
+          m_Value0: 2197341316942522488
+          m_Value1: 6298322634609509782
+        Parents: []
+        PortModels:
+        - rid: 3518265745210081799
+        - rid: 3518265745210081800
+        NodeType:
+          m_SerializableType: RadialAttackAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 4947425575102236054
+          m_Value1: 17350156157271876954
+        m_FieldValues:
+        - rid: 3518265745210081801
+        - rid: 3518265745210081802
+        - rid: 3518265745210081919
+        - rid: 3518265745210081920
+    - rid: 3518265745210081799
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081798
+        m_Connections:
+        - rid: 3518265745210081770
+    - rid: 3518265745210081800
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081798
+        m_Connections: []
+    - rid: 3518265745210081801
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: NumBullets
+        Type:
+          m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265745210081803
+        LinkedVariable:
+          rid: 3518265758118576238
+    - rid: 3518265745210081802
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Bullets
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3518265745210081804
+        LinkedVariable:
+          rid: 3518265745210081906
+    - rid: 3518265745210081803
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 10
+    - rid: 3518265745210081804
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3518265745210081906
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265745210081919
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Self
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3518265745210081921
+        LinkedVariable:
+          rid: 3518265745210081923
+    - rid: 3518265745210081920
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: BulletSpeed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265745210081922
+        LinkedVariable:
+          rid: 3518265745210081948
+    - rid: 3518265745210081921
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3518265745210081922
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 10
+    - rid: 3518265745210081923
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3518265745210081948
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 5
+    - rid: 3518265745210081960
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 0, y: 105}
+        ID:
+          m_Value0: 18427801813449333352
+          m_Value1: 6239112288062759590
+        Parents: []
+        PortModels:
+        - rid: 3518265745210081961
+        - rid: 3518265745210081962
+        NodeType:
+          m_SerializableType: Unity.Behavior.WaitAction, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 7729581452106168333
+          m_Value1: 8820302366443624372
+        m_FieldValues:
+        - rid: 3518265745210081963
+    - rid: 3518265745210081961
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081960
+        m_Connections:
+        - rid: 3518265745210081758
+    - rid: 3518265745210081962
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265745210081960
+        m_Connections:
+        - rid: 3518265745210081769
+    - rid: 3518265745210081963
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: SecondsToWait
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265745210081964
+        LinkedVariable:
+          rid: 3518265758118576391
+    - rid: 3518265745210081964
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 3
+    - rid: 3518265758118576238
+      type: {class: 'TypedVariableModel`1[[System.Int32, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 10
+    - rid: 3518265758118576259
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 0.95856476, y: 387.751}
+        ID:
+          m_Value0: 6161307258243831750
+          m_Value1: 7483213403304617002
+        Parents: []
+        PortModels:
+        - rid: 3518265758118576260
+        - rid: 3518265758118576261
+        NodeType:
+          m_SerializableType: SpiralAction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 2839358298308128536
+          m_Value1: 9858389397662828910
+        m_FieldValues:
+        - rid: 3518265758118576262
+        - rid: 3518265758118576263
+        - rid: 3518265758118576264
+        - rid: 3518265758118576265
+    - rid: 3518265758118576260
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265758118576259
+        m_Connections:
+        - rid: 3518265745210081770
+    - rid: 3518265758118576261
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265758118576259
+        m_Connections: []
+    - rid: 3518265758118576262
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: NumBullets
+        Type:
+          m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265758118576266
+        LinkedVariable:
+          rid: 3518265758118576288
+    - rid: 3518265758118576263
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Bullets
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3518265758118576267
+        LinkedVariable:
+          rid: 3518265758118576303
+    - rid: 3518265758118576264
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Self
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3518265758118576268
+        LinkedVariable:
+          rid: 3518265758118576269
+    - rid: 3518265758118576265
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: BulletSpeed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265758118576270
+        LinkedVariable:
+          rid: 3518265758118576271
+    - rid: 3518265758118576266
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3518265758118576267
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3518265758118576268
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3518265758118576269
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+    - rid: 3518265758118576270
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3518265758118576271
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 5
+    - rid: 3518265758118576288
+      type: {class: 'TypedVariableModel`1[[System.Int32, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 10
+    - rid: 3518265758118576303
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265758118576391
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 18396241127579803025
+          m_Value1: 3833437388644116648
+        Name: pauseTime
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 3
+    - rid: 3518265758118576432
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 474.2721, y: 361.89783}
+        ID:
+          m_Value0: 10140047909702159692
+          m_Value1: 1282777810648645514
+        Parents: []
+        PortModels:
+        - rid: 3518265758118576433
+        - rid: 3518265758118576434
+        NodeType:
+          m_SerializableType: FireCannonsAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 5611994801677999614
+          m_Value1: 15192943265812887267
+        m_FieldValues:
+        - rid: 3518265758118576435
+        - rid: 3518265758118576436
+        - rid: 3518265758118576442
+    - rid: 3518265758118576433
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265758118576432
+        m_Connections:
+        - rid: 3518265745210081770
+    - rid: 3518265758118576434
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 3518265758118576432
+        m_Connections: []
+    - rid: 3518265758118576435
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: NumBullets
+        Type:
+          m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265758118576438
+        LinkedVariable:
+          rid: 3518265758118576465
+    - rid: 3518265758118576436
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Bullets
+        Type:
+          m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 3518265758118576439
+        LinkedVariable:
+          rid: 3518265758118576483
+    - rid: 3518265758118576438
+      type: {class: 'BlackboardVariable`1[[System.Int32, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3518265758118576439
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 3518265758118576442
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: BulletSpeed
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 3518265758118576443
+        LinkedVariable:
+          rid: 3518265758118576501
+    - rid: 3518265758118576443
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 3518265758118576465
+      type: {class: 'TypedVariableModel`1[[System.Int32, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 7912350081348613299
+          m_Value1: 11886014342863869303
+        Name: numBullets
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 10
+    - rid: 3518265758118576483
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 3620445420958738418
+          m_Value1: 16183230821850859321
+        Name: BulletPrefab
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+    - rid: 3518265758118576501
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 6325794899740968622
+          m_Value1: 8836529639091885771
+        Name: BulletSpeed
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 1

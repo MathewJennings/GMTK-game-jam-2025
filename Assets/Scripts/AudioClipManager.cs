@@ -165,7 +165,6 @@ public class AudioClipManager : MonoBehaviour, ILineDrawingObserver, ILineBreaki
     {
         newAudioSource.volume = 0.0f;
         newAudioSource.Play();
-        Debug.Log($"Crossfading music from {oldAudioSource.clip.name} to {newAudioSource.clip.name}");
         float timer = 0.0f;
         while (timer < crossfadeDuration)
         {

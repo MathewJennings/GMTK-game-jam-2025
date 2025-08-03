@@ -128,7 +128,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
 
     private void PrepareBossFight()
     {
-        GameObject boss = Instantiate(currentLevel.bossPrefab, Vector2.zero, Quaternion.identity);
+        GameObject boss = Instantiate(currentLevel.GetRandomBoss(), Vector2.zero, Quaternion.identity);
         boss.GetComponent<BossHealth>().SetNotifyBossDefeated(NotifyBossDefeated);
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());

@@ -15,6 +15,7 @@ public class LevelScriptableObject : ScriptableObject
     public List<float> enemyPrefabWeights; // Parallel list to enemyPrefabs
 
     public GameObject bossPrefab;
+    public List<GameObject> bossPrefabs;
 
     public bool HasClearedAllCorruption()
     {
@@ -24,5 +25,17 @@ public class LevelScriptableObject : ScriptableObject
     public bool HasReachedMaxCorruption()
     {
         return currentCorruption >= totalCorruption;
+    }
+
+    public GameObject GetRandomBoss()
+    {
+        if (bossPrefabs == null || bossPrefabs.Count == 0)
+        {
+            Debug.LogWarning("No boss prefabs available.");
+            return null;
+        }
+
+        int randomIndex = Random.Range(0, bossPrefabs.Count);
+        return bossPrefabs[randomIndex];
     }
 }

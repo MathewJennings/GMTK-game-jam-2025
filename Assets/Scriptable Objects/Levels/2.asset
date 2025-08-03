@@ -99,3 +99,5 @@ MonoBehaviour:
   - 3
   - 3
   bossPrefab: {fileID: 8210314934849023821, guid: 7b82d7faa100d4d2fa9457ab9ebafed1, type: 3}
+  bossPrefabs:
+  - {fileID: 8210314934849023821, guid: 7b82d7faa100d4d2fa9457ab9ebafed1, type: 3}

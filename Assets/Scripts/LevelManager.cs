@@ -86,12 +86,23 @@ public class LevelManager : MonoBehaviour, IBossObserver
             StartCoroutine(LoadPickupSceneCoroutine());
             spawnEnemy.ClearRemainingEnemies();
             spawnEnemy.PauseSpawning();
+            ClearLoopableObjects();
             inPickupScene = true;
         }
         else
         {
             waveAndBossBarsManager.DisableBothBars();
             youWinUI.ShowYouWinScreen();
+        }
+    }
+
+    private void ClearLoopableObjects()
+    {
+        // Destroy all objects labeled "loopableObject"
+        GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
+        foreach (GameObject obj in loopableObjects)
+        {
+            Destroy(obj);
         }
     }
 

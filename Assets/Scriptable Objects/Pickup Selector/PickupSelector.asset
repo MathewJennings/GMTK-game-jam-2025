@@ -18,11 +18,12 @@ MonoBehaviour:
   - {fileID: 4827265980704315333, guid: 52c56865d7980465b93758659b6c2573, type: 3}
   - {fileID: 4827265980704315333, guid: f71f693b93ee34512b9ba3f59696a3a4, type: 3}
   - {fileID: 3489123812096408759, guid: 9c4f7164cb473c94cab1c8ab008bc941, type: 3}
-  hasPickup: 0101010101
+  hasPickup: 0000000000
   pickupDescriptions:
-  - Time Warp\nCause time to temporarily move at a snail's pace.
-  - Decay Pause\nCorruption build up will temporarily come to a halt.
+  - Time Warp\nCauses time to temporarily slow to a crawl.
+  - Halt Corruption\nCorruption build up will temporarily freeze.
   - Gravity Well\nCreate a gravitational force that pulls in all enemies and objects.
   - Ghost\nCreate lines that can phase through enemies and objects.
   - Damage Multiplier\nIncreases damage done per loop. Picking up multiple will stack
     the effect and reset the duration.
+  shouldResetPickups: 1

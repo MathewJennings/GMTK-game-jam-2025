@@ -57,7 +57,7 @@ public class BossProgressBar : MonoBehaviour
     public void SetBossName(string name, Color color)
     {
         bossNameText.text = name;
-        bossNameText.color = color;
+        bossNameText.color = ColorPalette.BrightYellow;
         bossNameText.gameObject.SetActive(true);
     }
     

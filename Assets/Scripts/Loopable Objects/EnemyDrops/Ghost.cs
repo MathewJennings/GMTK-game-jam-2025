@@ -14,9 +14,10 @@ public class Ghost : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked ghost mode!", Color.grey, transform.position);
+            return new LoopResult(0, "Unlocked ghost mode!", spriteColor, transform.position);
         }
 
         LogPowerupCollected();
@@ -55,7 +56,7 @@ public class Ghost : MonoBehaviour, ILoopable
         }
 
         Destroy(gameObject);
-        return new LoopResult(0, "Ghost mode activated!", Color.grey, transform.position);
+        return new LoopResult(0, "Ghost mode activated!", spriteColor, transform.position);
     }
     
     private void LogPowerupCollected()

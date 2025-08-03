@@ -15,10 +15,10 @@ public class TutorialTrigger : EnemyHealth
         currentHealth -= 1 * multiplier;
         if (currentHealth > 0)
         {
-            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", ColorPalette.BrightYellow, transform.position);
         }
         Destroy(gameObject);
         tutorialManager.LoadSceneAfterDelay();
-        return new LoopResult(0, "You get it!", Color.red, transform.position);
+        return new LoopResult(0, "You get it!", ColorPalette.BrightYellow, transform.position);
     }
 }

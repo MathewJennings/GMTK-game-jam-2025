@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class EnemyHealth : MonoBehaviour, ILoopable
 {
@@ -50,8 +48,10 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     {
         return maxHealth;
     }
+
     public virtual LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         currentHealth -= 1*multiplier;
         if (currentHealth > 0)
         {
@@ -59,7 +59,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
             {
                 transform.localScale *= 0.95f;
             }
-            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", spriteColor, transform.position);
         }
         Destroy(gameObject);
         MaybeDropItem();
@@ -68,7 +68,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
             currentLevel.currentCorruption -= maxHealth * multiplier;
         }
         string displayText = isBossMode ? "" : $"-{maxHealth} corruption!";
-        return new LoopResult((int)maxHealth, displayText, Color.red, transform.position);
+        return new LoopResult((int)maxHealth, displayText, spriteColor, transform.position);
     }
 
     private void MaybeDropItem()

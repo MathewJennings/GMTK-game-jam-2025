@@ -79,7 +79,8 @@ public class SlimeChild : MonoBehaviour, ILoopable
             damage = health;
         }
         health -= damage;
-        LoopResult result = slimeBoss.HandleGetHit(damage, health, transform.position);
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
+        LoopResult result = slimeBoss.HandleGetHit(damage, health, transform.position, spriteColor);
 
         if (ShouldSplit())
         {

@@ -9,6 +9,9 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     private SpriteRenderer spriteRenderer;
     private InfinityCoinsHandler infinityCoinsHandler;
 
+    private readonly Color activeColor = ColorPalette.HotPink;
+    private readonly Color inactiveColor = ColorPalette.ElectricCyan;
+
     void Awake()
     {
         infinityCoinsHandler = GetComponentInParent<InfinityCoinsHandler>();
@@ -23,7 +26,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
                 Debug.LogError("SpriteRenderer not found on the child object.");
             }
         }
-        spriteRenderer.color = isActive ? Color.red : Color.purple;
+        spriteRenderer.color = isActive ? activeColor : inactiveColor;
     }
 
     public bool GetIsActive()
@@ -34,21 +37,17 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     public void SetIsActive(bool b)
     {
         isActive = b;
-        spriteRenderer.color = isActive ? Color.red : Color.purple;
+        spriteRenderer.color = isActive ? activeColor : inactiveColor;
     }
 
     public void ToggleIsActive()
     {
         isActive = !isActive;
-        spriteRenderer.color = isActive ? Color.red : Color.purple;
+        spriteRenderer.color = isActive ? activeColor : inactiveColor;
     }
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1f)
     {
-        LoopCounter lineCounter = line.GetComponent<LoopCounter>();
-        int loopCount = lineCounter.GetCurrentLoopCount();
-        int points = isActive ? loopCount : -1 * loopCount;
-
         if (!isActive)
         {
             line.GetComponent<LineBreaker>().BreakLine();

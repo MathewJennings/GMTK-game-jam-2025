@@ -90,6 +90,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
         }
         else
         {
+            waveAndBossBarsManager.DisableBothBars();
             youWinUI.ShowYouWinScreen();
         }
     }

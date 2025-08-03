@@ -25,6 +25,11 @@ public class CircleAround : MonoBehaviour
     private LineRenderer circleLineRenderer;
     private GameObject circleObject;
     private List<Vector3> trailPoints;
+    private List<Color> trailColors = new List<Color> {
+        ColorPalette.HotPink,
+        ColorPalette.ElectricCyan,
+        ColorPalette.BrightYellow
+    };
 
     void Start()
     {
@@ -112,7 +117,7 @@ public class CircleAround : MonoBehaviour
         // Add and configure LineRenderer
         circleLineRenderer = circleObject.AddComponent<LineRenderer>();
         Material circleMaterial = new Material(Shader.Find("Sprites/Default"));
-        circleMaterial.color = Color.red;
+        circleMaterial.color = trailColors[0];
         circleLineRenderer.material = circleMaterial;
         circleLineRenderer.startWidth = circleLineWidth;
         circleLineRenderer.endWidth = circleLineWidth;
@@ -134,17 +139,17 @@ public class CircleAround : MonoBehaviour
             ClearTrail();
             if (completedLoops % 4 == 0)
             {
-                circleLineRenderer.material.color = Color.red;
+                circleLineRenderer.material.color = trailColors[0];
                 speed = 3.5f;
             }
             else if (completedLoops % 4 == 1)
             {
-                circleLineRenderer.material.color = Color.yellow;
+                circleLineRenderer.material.color = trailColors[1];
                 speed = 5f;
             }
             else if (completedLoops % 4 == 2)
             {
-                circleLineRenderer.material.color = Color.green;
+                circleLineRenderer.material.color = trailColors[2];
                 speed = 6.5f;
             }
             else if (completedLoops % 4 == 3)

@@ -35,7 +35,8 @@ public class BossHealth : EnemyHealth, ILoopable
         if (currentHealth > 0)
         {
             onDamage?.Invoke(currentHealth, maxHealth);
-            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", Color.red, transform.position);
+            Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
+            return new LoopResult(0, $"{Mathf.Ceil(currentHealth)} more", spriteColor, transform.position);
         }
         return OnDefeatBoss();
     }
@@ -56,6 +57,7 @@ public class BossHealth : EnemyHealth, ILoopable
         onDeath?.Invoke();
         NotifyBossDefeated();
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
-        return new LoopResult((int)maxHealth, resultText, Color.red, transform.position);
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
+        return new LoopResult((int)maxHealth, resultText, spriteColor, transform.position);
     }
 }

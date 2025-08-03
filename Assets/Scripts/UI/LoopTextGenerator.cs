@@ -12,6 +12,7 @@ public class LoopTextGenerator : MonoBehaviour
     public Color fontColor = Color.yellow;
     public float fadeDuration = 0.5f;
     public float verticalMovementAnimationDistance = 50f;
+    public Font font;
 
     public void SetFontColor(Color color)
     {
@@ -35,7 +36,7 @@ public class LoopTextGenerator : MonoBehaviour
         loopCountTextGameObject.transform.SetParent(transform, false);
 
         Text loopCountText = loopCountTextGameObject.AddComponent<Text>();
-        loopCountText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        loopCountText.font = font;
         loopCountText.fontSize = fontSize;
         loopCountText.fontStyle = FontStyle.Bold;
         loopCountText.color = c;

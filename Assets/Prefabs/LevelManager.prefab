@@ -287,7 +287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8206130156515743372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -553,6 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22179ec6bfc04bc4a37afd623ea0442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupScene: SelectPickup
   currentLevel: {fileID: 11400000, guid: 93fdcdbebb5d7457b8c2b7786f4e4a28, type: 2}
   bossModeLevel: {fileID: 11400000, guid: d4e909a4a0ef343799dc905af8e578a7, type: 2}
   spawnEnemy: {fileID: 0}

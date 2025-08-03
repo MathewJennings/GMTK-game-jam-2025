@@ -132,8 +132,8 @@ public class BossProgressBar : MonoBehaviour
     private IEnumerator CorruptionWarningEffect()
     {
         isCorruptionWarningEffectActive = true;
-        // Subtle black flash to indicate corruption
-        Color warningColor = Color.Lerp(originalColor, Color.black, 0.3f);
+        // Subtle flash to indicate corruption
+        Color warningColor = Color.Lerp(originalColor, ColorPalette.VividPurple, 0.3f);
 
         float elapsedTime = 0f;
         float effectDuration = 0.5f;

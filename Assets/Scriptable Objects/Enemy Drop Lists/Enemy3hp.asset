@@ -19,6 +19,6 @@ MonoBehaviour:
   - {fileID: 4827265980704315333, guid: f71f693b93ee34512b9ba3f59696a3a4, type: 3}
   enemyDropWeights:
   - 0.1
+  - 0.1
   - 0.05
-  - 0.025
-  - 0.025
+  - 0.05

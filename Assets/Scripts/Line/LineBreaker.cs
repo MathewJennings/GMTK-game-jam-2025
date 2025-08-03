@@ -16,7 +16,6 @@ public class LineBreaker : MonoBehaviour
     {
         if(isGhostMode)
         {
-            Debug.Log("Line breaking is in ghost mode, skipping actual break.");
             return;
         }
         GetComponent<LineDrawing>().DestroyLine();

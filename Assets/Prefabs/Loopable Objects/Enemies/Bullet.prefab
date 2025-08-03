@@ -27,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: enemyDropPercentages
       value: 
-      objectReference: {fileID: 11400000, guid: 0e9c4aafa5c4f8a45be172139c92b002, type: 2}
+      objectReference: {fileID: 11400000, guid: dec652defcfc84f389fb6d666a8e4919, type: 2}
     - target: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: m_Name
       value: Bullet

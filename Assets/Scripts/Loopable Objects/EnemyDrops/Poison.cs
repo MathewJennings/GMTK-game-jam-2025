@@ -24,10 +24,37 @@ public class Poison : MonoBehaviour, ILoopable
 
             BossHealth bossHealth = obj.GetComponent<BossHealth>();
             EnemyHealth enemyHealth = obj.GetComponent<EnemyHealth>();
+            InfinityCoinsHandler infinityCoinsHandler = obj.GetComponent<InfinityCoinsHandler>();
+            SlimeChild slimeChild = obj.GetComponent<SlimeChild>();
 
-            if (bossHealth != null)
+
+            if (slimeChild != null)
             {
-                bossHealth.currentHealth /= 2f;
+                int numAttacks = Mathf.RoundToInt(slimeChild.health / 2f);
+                for (int i = 0; i < numAttacks; i++)
+                {
+                    slimeChild.HandleLooped(null, 1);
+                    if (slimeChild.health <= 0)
+                    {
+                        break;
+                    }
+                }
+            }
+            else if (infinityCoinsHandler != null)
+            {
+                infinityCoinsHandler.currentHealth = infinityCoinsHandler.currentHealth / 2f;
+            }
+            else if (bossHealth != null)
+            {
+                int numAttacks = Mathf.RoundToInt(bossHealth.currentHealth / 2f);
+                for (int i = 0; i < numAttacks; i++)
+                {
+                    bossHealth.HandleLooped(null, 1);
+                    if (bossHealth.currentHealth <= 0)
+                    {
+                        break;
+                    }
+                }
             }
             else if (enemyHealth != null)
             {

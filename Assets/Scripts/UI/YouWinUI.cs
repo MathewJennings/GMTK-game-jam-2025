@@ -12,6 +12,8 @@ public class YouWinUI : MonoBehaviour
     [Header("UI Elements")]
     public Text congratulationsText;
     public Button restartButton;
+    public Button restartPlusButton;
+    public PickupSelector pickupSelector;
 
     [Header("Settings")]
     public string congratulationsMessage = "Congratulations!\nYou Win!";
@@ -22,6 +24,8 @@ public class YouWinUI : MonoBehaviour
         youWinPanel.SetActive(false);
         if (restartButton != null)
         restartButton.onClick.AddListener(OnRestartButtonClicked);
+        if (restartPlusButton != null)
+        restartPlusButton.onClick.AddListener(OnNewGamePlusButtonClicked);
         if (congratulationsText != null)
         congratulationsText.text = congratulationsMessage;
     }
@@ -49,6 +53,13 @@ public class YouWinUI : MonoBehaviour
     }
     private void OnRestartButtonClicked()
     {
+        pickupSelector.shouldResetPickups = true; 
+        StartCoroutine(LoadSceneCoroutine());
+    }
+    
+    private void OnNewGamePlusButtonClicked()
+    {
+        pickupSelector.shouldResetPickups = false;
         StartCoroutine(LoadSceneCoroutine());
     }
 

@@ -13,7 +13,10 @@ public class TutorialManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pickupSelector.ClearAllPickups();
+        if(pickupSelector.shouldResetPickups)
+        {
+            pickupSelector.ClearAllPickups();
+        }
     }
 
     // Update is called once per frame

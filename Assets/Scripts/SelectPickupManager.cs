@@ -51,10 +51,12 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
         // Instantiate the pickups at pointA and pointB
         Instantiate(pickups[0], pointA.position, Quaternion.identity);
         pickupAText.text = pickupSelector.GetPickupDescription(pickups[0]);
+        pickupAText.color = pickups[0].GetComponentInChildren<SpriteRenderer>().color;
         if (pickups.Count > 1)
         {
             Instantiate(pickups[1], pointB.position, Quaternion.identity);
             pickupBText.text = pickupSelector.GetPickupDescription(pickups[1]);
+            pickupBText.color = pickups[1].GetComponentInChildren<SpriteRenderer>().color;
         }
     }
 

@@ -20,7 +20,7 @@ public class DamageMultiplier : MonoBehaviour, ILoopable
 
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        Color spriteColor = GetComponent<SpriteRenderer>().color;
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
             return new LoopResult(0, "Unlocked damage multiplier!", spriteColor, transform.position);

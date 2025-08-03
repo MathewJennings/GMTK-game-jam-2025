@@ -24,10 +24,9 @@ public class LoopTextGenerator : MonoBehaviour
         CreateLoopCountText(text,currentCounterTextPosition, c, fontSize);
     }
 
-    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, bool useSmallFont)
+    public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, int fontSize)
     {
-        int size = useSmallFont ? fontSize - 4 : fontSize;
-        CreateLoopCountText(text,currentCounterTextPosition, fontColor, size);
+        CreateLoopCountText(text,currentCounterTextPosition, fontColor, fontSize);
     }
 
     public void CreateLoopCountText(string text, Vector2 currentCounterTextPosition, Color c, int fontSize)

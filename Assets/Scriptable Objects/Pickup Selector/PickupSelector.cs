@@ -87,7 +87,7 @@ public class PickupSelector : ScriptableObject
         }
         return false;
     }
-    
+
     public string GetPickupDescription(GameObject pickup)
     {
         for (int i = 0; i < pickupPrefabs.Count; i++)

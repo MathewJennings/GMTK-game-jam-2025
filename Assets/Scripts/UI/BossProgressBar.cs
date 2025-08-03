@@ -18,7 +18,6 @@ public class BossProgressBar : MonoBehaviour
 
     [Header("Visual Effects")]
     [SerializeField] private Gradient progressGradient;
-    [SerializeField] private bool useGradient = true;
 
     [Header("Juice Effects")]
     [SerializeField] private float pulseIntensity = 1.1f;

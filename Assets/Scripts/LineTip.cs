@@ -26,7 +26,7 @@ public class LineTip : MonoBehaviour
         circleDrawer = GetComponentInParent<InteractiveCircleDrawer>();
         if (circleDrawer == null)
         {
-            circleDrawer = FindObjectOfType<InteractiveCircleDrawer>();
+            circleDrawer = FindFirstObjectByType<InteractiveCircleDrawer>();
         }
         
         // Setup collider

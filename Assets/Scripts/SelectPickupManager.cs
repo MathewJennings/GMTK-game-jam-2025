@@ -26,10 +26,10 @@ public class SelectPickupManager : MonoBehaviour, ILoopObserver
         waveAndBossBarsManager.DisableBothBars();
 
         pickupSelected = false;
-        levelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindFirstObjectByType<LevelManager>();
 
         // Get the LoopTextGenerator from the Canvas
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas != null)
         {
             loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class YouWinUI : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class YouWinUI : MonoBehaviour
     [Header("Settings")]
     public string congratulationsMessage = "Congratulations!\nYou Win!";
 
+    public TMP_Text statsSummaryText;
     void Awake()
     {
         youWinPanel.SetActive(false);
@@ -26,7 +28,19 @@ public class YouWinUI : MonoBehaviour
 
     public void ShowYouWinScreen()
     {
+        // Set endTime in LogManager
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            logManager.endTime = Time.time;
+        }
+        else
+        {
+            Debug.LogWarning("LogManager not found.");
+        }
+
         youWinPanel.SetActive(true);
+        statsSummaryText.text = logManager.PrintLog();
     }
 
     public void HideYouWinScreen()

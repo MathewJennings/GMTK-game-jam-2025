@@ -26,6 +26,10 @@ public class BossHealth : EnemyHealth, ILoopable
     void Awake()
     {
         currentHealth = maxHealth;
+    }
+
+    void Start()
+    {
         bossStartTime = Time.time;
     }
 
@@ -49,10 +53,11 @@ public class BossHealth : EnemyHealth, ILoopable
         LogManager logManager = FindFirstObjectByType<LogManager>();
         if (logManager != null)
         {
-            string bossName = gameObject.name;
+            Debug.Log($"Boss defeated: {gameObject.name} at {bossEndTime:F2}, {bossStartTime:F2}");
+            string bossName = gameObject.GetComponent<BossName>()?.bossName?.Replace("\n", " ") ?? gameObject.name;
             logManager.bossTimes[bossName] = (bossStartTime, bossEndTime);
         }
-        
+
         Destroy(gameObject);
         onDeath?.Invoke();
         NotifyBossDefeated();

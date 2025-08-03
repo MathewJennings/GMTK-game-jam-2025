@@ -18,7 +18,7 @@ public class GravityWellSuck : MonoBehaviour
             if (activeTimer >= activeDuration)
             {
                 isActive = false;
-                Destroy(transform.parent.gameObject);
+                Destroy(gameObject);
             }
         }
     }

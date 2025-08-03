@@ -30,8 +30,6 @@ public class LogManager : MonoBehaviour
     {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         sb.AppendLine("===== Game Session Log =====");
-        sb.AppendLine($"Start Time: {startTime:F2}");
-        sb.AppendLine($"End Time: {endTime:F2}");
         sb.AppendLine($"Time Played: {endTime - startTime:F2} seconds");
 
         sb.AppendLine("\nPowerups Collected:");
@@ -56,7 +54,7 @@ public class LogManager : MonoBehaviour
         {
             foreach (var kvp in bossTimes)
             {
-                sb.AppendLine($"  {kvp.Key}: Start {kvp.Value.startTime:F2}s, End {kvp.Value.endTime:F2}s, Duration {(kvp.Value.endTime - kvp.Value.startTime):F2}s");
+                sb.AppendLine($"  {kvp.Key}: Duration {(kvp.Value.endTime - kvp.Value.startTime):F2}s");
             }
         }
 

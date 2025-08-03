@@ -10,7 +10,7 @@ public class InfinityCoinLoopable : MonoBehaviour, ILoopable
     private InfinityCoinsHandler infinityCoinsHandler;
 
     private readonly Color activeColor = ColorPalette.HotPink;
-    private readonly Color inactiveColor = ColorPalette.ElectricCyan;
+    private readonly Color inactiveColor = ColorPalette.BrightYellow;
 
     void Awake()
     {

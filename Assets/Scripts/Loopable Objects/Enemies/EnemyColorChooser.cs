@@ -14,7 +14,7 @@ public class EnemyColorChooser : MonoBehaviour
         }
         List<Color> colorChoices = new() {
             ColorPalette.HotPink,
-            ColorPalette.ElectricCyan,
+            ColorPalette.VividPurple,
             ColorPalette.BrightYellow
         };
 

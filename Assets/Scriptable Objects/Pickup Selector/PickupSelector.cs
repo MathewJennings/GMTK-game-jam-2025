@@ -8,6 +8,30 @@ public class PickupSelector : ScriptableObject
     public List<bool> hasPickup;
     public List<string> pickupDescriptions;
 
+    public GameObject GetRandomUnlockedPickup()
+    {
+        List<GameObject> availablePickups = new List<GameObject>();
+
+        // Collect all available pickups
+        for (int i = 0; i < pickupPrefabs.Count; i++)
+        {
+            if (hasPickup[i])
+            {
+                availablePickups.Add(pickupPrefabs[i]);
+            }
+        }
+
+        // If no pickups are available, return null
+        if (availablePickups.Count == 0)
+        {
+            return null;
+        }
+
+        // Randomly select one pickup
+        int randomIndex = Random.Range(0, availablePickups.Count);
+        return availablePickups[randomIndex];
+    }
+    
     public List<GameObject> GetUpToTwoRandomPickups()
     {
         List<GameObject> availablePickups = new List<GameObject>();

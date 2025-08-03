@@ -11,7 +11,7 @@ public class EnemyHealth : MonoBehaviour, ILoopable
     private PickupSelector pickupSelector;
 
     [SerializeField]
-    private EnemyDropList enemyDropList;
+    private EnemyDropPercentages enemyDropPercentages;
 
     [SerializeField]
     public float maxHealth = 1;
@@ -73,27 +73,17 @@ public class EnemyHealth : MonoBehaviour, ILoopable
 
     private void MaybeDropItem()
     {
-        if (enemyDropList == null) return;
+        if (enemyDropPercentages == null) return;
 
-        int prefabCount = enemyDropList.enemyDropPrefabs.Count;
-        int weightCount = enemyDropList.enemyDropWeights.Count;
-        if (prefabCount == 0 || prefabCount != weightCount) return;
-
+        float dropChance = enemyDropPercentages.dropPercentage;
         float randomWeight = UnityEngine.Random.Range(0f, 1f);
 
-        float cumulativeWeight = 0f;
-
-        for (int i = 0; i < weightCount; i++)
+        if (randomWeight <= dropChance)
         {
-            cumulativeWeight += enemyDropList.enemyDropWeights[i];
-            if (randomWeight <= cumulativeWeight)
+            GameObject randomDrop = pickupSelector.GetRandomUnlockedPickup();
+            if (randomDrop != null)
             {
-                GameObject randomDrop = enemyDropList.enemyDropPrefabs[i];
-                if (PickupUnlocked(randomDrop))
-                {
-                    Instantiate(randomDrop, transform.position, Quaternion.identity);
-                }
-                break;
+                Instantiate(randomDrop, transform.position, Quaternion.identity);
             }
         }
     }

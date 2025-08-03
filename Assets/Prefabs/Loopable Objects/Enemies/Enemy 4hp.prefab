@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: enemyDropList
       value: 
       objectReference: {fileID: 11400000, guid: e112acb02a27e464aa73bdd96f32f659, type: 2}
+    - target: {fileID: 4339921542679720547, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      propertyPath: enemyDropPercentages
+      value: 
+      objectReference: {fileID: 11400000, guid: 2022069c04cc5204aa83741ddf356212, type: 2}
     - target: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       propertyPath: m_Name
       value: Enemy 4hp

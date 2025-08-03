@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupSelector: {fileID: 11400000, guid: 2b01907c581cc614fa63bc4e4b13c4ce, type: 2}
-  enemyDropList: {fileID: 11400000, guid: 8d4f9873c87da414394168c4a1bc40c8, type: 2}
+  enemyDropPercentages: {fileID: 11400000, guid: 3cd2b86ba0d072444a2c3b935d70cccd, type: 2}
   maxHealth: 1
   shrinkOnHit: 1
   currentHealth: 0

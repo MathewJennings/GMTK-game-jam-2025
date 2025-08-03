@@ -101,7 +101,7 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentCorruption: -11.47611
+  currentCorruption: 0
   initialCorruption: 30
   totalCorruption: 50
   enemyPrefabs:

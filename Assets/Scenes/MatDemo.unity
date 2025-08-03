@@ -689,6 +689,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1983548375751407474, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983548375751407474, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983548375751407474, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -630
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983548375751407474, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 235
+      objectReference: {fileID: 0}
+    - target: {fileID: 2511121836693389699, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324450590704740114, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064167030777019957, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404505489515575638, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -768,6 +800,44 @@ PrefabInstance:
     - target: {fileID: 8371540524817085872, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_text
+      value: 'Nullframe
+
+        "The Empty Construct"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_fontSize
+      value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.86666673
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_lineSpacingMax
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_charWidthMaxAdj
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697664265802890066, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278246911
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

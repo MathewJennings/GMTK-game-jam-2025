@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +28,10 @@ public class SpawnLine : MonoBehaviour
     private bool isGhostMode = false;
 
     private float ghostModeTimeRemaining = 0f;
+
+    [SerializeField]
+    private float loopCounterBonusMultiplier = 0f;
+    private Coroutine activeBonusMultiplierCoroutine;
 
     private readonly List<ILoopObserver> loopObservers = new();
     public void RegisterLoopObserver(ILoopObserver loopObserver) { loopObservers.Add(loopObserver); }
@@ -67,7 +72,7 @@ public class SpawnLine : MonoBehaviour
         InitializeLoopDetector(line);
 
         LoopTextGenerator loopTextGenerator = canvas.GetComponent<LoopTextGenerator>();
-        InitializeLoopCounter(line, loopTextGenerator);
+        InitializeLoopCounter(line, loopCounterBonusMultiplier, loopTextGenerator);
         InitializeLineGradient(line, loopTextGenerator);
     }
 
@@ -125,10 +130,30 @@ public class SpawnLine : MonoBehaviour
         });
     }
 
-    private void InitializeLoopCounter(GameObject line, LoopTextGenerator loopTextGenerator)
+    private void InitializeLoopCounter(GameObject line, float bonusMult, LoopTextGenerator loopTextGenerator)
     {
         LoopCounter loopCounter = line.GetComponent<LoopCounter>();
+        loopCounter.AddBonusMultiplier(bonusMult);
         loopCounter.SetLoopTextGenerator(loopTextGenerator);
+    }
+    
+    public float TemporarilyAddBonusMultiplier(float bonusMult, float duration)
+    {
+        loopCounterBonusMultiplier += bonusMult;
+        if (activeBonusMultiplierCoroutine != null)
+        {
+            StopCoroutine(activeBonusMultiplierCoroutine);
+        }
+        activeBonusMultiplierCoroutine = StartCoroutine(ResetBonusMultiplierAfterDuration(duration));
+        return loopCounterBonusMultiplier + 1;
+    }
+    
+    private IEnumerator ResetBonusMultiplierAfterDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        loopCounterBonusMultiplier = 0f;
+        activeBonusMultiplierCoroutine = null; // Clear the reference when the coroutine finishes
     }
 
     private void InitializeLineGradient(GameObject line, LoopTextGenerator loopTextGenerator)

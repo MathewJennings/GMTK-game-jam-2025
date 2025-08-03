@@ -19,6 +19,8 @@ public class LoopCounter : MonoBehaviour, ILoopObserver
     [Tooltip("Multiplier per loop completed (default 0.1)")]
     public float perLoopMultiplier = 0.1f;
 
+    public float multiplierBonus = 0f;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -77,7 +79,7 @@ public class LoopCounter : MonoBehaviour, ILoopObserver
 
     public float CalculateMultiplier()
     {
-        return 1 + (currentLoopCount - 1) * perLoopMultiplier;
+        return 1 + (currentLoopCount - 1) * perLoopMultiplier + multiplierBonus;
     }
 
     /// <summary>
@@ -87,5 +89,10 @@ public class LoopCounter : MonoBehaviour, ILoopObserver
     public void UpdateLineTipPosition(Vector2 worldPosition)
     {
         currentCounterTextPosition = mainCamera.WorldToScreenPoint(worldPosition);
+    }
+    
+    public void AddBonusMultiplier(float mult)
+    {
+        multiplierBonus += mult;
     }
 }

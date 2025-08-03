@@ -30,15 +30,7 @@ public class Poison : MonoBehaviour, ILoopable
 
             if (slimeChild != null)
             {
-                int numAttacks = Mathf.RoundToInt(slimeChild.health / 2f);
-                for (int i = 0; i < numAttacks; i++)
-                {
-                    slimeChild.HandleLooped(null, 1);
-                    if (slimeChild.health <= 0)
-                    {
-                        break;
-                    }
-                }
+                slimeChild.HandleLooped(null, slimeChild.health / 2f);
             }
             else if (infinityCoinsHandler != null)
             {

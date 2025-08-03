@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
+      propertyPath: waveText
+      value: 
+      objectReference: {fileID: 1117189792652999488}
+    - target: {fileID: 3186928669041229299, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: youWinUI
       value: 
       objectReference: {fileID: 1431595522}
@@ -853,6 +857,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf7fb6ae7fa75054bb0926d57819ebd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1117189792652999488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7391432474117061120, guid: 81cd29af21a2b3742964382e9d7cabb2, type: 3}
+  m_PrefabInstance: {fileID: 1117189792652999486}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3448668510911857175

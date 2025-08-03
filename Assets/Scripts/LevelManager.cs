@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using NUnit.Framework.Constraints;
 using System.Collections.Generic;
+using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,6 +22,9 @@ public class LevelManager : MonoBehaviour, IBossObserver
     [SerializeField]
     private GameObject gameOverCanvas; // Assign in Inspector
     public YouWinUI youWinUI; // Assign in Inspector
+
+    [Header("UI")]
+    [SerializeField] private TMP_Text waveText; // Configurable in Inspector
 
     private readonly List<IBossObserver> bossObservers = new();
     public void RegisterBossObserver(IBossObserver observer) { bossObservers.Add(observer); }
@@ -64,6 +68,12 @@ public class LevelManager : MonoBehaviour, IBossObserver
         spawnEnemy.ResumeSpawning();
         spawnEnemy.PlayLevel(currentLevel);
         waveAndBossBarsManager.SetWaveBarActive();
+
+        // Set wave text to current level name
+        if (waveText != null)
+        {
+            waveText.text = currentLevel.levelName;
+        }
     }
 
     private void ResetCurrentLevel()
@@ -86,12 +96,23 @@ public class LevelManager : MonoBehaviour, IBossObserver
             StartCoroutine(LoadPickupSceneCoroutine());
             spawnEnemy.ClearRemainingEnemies();
             spawnEnemy.PauseSpawning();
+            ClearLoopableObjects();
             inPickupScene = true;
         }
         else
         {
             waveAndBossBarsManager.DisableBothBars();
             youWinUI.ShowYouWinScreen();
+        }
+    }
+
+    private void ClearLoopableObjects()
+    {
+        // Destroy all objects labeled "loopableObject"
+        GameObject[] loopableObjects = GameObject.FindGameObjectsWithTag("LoopableObject");
+        foreach (GameObject obj in loopableObjects)
+        {
+            Destroy(obj);
         }
     }
 

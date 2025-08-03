@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b0741b26ddd47a5a7e75bd74a42ac4, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  levelName: Mild Medium
+  levelName: Wave 3/3
   nextLevel: {fileID: 0}
   spawnInterval:
     serializedVersion: 2
@@ -110,7 +110,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentCorruption: 0
+  currentCorruption: -7.0879354
   initialCorruption: 110
   totalCorruption: 120
   enemyPrefabs:

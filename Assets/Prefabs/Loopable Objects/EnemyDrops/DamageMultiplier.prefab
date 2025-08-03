@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03e4f511a3a3ab40abe2274fd5858a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusMultiplier: 1
+  bonusMultiplier: 0.5
   duration: 5
 --- !u!1 &7278303678033908787
 GameObject:

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b0741b26ddd47a5a7e75bd74a42ac4, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  levelName: Easy Breezy
+  levelName: Wave 2/3
   nextLevel: {fileID: 11400000, guid: fe1096c2b11804b31b5c40e826cfbbbc, type: 2}
   spawnInterval:
     serializedVersion: 2
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 1
     m_RotationOrder: 4
-  currentCorruption: 0
+  currentCorruption: -20.855822
   initialCorruption: 55
   totalCorruption: 70
   enemyPrefabs:

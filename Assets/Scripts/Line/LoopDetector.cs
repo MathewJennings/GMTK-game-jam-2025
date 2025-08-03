@@ -7,6 +7,12 @@ public class LoopDetector : MonoBehaviour
     [SerializeField]
     float minimumLoopArea = 1.0f;
 
+    [SerializeField]
+    private float onSegmentAcceptableRange = 0.05f; // Configurable in Inspector
+
+    [SerializeField]
+    private float orientationAcceptableRange = 0.05f; // Configurable in Inspector
+
     private List<ILoopable> loopablesInLoop = new();
     private Action<GameObject> notifyOnLoopCompleted;
 
@@ -73,15 +79,32 @@ public class LoopDetector : MonoBehaviour
         int Orientation(Vector2 a, Vector2 b, Vector2 c)
         {
             float val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
-            if (Mathf.Abs(val) < Mathf.Epsilon) return 0; // Collinear
+            if (Mathf.Abs(val) < orientationAcceptableRange) return 0; // Collinear with buffer
             return (val > 0) ? 1 : 2; // Clockwise or Counterclockwise
         }
 
         // Check if point c lies on segment ab
         bool OnSegment(Vector2 a, Vector2 b, Vector2 c)
         {
-            return c.x <= Mathf.Max(a.x, b.x) && c.x >= Mathf.Min(a.x, b.x) &&
-                   c.y <= Mathf.Max(a.y, b.y) && c.y >= Mathf.Min(a.y, b.y);
+            // Standard bounding box check with buffer
+            bool inBounds = c.x <= Mathf.Max(a.x, b.x) + onSegmentAcceptableRange && c.x >= Mathf.Min(a.x, b.x) - onSegmentAcceptableRange &&
+                            c.y <= Mathf.Max(a.y, b.y) + onSegmentAcceptableRange && c.y >= Mathf.Min(a.y, b.y) - onSegmentAcceptableRange;
+
+            // Distance from c to the segment ab
+            float distance = DistancePointToSegment(c, a, b);
+            return inBounds && distance <= onSegmentAcceptableRange;
+        }
+
+        // Helper function to compute the minimum distance from point p to segment ab
+        float DistancePointToSegment(Vector2 p, Vector2 a, Vector2 b)
+        {
+            Vector2 ab = b - a;
+            Vector2 ap = p - a;
+            float abLenSqr = ab.sqrMagnitude;
+            if (abLenSqr == 0f) return (p - a).magnitude;
+            float t = Mathf.Clamp01(Vector2.Dot(ap, ab) / abLenSqr);
+            Vector2 projection = a + t * ab;
+            return (p - projection).magnitude;
         }
 
         int o1 = Orientation(p1, q1, p2);

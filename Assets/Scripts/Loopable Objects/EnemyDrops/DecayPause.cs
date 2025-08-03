@@ -34,8 +34,26 @@ public class DecayPause : MonoBehaviour, ILoopable
             return new LoopResult(0, "Unlocked decay pause!", spriteColor, transform.position);
         }
 
+        LogPowerupCollected();
         waveProgressBar.PauseCorruption(duration);
         Destroy(gameObject);
         return new LoopResult(0, "Corruption paused!", spriteColor, transform.position);
+    }
+
+    private void LogPowerupCollected()
+    {
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string powerupName = this.GetType().Name;
+            if (logManager.numPowerups.ContainsKey(powerupName))
+            {
+                logManager.numPowerups[powerupName]++;
+            }
+            else
+            {
+                logManager.numPowerups[powerupName] = 1;
+            }
+        }
     }
 }

@@ -26,14 +26,14 @@ public class InfinityCoinsHandler : BossHealth
         currentHealth = maxHealth;
     }
 
-    public override void AddHealth(float additonalHealth)
+    public override void AddHealth(float additionalHealth)
     {
         float oldHealth = currentHealth;
-        base.AddHealth(additonalHealth);
+        base.AddHealth(additionalHealth);
         float addedHealth = currentHealth - oldHealth;
         minRotationSpeed -= rotationSpeedHitIncrease * addedHealth;
         maxRotationSpeed -= rotationSpeedHitIncrease * addedHealth;
-        ChangeRotationSpeed(false);
+        rotationSpeed -= rotationSpeedHitIncrease * addedHealth;
     }
 
     // Override this to do nothing on looped result. That is handled by the children coins.

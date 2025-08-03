@@ -4,7 +4,6 @@ using UnityEngine.Events;
 
 public class BossHealth : EnemyHealth, ILoopable
 {
-
     [SerializeField]
     private UnityEvent onDeath;
 
@@ -16,6 +15,9 @@ public class BossHealth : EnemyHealth, ILoopable
 
     private Action NotifyBossDefeated;
 
+    private float bossStartTime;
+    private float bossEndTime;
+
     public void SetNotifyBossDefeated(Action notifyBossDefeated)
     {
         NotifyBossDefeated = notifyBossDefeated;
@@ -24,6 +26,7 @@ public class BossHealth : EnemyHealth, ILoopable
     void Awake()
     {
         currentHealth = maxHealth;
+        bossStartTime = Time.time;
     }
 
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
@@ -40,6 +43,16 @@ public class BossHealth : EnemyHealth, ILoopable
 
     protected LoopResult OnDefeatBoss()
     {
+        bossEndTime = Time.time;
+
+        // Log to LogManager2
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string bossName = gameObject.name;
+            logManager.bossTimes[bossName] = (bossStartTime, bossEndTime);
+        }
+        
         Destroy(gameObject);
         onDeath?.Invoke();
         NotifyBossDefeated();

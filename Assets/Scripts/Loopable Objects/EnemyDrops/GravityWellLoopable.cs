@@ -18,10 +18,26 @@ public class GravityWellLoopable : MonoBehaviour, ILoopable
         {
             return new LoopResult(0, "Unlocked gravity well!", spriteColor, transform.position);
         }
-
+        LogPowerupCollected();
         gravityWellSuck.Activate();
         Destroy(gameObject);
         return new LoopResult(0, "Gravity Well activated!", spriteColor, transform.position);
     }
 
+    private void LogPowerupCollected()
+    {
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string powerupName = this.GetType().Name;
+            if (logManager.numPowerups.ContainsKey(powerupName))
+            {
+                logManager.numPowerups[powerupName]++;
+            }
+            else
+            {
+                logManager.numPowerups[powerupName] = 1;
+            }
+        }
+    }
 }

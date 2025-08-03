@@ -15,6 +15,23 @@ public class TimeSlower : MonoBehaviour, ILoopable
         isPickupScene = GameObject.Find("/SelectPickupManager") != null;
     }
 
+    private void LogPowerupCollected()
+    {
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string powerupName = this.GetType().Name;
+            if (logManager.numPowerups.ContainsKey(powerupName))
+            {
+                logManager.numPowerups[powerupName]++;
+            }
+            else
+            {
+                logManager.numPowerups[powerupName] = 1;
+            }
+        }
+    }
+
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
@@ -23,6 +40,7 @@ public class TimeSlower : MonoBehaviour, ILoopable
             return new LoopResult(0, "Unlocked time warp!", spriteColor, transform.position);
         }
 
+        LogPowerupCollected();
         TimeManager.SetTimeScale(timeFraction, duration);
         Destroy(gameObject);
         return new LoopResult(0, "Time warp activated!", spriteColor, transform.position);

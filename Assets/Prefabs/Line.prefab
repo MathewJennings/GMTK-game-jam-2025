@@ -258,6 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayOffsetX: 100
   displayOffsetY: 50
+  loopTextGenerator: {fileID: 0}
   perLoopMultiplier: 0.1
 --- !u!114 &2516808368803930003
 MonoBehaviour:
@@ -272,6 +273,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumLoopArea: 1
+  onSegmentAcceptableRange: 0.5
+  orientationAcceptableRange: 0.05
 --- !u!114 &2093494037804232686
 MonoBehaviour:
   m_ObjectHideFlags: 0

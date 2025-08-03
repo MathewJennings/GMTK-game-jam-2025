@@ -144,3 +144,4 @@ MonoBehaviour:
   numTimesHalved: 3
   maxSplits: 4
   initialMoveSpeed: 2
+  canGrow: 1

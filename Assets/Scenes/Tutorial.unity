@@ -154,7 +154,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -490}
-  m_SizeDelta: {x: 214.5288, y: 79.0573}
+  m_SizeDelta: {x: 300, y: 79.0573}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &39876341
 MonoBehaviour:
@@ -176,17 +176,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Kill to Start
+  m_text: Draw a Circle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}
+  m_sharedMaterial: {fileID: 6075684817272387104, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294953984
+  m_fontColor: {r: 0, g: 0.8000001, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -203,13 +203,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.75
+  m_fontSize: 53.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -385,6 +385,10 @@ PrefabInstance:
     - target: {fileID: 2623376487666722936, guid: a3d81bc3d32f0c343a63f7ca900ffefb, type: 3}
       propertyPath: m_Name
       value: Enemy 3hp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3905580449056687723, guid: a3d81bc3d32f0c343a63f7ca900ffefb, type: 3}
+      propertyPath: suppressColorChooser
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5982316804669236982, guid: a3d81bc3d32f0c343a63f7ca900ffefb, type: 3}
       propertyPath: deathTextOverride
@@ -727,7 +731,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 736d727df354a493a8655fed459918f6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.86666673, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -828,15 +832,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Untitled Loop Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}
+  m_sharedMaterial: {fileID: 6075684817272387104, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278246911
+  m_fontColor: {r: 1, g: 0.86666673, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -853,13 +857,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 63.7
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1258,6 +1262,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4427270174041315833, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459233523469388961, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9124930400568872822, guid: 8eb7ef56cef2149a2891bc6d5baebd0e, type: 3}

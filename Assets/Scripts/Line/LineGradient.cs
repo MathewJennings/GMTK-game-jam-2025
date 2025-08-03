@@ -6,10 +6,6 @@ public class LineGradient : MonoBehaviour
     private LineRenderer lineRenderer;
     private LoopTextGenerator loopTextGenerator;
 
-    private readonly Color hotPink = new Color(1f, 0f, 0.533f, 1f);    // ff0088
-    private readonly Color cyan = new Color(0f, 0.8f, 1f, 1f);         // 00ccff
-    private readonly Color yellow = new Color(1f, 0.867f, 0f, 1f);     // ffdd00
-
     public void SetLoopTextGenerator(LoopTextGenerator loopTextGenerator)
     {
         this.loopTextGenerator = loopTextGenerator;
@@ -30,23 +26,23 @@ public class LineGradient : MonoBehaviour
         if (progress < 0.333f)
         {
             localProgress = progress / 0.333f;
-            currentColor = Color.Lerp(hotPink, cyan, localProgress);
+            currentColor = Color.Lerp(ColorPalette.HotPink, ColorPalette.ElectricCyan, localProgress);
         }
         else if (progress < 0.666f)
         {
             localProgress = (progress - 0.333f) / 0.333f;
-            currentColor = Color.Lerp(cyan, yellow, localProgress);
+            currentColor = Color.Lerp(ColorPalette.ElectricCyan, ColorPalette.BrightYellow, localProgress);
         }
         else
         {
             localProgress = (progress - 0.666f) / 0.334f;
-            currentColor = Color.Lerp(yellow, hotPink, localProgress);
+            currentColor = Color.Lerp(ColorPalette.BrightYellow, ColorPalette.HotPink, localProgress);
         }
         GradientColorKey[] colorKeys = new GradientColorKey[4];
         colorKeys[0] = new GradientColorKey(currentColor, 0.0f);
-        colorKeys[1] = new GradientColorKey(Color.Lerp(currentColor, hotPink, 0.3f), 0.33f);
-        colorKeys[2] = new GradientColorKey(Color.Lerp(currentColor, cyan, 0.3f), 0.66f);
-        Color colorAtEndOfLine = Color.Lerp(currentColor, yellow, 0.3f);
+        colorKeys[1] = new GradientColorKey(Color.Lerp(currentColor, ColorPalette.HotPink, 0.3f), 0.33f);
+        colorKeys[2] = new GradientColorKey(Color.Lerp(currentColor, ColorPalette.ElectricCyan, 0.3f), 0.66f);
+        Color colorAtEndOfLine = Color.Lerp(currentColor, ColorPalette.BrightYellow, 0.3f);
         colorKeys[3] = new GradientColorKey(colorAtEndOfLine, 1.0f);
 
         GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];

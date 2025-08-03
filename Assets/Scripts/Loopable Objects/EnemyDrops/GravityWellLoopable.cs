@@ -13,14 +13,15 @@ public class GravityWellLoopable : MonoBehaviour, ILoopable
     }
     public LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
+        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked gravity well!", Color.purple, transform.position);
+            return new LoopResult(0, "Unlocked gravity well!", spriteColor, transform.position);
         }
 
         gravityWellSuck.Activate();
         Destroy(gameObject);
-        return new LoopResult(0, "Gravity Well activated!", Color.purple, transform.position);
+        return new LoopResult(0, "Gravity Well activated!", spriteColor, transform.position);
     }
 
 }

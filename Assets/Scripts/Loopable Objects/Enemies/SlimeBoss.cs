@@ -31,7 +31,7 @@ public class SlimeBoss : BossHealth
     // Override this to do nothing on looped result. That is handled by the children slimes.
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        return new LoopResult(0, null, Color.red, transform.position);
+        return new LoopResult(0, null, new Color(), transform.position);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,7 +53,7 @@ public class SlimeBoss : BossHealth
         }
     }
 
-    public LoopResult HandleGetHit(float damage, float remainingSlimeHealth, Vector3 slimePosition)
+    public LoopResult HandleGetHit(float damage, float remainingSlimeHealth, Vector3 slimePosition, Color spriteColor)
     {
         currentHealth -= damage;
         // There might be floating point errors with reporting health from all the children, so checking health against
@@ -64,7 +64,7 @@ public class SlimeBoss : BossHealth
         }
         float v = Mathf.Ceil(remainingSlimeHealth);
         string text = v > 0 ? $"{v} more" : "DEFEATED!";
-        return new LoopResult(0,  text, Color.red, slimePosition);
+        return new LoopResult(0,  text, spriteColor, slimePosition);
     }
 
     public void HandleSplit(Transform slimeTransform, float health, int splitsRemaining, float moveSpeed)

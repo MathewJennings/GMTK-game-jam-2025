@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1002334185403504299, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.53333336
       objectReference: {fileID: 0}
     - target: {fileID: 1002334185403504299, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_Color.g
@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1002334185403504299, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 1286398527470442751, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -111,6 +115,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1286398527470442751, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4339921542679720547}
+    - targetCorrespondingSourceObject: {fileID: 1286398527470442751, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2806760235255360770}
   m_SourcePrefab: {fileID: 100100000, guid: 06a9b165b0d33144db9961427a01ad89, type: 3}
 --- !u!1 &5428827470384676077 stripped
 GameObject:
@@ -134,3 +141,16 @@ MonoBehaviour:
   maxHealth: 1
   shrinkOnHit: 1
   currentHealth: 0
+--- !u!114 &-2806760235255360770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5428827470384676077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3edd73297804774cb20f44a6737c50c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suppressColorChooser: 0

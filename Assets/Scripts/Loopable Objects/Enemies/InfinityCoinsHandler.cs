@@ -36,9 +36,10 @@ public class InfinityCoinsHandler : BossHealth
         ChangeRotationSpeed(false);
     }
 
+    // Override this to do nothing on looped result. That is handled by the children coins.
     public override LoopResult HandleLooped(GameObject line, float multiplier = 1.0f)
     {
-        return new LoopResult(0, null, Color.red, transform.position);
+        return new LoopResult(0, null, new Color(), transform.position);
     }
 
     public static void HandleMultipleInfinityCoins(List<ILoopable> loopables)

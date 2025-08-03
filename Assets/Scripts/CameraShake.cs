@@ -37,10 +37,13 @@ public class CameraShake : MonoBehaviour, ILoopObserver
     }
 
     private void Update() {
+        if (currentStrength >0f)
+        {
         float randomX = Random.value - 0.5f;
-        float randomY = Random.value - 0.5f;
-        float randomZ = Random.value - 0.5f;
-        transform.localEulerAngles = new Vector3(randomX, randomY, randomZ) * currentStrength;
+            float randomY = Random.value - 0.5f;
+            float randomZ = Random.value - 0.5f;
+            transform.localEulerAngles = new Vector3(randomX, randomY, randomZ) * currentStrength;
+        }
     }
 
     private IEnumerator DampenStrength(int loopCount)

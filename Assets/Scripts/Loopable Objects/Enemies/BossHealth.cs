@@ -57,7 +57,8 @@ public class BossHealth : EnemyHealth, ILoopable
         onDeath?.Invoke();
         NotifyBossDefeated();
         string resultText = !string.IsNullOrEmpty(deathTextOverride) ? deathTextOverride : "BOSS DEFEATED!";
-        Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Color spriteColor = spriteRenderer != null ? spriteRenderer.color : ColorPalette.BrightYellow;
         return new LoopResult((int)maxHealth, resultText, spriteColor, transform.position);
     }
 }

@@ -46,7 +46,7 @@ public class LineGradient : MonoBehaviour
         colorKeys[3] = new GradientColorKey(colorAtEndOfLine, 1.0f);
 
         GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
-        alphaKeys[0] = new GradientAlphaKey(0.0f, 0.0f);
+        alphaKeys[0] = new GradientAlphaKey(0.3f, 0.0f);
         alphaKeys[1] = new GradientAlphaKey(0.5f, 0.333f);
         alphaKeys[2] = new GradientAlphaKey(1.0f, 1.0f);
 

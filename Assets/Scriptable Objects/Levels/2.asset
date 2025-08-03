@@ -84,7 +84,7 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   currentCorruption: 0
-  initialCorruption: 55
+  initialCorruption: 0
   totalCorruption: 70
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}

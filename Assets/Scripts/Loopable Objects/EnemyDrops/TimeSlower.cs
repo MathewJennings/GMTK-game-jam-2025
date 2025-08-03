@@ -37,12 +37,12 @@ public class TimeSlower : MonoBehaviour, ILoopable
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked time warp!", spriteColor, transform.position);
+            return new LoopResult(0, "Unlocked Time Warp!", spriteColor, transform.position);
         }
 
         LogPowerupCollected();
         TimeManager.SetTimeScale(timeFraction, duration);
         Destroy(gameObject);
-        return new LoopResult(0, "Time warp activated!", spriteColor, transform.position);
+        return new LoopResult(0, "Time Warp activated!", spriteColor, transform.position);
     }
 }

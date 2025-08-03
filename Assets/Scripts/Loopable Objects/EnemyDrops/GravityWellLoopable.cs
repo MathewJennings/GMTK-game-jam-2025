@@ -16,7 +16,7 @@ public class GravityWellLoopable : MonoBehaviour, ILoopable
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked gravity well!", spriteColor, transform.position);
+            return new LoopResult(0, "Unlocked Gravity Well!", spriteColor, transform.position);
         }
         LogPowerupCollected();
         gravityWellSuck.Activate();

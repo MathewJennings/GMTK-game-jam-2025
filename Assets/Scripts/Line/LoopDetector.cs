@@ -86,13 +86,15 @@ public class LoopDetector : MonoBehaviour
         // Check if point c lies on segment ab
         bool OnSegment(Vector2 a, Vector2 b, Vector2 c)
         {
+            bool oldInBounds = c.x <= Mathf.Max(a.x, b.x) && c.x >= Mathf.Min(a.x, b.x) &&
+                   c.y <= Mathf.Max(a.y, b.y) && c.y >= Mathf.Min(a.y, b.y);
             // Standard bounding box check with buffer
             bool inBounds = c.x <= Mathf.Max(a.x, b.x) + onSegmentAcceptableRange && c.x >= Mathf.Min(a.x, b.x) - onSegmentAcceptableRange &&
                             c.y <= Mathf.Max(a.y, b.y) + onSegmentAcceptableRange && c.y >= Mathf.Min(a.y, b.y) - onSegmentAcceptableRange;
 
             // Distance from c to the segment ab
             float distance = DistancePointToSegment(c, a, b);
-            return inBounds && distance <= onSegmentAcceptableRange;
+            return oldInBounds || (inBounds && distance <= onSegmentAcceptableRange);
         }
 
         // Helper function to compute the minimum distance from point p to segment ab

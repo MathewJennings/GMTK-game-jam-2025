@@ -23,11 +23,29 @@ public class DamageMultiplier : MonoBehaviour, ILoopable
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked damage multiplier!", spriteColor, transform.position);
+            return new LoopResult(0, "Unlocked Damage Multiplier!", spriteColor, transform.position);
         }
 
         float newMult = spawnLine.TemporarilyAddBonusMultiplier(bonusMultiplier, duration);
         Destroy(gameObject);
-        return new LoopResult(0, $"{newMult}x damage activated!", spriteColor, transform.position);
+        LogPowerupCollected();
+        return new LoopResult(0, $"{newMult}x Damage activated!", spriteColor, transform.position);
+    }
+
+    private void LogPowerupCollected()
+    {
+        LogManager logManager = FindFirstObjectByType<LogManager>();
+        if (logManager != null)
+        {
+            string powerupName = this.GetType().Name;
+            if (logManager.numPowerups.ContainsKey(powerupName))
+            {
+                logManager.numPowerups[powerupName]++;
+            }
+            else
+            {
+                logManager.numPowerups[powerupName] = 1;
+            }
+        }
     }
 }

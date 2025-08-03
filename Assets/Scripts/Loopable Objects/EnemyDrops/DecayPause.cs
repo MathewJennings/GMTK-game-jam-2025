@@ -7,6 +7,7 @@ public class DecayPause : MonoBehaviour, ILoopable
     private float duration = 5f;
 
     private WaveProgressBar waveProgressBar;
+    private BossProgressBar bossProgressBar;
 
     private bool isPickupScene = false;
 
@@ -16,6 +17,7 @@ public class DecayPause : MonoBehaviour, ILoopable
         if (canvas != null)
         {
             waveProgressBar = canvas.transform.Find("ProgressBarBackground").GetComponent<WaveProgressBar>();
+            bossProgressBar = canvas.transform.Find("BossBarBackground").GetComponent<BossProgressBar>();
         }
         if (waveProgressBar == null)
         {
@@ -31,13 +33,14 @@ public class DecayPause : MonoBehaviour, ILoopable
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked decay pause!", spriteColor, transform.position);
+            return new LoopResult(0, "Unlocked Halt Corruption!", spriteColor, transform.position);
         }
 
         LogPowerupCollected();
         waveProgressBar.PauseCorruption(duration);
+        bossProgressBar.PauseCorruption(duration);
         Destroy(gameObject);
-        return new LoopResult(0, "Corruption paused!", spriteColor, transform.position);
+        return new LoopResult(0, "Corruption halted!", spriteColor, transform.position);
     }
 
     private void LogPowerupCollected()

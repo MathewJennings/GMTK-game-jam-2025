@@ -132,6 +132,13 @@ public class LevelManager : MonoBehaviour, IBossObserver
         boss.GetComponent<BossHealth>().SetNotifyBossDefeated(NotifyBossDefeated);
         waveAndBossBarsManager.SetBossBarActive();
         bossProgressBar.SetBossHealth(boss.GetComponent<BossHealth>());
+
+        // Color for boss name.
+        SpriteRenderer spriteRenderer = boss.GetComponentInChildren<SpriteRenderer>();
+        Color spriteColor = spriteRenderer != null ? spriteRenderer.color : Color.yellow;
+        string name = boss.GetComponent<BossName>().bossName;
+        bossProgressBar.SetBossName(boss.GetComponent<BossName>().bossName, spriteColor);
+
         Debug.Log($"Preparing boss fight for level: {bossModeLevel}");
         spawnEnemy.PlayLevel(bossModeLevel, true);
         NotifyBossSpawned();
@@ -145,6 +152,7 @@ public class LevelManager : MonoBehaviour, IBossObserver
 
     void IBossObserver.NotifyBossDefeated()
     {
+        bossProgressBar.HideBossName();
         PrepareNextLevel();
     }
 

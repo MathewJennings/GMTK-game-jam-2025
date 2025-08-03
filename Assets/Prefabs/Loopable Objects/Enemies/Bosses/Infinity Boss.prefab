@@ -404,6 +404,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2049416571819557085, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+      propertyPath: bossName
+      value: Mat
+      objectReference: {fileID: 0}
     - target: {fileID: 5550314188805922506, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

@@ -279,6 +279,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8900106608822870948}
+    - targetCorrespondingSourceObject: {fileID: 5428827470384676077, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2049416571819557085}
   m_SourcePrefab: {fileID: 100100000, guid: 22e114274ae12ef478951472dedb41d0, type: 3}
 --- !u!4 &5550314188805922506 stripped
 Transform:
@@ -303,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupSelector: {fileID: 0}
-  enemyDropList: {fileID: 0}
+  enemyDropPercentages: {fileID: 0}
   maxHealth: 50
   shrinkOnHit: 0
   currentHealth: 0
@@ -335,3 +338,16 @@ MonoBehaviour:
   smoothness: 0.5
   usePerlinNoise: 0
   noiseScale: 0.5
+--- !u!114 &2049416571819557085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066606338228497719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809af140874e3ce449733c9a5271ecf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossName: Franklin

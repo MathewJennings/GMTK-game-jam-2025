@@ -79,6 +79,13 @@ public class LoopDetector : MonoBehaviour
         int Orientation(Vector2 a, Vector2 b, Vector2 c)
         {
             float val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+            if (Mathf.Abs(val) < Mathf.Epsilon) return 0; // Collinear
+            return (val > 0) ? 1 : 2; // Clockwise or Counterclockwise
+        }
+        
+        int BufferedOrientation(Vector2 a, Vector2 b, Vector2 c)
+        {
+            float val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
             if (Mathf.Abs(val) < orientationAcceptableRange) return 0; // Collinear with buffer
             return (val > 0) ? 1 : 2; // Clockwise or Counterclockwise
         }
@@ -86,15 +93,19 @@ public class LoopDetector : MonoBehaviour
         // Check if point c lies on segment ab
         bool OnSegment(Vector2 a, Vector2 b, Vector2 c)
         {
-            bool oldInBounds = c.x <= Mathf.Max(a.x, b.x) && c.x >= Mathf.Min(a.x, b.x) &&
+            return c.x <= Mathf.Max(a.x, b.x) && c.x >= Mathf.Min(a.x, b.x) &&
                    c.y <= Mathf.Max(a.y, b.y) && c.y >= Mathf.Min(a.y, b.y);
+        }
+        
+        bool BufferedOnSegment(Vector2 a, Vector2 b, Vector2 c)
+        {
             // Standard bounding box check with buffer
             bool inBounds = c.x <= Mathf.Max(a.x, b.x) + onSegmentAcceptableRange && c.x >= Mathf.Min(a.x, b.x) - onSegmentAcceptableRange &&
                             c.y <= Mathf.Max(a.y, b.y) + onSegmentAcceptableRange && c.y >= Mathf.Min(a.y, b.y) - onSegmentAcceptableRange;
 
             // Distance from c to the segment ab
             float distance = DistancePointToSegment(c, a, b);
-            return oldInBounds || (inBounds && distance <= onSegmentAcceptableRange);
+            return inBounds && distance <= onSegmentAcceptableRange;
         }
 
         // Helper function to compute the minimum distance from point p to segment ab
@@ -122,6 +133,19 @@ public class LoopDetector : MonoBehaviour
         if (o2 == 0 && OnSegment(p1, q1, q2)) return true;
         if (o3 == 0 && OnSegment(p2, q2, p1)) return true;
         if (o4 == 0 && OnSegment(p2, q2, q1)) return true;
+        
+        // Retry above with buffered calculations.
+        o1 = BufferedOrientation(p1, q1, p2);
+        o2 = BufferedOrientation(p1, q1, q2);
+        o3 = BufferedOrientation(p2, q2, p1);
+        o4 = BufferedOrientation(p2, q2, q1);
+
+        if (o1 != o2 && o3 != o4) return true;
+
+        if (o1 == 0 && BufferedOnSegment(p1, q1, p2)) return true;
+        if (o2 == 0 && BufferedOnSegment(p1, q1, q2)) return true;
+        if (o3 == 0 && BufferedOnSegment(p2, q2, p1)) return true;
+        if (o4 == 0 && BufferedOnSegment(p2, q2, q1)) return true;
 
         return false; // No intersection
     }

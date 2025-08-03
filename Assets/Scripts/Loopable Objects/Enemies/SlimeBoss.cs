@@ -13,6 +13,9 @@ public class SlimeBoss : BossHealth
     [SerializeField]
     private float initialMoveSpeed = 1f; // Set this in the Inspector
 
+    [SerializeField]
+    private bool canGrow = true;
+
     private readonly List<SlimeChild> slimeChildren = new();
 
     public override void AddHealth(float additonalHealth)
@@ -45,6 +48,8 @@ public class SlimeBoss : BossHealth
         if (slimeChild != null)
         {
             slimeChild.SetSlimeBoss(this);
+            slimeChild.canGrow = canGrow;
+            slimeChild.SetOriginalMaxHealth(maxHealth);
             slimeChild.SetMaxHealth(maxHealth);
             slimeChild.SetHealth(maxHealth);
             slimeChild.SetSplitsRemaining(maxSplits);
@@ -80,6 +85,8 @@ public class SlimeBoss : BossHealth
             if (slimeChild != null)
             {
                 slimeChild.SetSlimeBoss(this);
+                slimeChild.canGrow = canGrow;
+                slimeChild.SetOriginalMaxHealth(health / 2f);
                 slimeChild.SetMaxHealth(health / 2f);
                 slimeChild.SetHealth(health / 2f);
                 slimeChild.SetSplitsRemaining(splitsRemaining - 1);

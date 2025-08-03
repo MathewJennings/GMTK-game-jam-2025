@@ -39,10 +39,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   currentCorruption: -3.1254163
-  initialCorruption: 1
+  initialCorruption: 0
   totalCorruption: 100
   enemyPrefabs:
   - {fileID: 5428827470384676077, guid: 8703a353748e64aee94c7a6aa7a5ca28, type: 3}
   enemyPrefabWeights:
   - 0.5
-  bossPrefab: {fileID: 7248937843699327009, guid: ddeea5542cfcbcb4f9a929ae9f8b4ebc, type: 3}
+  bossPrefab: {fileID: 8210314934849023821, guid: 7b82d7faa100d4d2fa9457ab9ebafed1, type: 3}

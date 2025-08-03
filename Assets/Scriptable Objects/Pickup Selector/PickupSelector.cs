@@ -7,6 +7,7 @@ public class PickupSelector : ScriptableObject
     public List<GameObject> pickupPrefabs;
     public List<bool> hasPickup;
     public List<string> pickupDescriptions;
+    public bool shouldResetPickups = true;
 
     public GameObject GetRandomUnlockedPickup()
     {

@@ -47,5 +47,4 @@ MonoBehaviour:
   - 0.5
   bossPrefab: {fileID: 7248937843699327009, guid: ddeea5542cfcbcb4f9a929ae9f8b4ebc, type: 3}
   bossPrefabs:
-  - {fileID: 7248937843699327009, guid: ddeea5542cfcbcb4f9a929ae9f8b4ebc, type: 3}
-  - {fileID: 8066606338228497719, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+  - {fileID: 7248937843699327009, guid: 4e63fcd69002a17438d0f287216e945d, type: 3}

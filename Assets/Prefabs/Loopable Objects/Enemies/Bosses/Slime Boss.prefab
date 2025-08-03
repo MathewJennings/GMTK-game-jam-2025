@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: onDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2049416571819557085, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
+      propertyPath: bossName
+      value: Sam
+      objectReference: {fileID: 0}
     - target: {fileID: 5550314188805922506, guid: e0e1bd8281c28f7448e5e9e8eff19652, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -129,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupSelector: {fileID: 0}
-  enemyDropList: {fileID: 0}
+  enemyDropPercentages: {fileID: 0}
   maxHealth: 32
   shrinkOnHit: 0
   currentHealth: 0

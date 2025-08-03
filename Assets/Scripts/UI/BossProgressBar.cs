@@ -10,6 +10,7 @@ public class BossProgressBar : MonoBehaviour
     [Header("UI Components")]
     [SerializeField] private RectTransform progressBarFill;
     [SerializeField] private TextMeshProUGUI currentScoreText;
+    [SerializeField] private TextMeshProUGUI bossNameText;
 
     [Header("Animation Settings")]
     [SerializeField] private AnimationCurve animationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -51,6 +52,18 @@ public class BossProgressBar : MonoBehaviour
     public void SetBossHealth(BossHealth bossHealth)
     {
         this.bossHealth = bossHealth;
+    }
+
+    public void SetBossName(string name, Color color)
+    {
+        bossNameText.text = name;
+        bossNameText.color = color;
+        bossNameText.gameObject.SetActive(true);
+    }
+    
+    public void HideBossName()
+    {
+        bossNameText.gameObject.SetActive(false);
     }
 
     void Awake()

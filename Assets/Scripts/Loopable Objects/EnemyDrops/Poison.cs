@@ -14,7 +14,7 @@ public class Poison : MonoBehaviour, ILoopable
         Color spriteColor = GetComponentInChildren<SpriteRenderer>().color;
         if (isPickupScene)
         {
-            return new LoopResult(0, "Unlocked Poison!", spriteColor, transform.position);
+            return new LoopResult(0, "Unlocked Poison Blast!", spriteColor, transform.position);
         }
 
         // Affect all LoopableObjects in the scene
@@ -65,7 +65,7 @@ public class Poison : MonoBehaviour, ILoopable
 
         Destroy(gameObject);
         LogPowerupCollected();
-        return new LoopResult(0, $"Poison activated!", spriteColor, transform.position);
+        return new LoopResult(0, $"Poison Blast activated!", spriteColor, transform.position);
     }
     
 

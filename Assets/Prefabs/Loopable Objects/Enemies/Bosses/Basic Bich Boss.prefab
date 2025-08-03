@@ -307,7 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupSelector: {fileID: 0}
   enemyDropPercentages: {fileID: 0}
-  maxHealth: 50
+  maxHealth: 30
   shrinkOnHit: 0
   currentHealth: 0
   onDeath:

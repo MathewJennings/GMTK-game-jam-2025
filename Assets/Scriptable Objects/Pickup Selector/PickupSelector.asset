@@ -19,14 +19,14 @@ MonoBehaviour:
   - {fileID: 4827265980704315333, guid: f71f693b93ee34512b9ba3f59696a3a4, type: 3}
   - {fileID: 3489123812096408759, guid: 9c4f7164cb473c94cab1c8ab008bc941, type: 3}
   - {fileID: 3489123812096408759, guid: 225fe027c933440bca4e7cc4c6e0033b, type: 3}
-  hasPickup: 010101010101
+  hasPickup: 000000000000
   pickupDescriptions:
-  - Time Warp\n\nCauses time to temporarily slow to a crawl.
-  - Halt Corruption\n\nCorruption build up will temporarily freeze.
+  - Time Warp\n\nCause time to temporarily slow to a crawl.
+  - Halt Corruption\n\nTemporaily freeze Corruption build up.
   - Gravity Well\n\nCreate a gravitational force that pulls in all enemies and objects.
   - Ghost Line\n\nCreate lines that can phase through enemies and objects.
-  - Damage Multiplier\n\nIncreases damage done per loop. Picking up multiple will
-    stack the effect and reset the duration.
-  - Poison\n\nSets all enemies to 1hp, but also reduces their corruption value to
-    1. On bosses, halves current corruption.
+  - Damage Multiplier\n\nIncrease your damage done per loop. Can stack for large
+    multipliers.
+  - Poison Blast\n\nSet all enemies to 1hp, but also reduce their value to -1 corruption.\nHalve
+    bosses' remaining corruption.
   shouldResetPickups: 1

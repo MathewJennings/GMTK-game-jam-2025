@@ -176,9 +176,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Draw a circle
+  m_text: 'Draw loops
 
-    Remove the corruption'
+    Eliminate corruption'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}
   m_sharedMaterial: {fileID: 6075684817272387104, guid: cfe3ac59dd1fe9445acf3e738722f981, type: 2}

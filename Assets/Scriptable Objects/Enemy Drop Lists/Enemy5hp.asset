@@ -17,7 +17,9 @@ MonoBehaviour:
   - {fileID: 4827265980704315333, guid: 8805cf2bc313012449a1cea82032ecc1, type: 3}
   - {fileID: 4827265980704315333, guid: 52c56865d7980465b93758659b6c2573, type: 3}
   - {fileID: 4827265980704315333, guid: f71f693b93ee34512b9ba3f59696a3a4, type: 3}
+  - {fileID: 3489123812096408759, guid: 9c4f7164cb473c94cab1c8ab008bc941, type: 3}
   enemyDropWeights:
+  - 0.3
   - 0.3
   - 0.3
   - 0.3

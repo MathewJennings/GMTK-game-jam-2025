@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class LineGradient : MonoBehaviour
 {
+    [SerializeField] private float cycleDuration = 3f;
     private LineRenderer lineRenderer;
     private LoopTextGenerator loopTextGenerator;
+
+    private readonly Color hotPink = new Color(1f, 0f, 0.533f, 1f);    // ff0088
+    private readonly Color cyan = new Color(0f, 0.8f, 1f, 1f);         // 00ccff
+    private readonly Color yellow = new Color(1f, 0.867f, 0f, 1f);     // ffdd00
 
     public void SetLoopTextGenerator(LoopTextGenerator loopTextGenerator)
     {
@@ -19,26 +24,35 @@ public class LineGradient : MonoBehaviour
     public void UpdateGradient()
     {
         Gradient currentGradient = new();
-        // Create a rich gradient of green hues from vibrant lime to dark forest green
-        float timeShift = (Mathf.Sin(Time.time * 0.8f) + 1f) * 0.5f; // Gentle sine wave oscillation (0 to 1)
+        float progress = Time.time % cycleDuration / cycleDuration;
+        Color currentColor;
+        float localProgress;
+        if (progress < 0.333f)
+        {
+            localProgress = progress / 0.333f;
+            currentColor = Color.Lerp(hotPink, cyan, localProgress);
+        }
+        else if (progress < 0.666f)
+        {
+            localProgress = (progress - 0.333f) / 0.333f;
+            currentColor = Color.Lerp(cyan, yellow, localProgress);
+        }
+        else
+        {
+            localProgress = (progress - 0.666f) / 0.334f;
+            currentColor = Color.Lerp(yellow, hotPink, localProgress);
+        }
+        GradientColorKey[] colorKeys = new GradientColorKey[4];
+        colorKeys[0] = new GradientColorKey(currentColor, 0.0f);
+        colorKeys[1] = new GradientColorKey(Color.Lerp(currentColor, hotPink, 0.3f), 0.33f);
+        colorKeys[2] = new GradientColorKey(Color.Lerp(currentColor, cyan, 0.3f), 0.66f);
+        Color colorAtEndOfLine = Color.Lerp(currentColor, yellow, 0.3f);
+        colorKeys[3] = new GradientColorKey(colorAtEndOfLine, 1.0f);
 
-        GradientColorKey[] colorKeys = new GradientColorKey[8];
-        // Green hue range: 0.25 (lime) to 0.4 (forest), with varying saturation and brightness
-        float greenHueBase = 0.33f; // Base green hue
-        float hueVariation = 0.1f;  // Range of green hues to cover
-        colorKeys[0] = new GradientColorKey(Color.HSVToRGB(greenHueBase - hueVariation + timeShift * 0.1f, 0.6f, 1f), 0.0f);   // Bright lime green
-        colorKeys[1] = new GradientColorKey(Color.HSVToRGB(greenHueBase - 0.05f + timeShift * 0.1f, 0.7f, 0.95f), 0.143f);     // Light green
-        colorKeys[2] = new GradientColorKey(Color.HSVToRGB(greenHueBase + timeShift * 0.1f, 0.8f, 0.9f), 0.286f);              // Medium green
-        colorKeys[3] = new GradientColorKey(Color.HSVToRGB(greenHueBase + 0.02f + timeShift * 0.1f, 0.85f, 0.8f), 0.429f);     // Darker green
-        colorKeys[4] = new GradientColorKey(Color.HSVToRGB(greenHueBase + 0.04f + timeShift * 0.1f, 0.9f, 0.7f), 0.571f);      // Forest green
-        colorKeys[5] = new GradientColorKey(Color.HSVToRGB(greenHueBase + 0.06f + timeShift * 0.1f, 0.95f, 0.6f), 0.714f);     // Deep green
-        colorKeys[6] = new GradientColorKey(Color.HSVToRGB(greenHueBase + 0.08f + timeShift * 0.1f, 1f, 0.5f), 0.857f);        // Dark forest green
-        Color colorAtEndOfLine = Color.HSVToRGB(greenHueBase + hueVariation + timeShift * 0.1f, 1f, 0.4f);                     // Very dark green
-        colorKeys[7] = new GradientColorKey(colorAtEndOfLine, 1.0f);
-
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-        alphaKeys[0] = new GradientAlphaKey(1.0f, 0.0f);
-        alphaKeys[1] = new GradientAlphaKey(1.0f, 1.0f);
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[3];
+        alphaKeys[0] = new GradientAlphaKey(0.0f, 0.0f);
+        alphaKeys[1] = new GradientAlphaKey(0.5f, 0.333f);
+        alphaKeys[2] = new GradientAlphaKey(1.0f, 1.0f);
 
         currentGradient.SetKeys(colorKeys, alphaKeys);
         lineRenderer.colorGradient = currentGradient;

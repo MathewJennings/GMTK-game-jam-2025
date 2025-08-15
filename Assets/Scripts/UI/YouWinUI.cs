@@ -18,7 +18,6 @@ public class YouWinUI : MonoBehaviour
     [Header("Settings")]
     public string congratulationsMessage = "Congratulations!\nYou Win!";
 
-    public TMP_Text statsSummaryText;
     void Awake()
     {
         youWinPanel.SetActive(false);
@@ -44,7 +43,6 @@ public class YouWinUI : MonoBehaviour
         }
 
         youWinPanel.SetActive(true);
-        statsSummaryText.text = logManager.PrintLog();
     }
 
     public void HideYouWinScreen()

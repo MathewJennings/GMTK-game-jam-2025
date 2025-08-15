@@ -350,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 476504034022054789, guid: a3d81bc3d32f0c343a63f7ca900ffefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4391533
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 476504034022054789, guid: a3d81bc3d32f0c343a63f7ca900ffefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -732,7 +732,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 736d727df354a493a8655fed459918f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 92083152bd39b0e41893a9177445207f, type: 3}
   m_Color: {r: 1, g: 0.86666673, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -772,8 +772,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2114484304}
   radius: 2
-  speed: 3.5
-  fadeDuration: 1
+  speed: 5
+  mouseSprite: {fileID: 21300000, guid: 736d727df354a493a8655fed459918f6, type: 3}
+  leftClickMouseSprite: {fileID: 21300000, guid: 92083152bd39b0e41893a9177445207f, type: 3}
   circleLineWidth: 0.1
 --- !u!1 &1017465462
 GameObject:

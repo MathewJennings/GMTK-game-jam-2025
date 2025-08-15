@@ -6,15 +6,13 @@ public class CircleAround : MonoBehaviour
     public Transform target;      // The object to circle around
     public float radius = 2f;     // Distance from the target
     public float speed = 1f;      // Speed of rotation (radians per second)
-    public float fadeDuration = 1f;
+    public Sprite mouseSprite;
+    public Sprite leftClickMouseSprite;
     [Header("Circle Drawing")]
     public float circleLineWidth = 0.1f;
 
     private float angle = 0f;
     private SpriteRenderer spriteRenderer;
-    private float fadeTimer = 0f;
-    private bool fadingIn = true;
-    private bool fadingOut = false;
 
     // Loop tracking variables
     private int completedLoops = 0;
@@ -22,10 +20,12 @@ public class CircleAround : MonoBehaviour
     private bool hasCompletedFirstRotation = false;
 
     // Circle drawing variables
-    private LineRenderer circleLineRenderer;
+    private readonly List<LineRenderer> circleLineRenderers = new();
+    private readonly Vector3 drawOffset = new(-0.25f, .15f);
     private GameObject circleObject;
-    private List<Vector3> trailPoints;
-    private List<Color> trailColors = new List<Color> {
+    private readonly List<Vector3> trailPoints = new();
+    private readonly List<Color> trailColors = new()
+    {
         ColorPalette.HotPink,
         ColorPalette.ElectricCyan,
         ColorPalette.BrightYellow
@@ -34,17 +34,7 @@ public class CircleAround : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            Color c = spriteRenderer.color;
-            c.a = 0f;
-            spriteRenderer.color = c;
-        }
-        fadeTimer = 0f;
-        fadingIn = true;
-        fadingOut = false;
         lastAngle = angle;
-        trailPoints = new List<Vector3>();
         CreateCircleDrawingObject();
     }
 
@@ -52,44 +42,21 @@ public class CircleAround : MonoBehaviour
     {
         if (spriteRenderer == null) return;
 
-        // Fade in
-        if (fadingIn)
-        {
-            fadeTimer += Time.deltaTime;
-            float alpha = Mathf.Clamp01(fadeTimer / fadeDuration);
-            SetAlpha(alpha);
-            if (alpha >= 1f)
-            {
-                fadingIn = false;
-            }
-        }
-        // Fade out
-        else if (fadingOut)
-        {
-            fadeTimer += Time.deltaTime;
-            float alpha = Mathf.Clamp01(1f - (fadeTimer / fadeDuration));
-            SetAlpha(alpha);
-            if (alpha <= 0f)
-            {
-                Destroy(gameObject);
-            }
-        }
+        float[] xOffsets = { -0.04f, 0.04f, -0.02f, 0.02f };
+        float[] yOffsets = { 0.09f, 0f, -0.09f, -0.18f };
+        int currentIndex = completedLoops % 4;
+        int nextIndex = (completedLoops + 1) % 4;
+        float normalizedAngle = Mathf.Abs(angle % (2 * Mathf.PI));
+        float loopProgress = normalizedAngle / (2 * Mathf.PI);
+        float xOffset = Mathf.Lerp(xOffsets[currentIndex], xOffsets[nextIndex], loopProgress);
+        float yOffset = Mathf.Lerp(yOffsets[currentIndex], yOffsets[nextIndex], loopProgress);
 
-        // Start fade out if target is null
-        if (!fadingOut && target == null)
-        {
-            fadingOut = true;
-            fadeTimer = 0f;
-        }
-
-        // Only circle if not fading out and target exists
-        if (!fadingOut && target != null)
+        if (target != null)
         {
             angle -= speed * Time.deltaTime;
-            CheckForCompletedLoop();
             float x = Mathf.Cos(angle) * radius;
             float y = Mathf.Sin(angle) * radius;
-            transform.position = target.position + new Vector3(x, y, 0f);
+            transform.position = target.position + new Vector3(x + xOffset, y + yOffset, 0f) - drawOffset;
             if (completedLoops % 4 < 3)
             {
                 AddPointToTrail();
@@ -98,31 +65,30 @@ public class CircleAround : MonoBehaviour
             {
                 ClearTrail();
             }
+            CheckForCompletedLoop();
         }
-    }
-
-    private void SetAlpha(float alpha)
-    {
-        Color c = spriteRenderer.color;
-        c.a = alpha;
-        spriteRenderer.color = c;
     }
 
     private void CreateCircleDrawingObject()
     {
-        // Create a separate GameObject for the circle line renderer
-        circleObject = new GameObject("DrawnCircle");
-        circleObject.transform.SetParent(transform);
+        for (int i = 0; i < 3; i++)
+        {
+            circleObject = new GameObject($"DrawnCircle {i}");
+            circleObject.transform.SetParent(transform);
+            circleObject.transform.Translate(-0.05f, 0.05f, 0f);
 
-        // Add and configure LineRenderer
-        circleLineRenderer = circleObject.AddComponent<LineRenderer>();
-        Material circleMaterial = new Material(Shader.Find("Sprites/Default"));
-        circleMaterial.color = trailColors[0];
-        circleLineRenderer.material = circleMaterial;
-        circleLineRenderer.startWidth = circleLineWidth;
-        circleLineRenderer.endWidth = circleLineWidth;
-        circleLineRenderer.positionCount = 0; // Start with no points
-        circleLineRenderer.useWorldSpace = true;
+            LineRenderer circleLineRenderer = circleObject.AddComponent<LineRenderer>();
+            circleLineRenderer.material = new Material(Shader.Find("Sprites/Default"))
+            {
+                color = trailColors[i]
+            };
+            circleLineRenderer.sortingOrder = i;
+            circleLineRenderer.startWidth = circleLineWidth;
+            circleLineRenderer.endWidth = circleLineWidth;
+            circleLineRenderer.positionCount = 0; // Start with no points
+            circleLineRenderer.useWorldSpace = true;
+            circleLineRenderers.Add(circleLineRenderer);
+        }
     }
 
     private void CheckForCompletedLoop()
@@ -136,52 +102,60 @@ public class CircleAround : MonoBehaviour
         if (hasCompletedFirstRotation && normalizedLastAngle < normalizedAngle)
         {
             completedLoops++;
-            ClearTrail();
-            if (completedLoops % 4 == 0)
+            if (trailPoints.Count > 0)
             {
-                circleLineRenderer.material.color = trailColors[0];
+                Vector3 lastPoint = trailPoints[^1];
+                trailPoints.Clear();
+                trailPoints.Add(lastPoint);
+            }
+            if (completedLoops % 4 == 3)
+            {
                 speed = 3.5f;
             }
-            else if (completedLoops % 4 == 1)
-            {
-                circleLineRenderer.material.color = trailColors[1];
-                speed = 5f;
-            }
-            else if (completedLoops % 4 == 2)
-            {
-                circleLineRenderer.material.color = trailColors[2];
-                speed = 6.5f;
-            }
-            else if (completedLoops % 4 == 3)
+            else
             {
                 speed = 5f;
+                spriteRenderer.sprite = leftClickMouseSprite;
             }
         }
-
         // Mark that we've started rotating (after the first significant movement)
         if (!hasCompletedFirstRotation && Mathf.Abs(angle - 0f) > 0.1f)
         {
             hasCompletedFirstRotation = true;
         }
-
         lastAngle = angle;
     }
 
     private void AddPointToTrail()
     {
-        if (circleLineRenderer == null) return;
-        trailPoints.Add(transform.position);
-        circleLineRenderer.positionCount = trailPoints.Count;
-        circleLineRenderer.SetPositions(trailPoints.ToArray());
+        if (circleLineRenderers[completedLoops % 4] == null) return;
+        trailPoints.Add(transform.position + drawOffset);
+        circleLineRenderers[completedLoops % 4].positionCount = trailPoints.Count;
+        circleLineRenderers[completedLoops % 4].SetPositions(trailPoints.ToArray());
     }
 
     private void ClearTrail()
     {
-        if (circleLineRenderer == null) return;
+        float normalizedAngle = Mathf.Abs(angle % (2 * Mathf.PI));
+        // After the 1st 1/4th circle, take 1/16th circle to complete a fade
+        float loopProgress = normalizedAngle / (Mathf.PI/8) - Mathf.PI/2;
+        float alpha = Mathf.Lerp(1, 0, loopProgress);
+        for (int i = 0; i < 3; i++)
+        {
+            if (circleLineRenderers[i] == null) continue;
+            Color color = circleLineRenderers[i].material.color;
+            color.a = alpha;
+            circleLineRenderers[i].material.color = color;
+        }
+        if (loopProgress >= 1) {
+            for (int i = 0; i < 3; i++)
+            {
+                circleLineRenderers[i].positionCount = 0;
+            }
+            trailPoints.Clear();
+            spriteRenderer.sprite = mouseSprite;
+        }
 
-        // Clear all trail points
-        trailPoints.Clear();
-        circleLineRenderer.positionCount = 0;
     }
 
     private void OnDestroy()

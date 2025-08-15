@@ -479,7 +479,6 @@ MonoBehaviour:
   congratulationsMessage: 'Congratulations!
 
     You Win!'
-  statsSummaryText: {fileID: 0}
 --- !u!1 &1992444635194791307
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,8 +737,8 @@ MonoBehaviour:
   pulseDuration: 0.2
   enableScoreChangeEffects: 1
   isAddCorruptionEnabled: 1
-  minCorruptRate: 0.5
-  maxCorruptRate: 2
+  minCorruptRate: 0.25
+  maxCorruptRate: 1
   corruptionCurve:
     serializedVersion: 2
     m_Curve:

@@ -42,8 +42,8 @@ public class BossProgressBar : MonoBehaviour
     private bool corruptionPaused = false;
     private Coroutine pauseCorruptionCoroutine;
     private bool isAddCorruptionEnabled = true;
-    private float minCorruptRate = 0.5f; // Minimum corruption when close to max corruption
-    private float maxCorruptRate = 2.0f; // Maximum corruption when close to zero corruption
+    private float minCorruptRate = 0.25f; // Minimum corruption when close to max corruption
+    private float maxCorruptRate = 1.0f; // Maximum corruption when close to zero corruption
     private AnimationCurve corruptionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     private float corruptionGracePeriod = 2f; // Seconds of no corruption after corruption decrease
     private float lowCorruptionThreshold = 0.2f; // Below this percentage, use aggressive corruption

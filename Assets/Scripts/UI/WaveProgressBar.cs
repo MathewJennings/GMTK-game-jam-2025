@@ -23,8 +23,8 @@ public class WaveProgressBar : MonoBehaviour, IBossObserver
 
     [Header("Score Corruption Settings")]
     [SerializeField] private bool isAddCorruptionEnabled = true;
-    [SerializeField] private float minCorruptRate = 0.5f; // Minimum corruption when close to max corruption
-    [SerializeField] private float maxCorruptRate = 2.0f; // Maximum corruption when close to zero corruption
+    private float minCorruptRate = 0.25f; // Minimum corruption when close to max corruption
+    private float maxCorruptRate = 1.0f; // Maximum corruption when close to zero corruption
     [SerializeField] private AnimationCurve corruptionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] private float corruptionGracePeriod = 2f; // Seconds of no corruption after corruption decrease
     [SerializeField] private float lowCorruptionThreshold = 0.2f; // Below this percentage, use aggressive corruption
